@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Acompanhamento de Obra — Checklist do Orçamento Assinado</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Condensed:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --papel:#F2EEE3; --papel-2:#E7E1CF; --linha:#CBC2A4;
+  --tinta:#24282B; --tinta-60:#6B6F63;
+  --azul:#1F3A52; --azul-luz:#E6EDF2;
+  --ambar:#C97F1F; --ambar-luz:#FBF0DE;
+  --verde:#3F6B4C; --verde-luz:#E6EEE8;
+  --vermelho:#A3372B;
+  --sans:"IBM Plex Sans",-apple-system,Segoe UI,sans-serif;
+  --cond:"IBM Plex Sans Condensed",var(--sans);
+  --mono:"IBM Plex Mono",monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--papel);color:var(--tinta);font-family:var(--sans);font-size:15px;line-height:1.5}
+h1,h2,h3{font-family:var(--cond);font-weight:700;letter-spacing:-.01em;margin:0;text-transform:uppercase}
+p{max-width:70ch}
+
+/* ---------------- capa ---------------- */
+.capa{min-height:100vh;display:grid;grid-template-columns:24px 1fr;background:var(--papel);border-bottom:3px solid var(--azul)}
+.capa .faixa{background:repeating-linear-gradient(-45deg,var(--ambar) 0 10px,var(--azul) 10px 20px)}
+.capa-int{max-width:1180px;margin:0 auto;width:100%;padding:clamp(26px,6vh,64px) 30px clamp(22px,4vh,40px);
+ display:flex;flex-direction:column;gap:clamp(16px,3vh,30px);justify-content:space-between}
+.capa .topo{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;
+ border-bottom:2px solid var(--tinta);padding-bottom:9px;font:600 12.5px var(--mono);letter-spacing:.04em;
+ text-transform:uppercase;color:var(--tinta-60)}
+.capa .topo b{color:var(--azul)}
+.capa h1{font-size:clamp(28px,6vw,58px);line-height:1.02;max-width:17ch;color:var(--azul)}
+.capa .sub{font-size:clamp(15px,1.8vw,17.5px);color:var(--tinta-60);margin-top:10px;max-width:60ch}
+.capa .selo{display:inline-flex;align-items:center;gap:8px;font:700 12px var(--mono);letter-spacing:.06em;
+ text-transform:uppercase;color:#fff;background:var(--azul);padding:6px 12px;margin-bottom:14px}
+.dados-obra{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:0 26px;
+ background:#fff;border:1px solid var(--linha);border-top:4px solid var(--ambar);padding:16px 22px;max-width:900px}
+.dados-obra dt{font:600 10.5px var(--mono);letter-spacing:.03em;text-transform:uppercase;color:var(--tinta-60);margin-top:10px}
+.dados-obra dd{margin:2px 0 0;font-size:14.5px;color:var(--tinta)}
+.ficha{background:#fff;border:1px solid var(--linha);border-top:4px solid var(--azul);padding:16px 22px;max-width:900px}
+.ficha h2{font-size:14px;margin-bottom:10px;color:var(--azul)}
+.ident{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px 22px}
+.ident label{display:block;font:600 11px var(--mono);letter-spacing:.03em;text-transform:uppercase;color:var(--tinta-60)}
+.ident input{width:100%;border:0;border-bottom:1.5px solid var(--azul);background:transparent;
+ font:500 15px var(--sans);color:var(--azul);padding:3px 2px;margin-top:3px}
+.ident input:focus{outline:2px solid var(--ambar);outline-offset:2px}
+.capa .pe{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;
+ border-top:1px solid var(--linha);padding-top:12px;font-size:13px;color:var(--tinta-60)}
+.iniciar{font:700 14px var(--cond);text-transform:uppercase;letter-spacing:.03em;background:var(--azul);color:#fff;
+ border:0;padding:13px 26px;cursor:pointer;text-decoration:none;display:inline-block}
+.iniciar:hover{background:#15293b}
+.iniciar:focus-visible{outline:3px solid var(--ambar);outline-offset:2px}
+
+/* ---------------- barra de status ---------------- */
+.status{position:sticky;top:0;z-index:30;background:var(--tinta);color:#F2EEE3;border-bottom:1px solid #000}
+.status-int{max-width:1180px;margin:0 auto;padding:8px 24px;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.barra-geral{flex:1 1 220px;min-width:160px;max-width:340px}
+.barra-geral .rot{display:flex;justify-content:space-between;font:600 11px var(--mono);letter-spacing:.02em;margin-bottom:3px}
+.barra-fundo{height:7px;background:#40453f;border-radius:1px;overflow:hidden}
+.barra-fundo i{display:block;height:100%;background:var(--ambar);transition:width .25s ease}
+.chip{font-size:12px;padding:4px 10px;border-radius:2px;border:1px solid #4B5049;white-space:nowrap;font-family:var(--mono)}
+.chip.ok{background:#2A4A35;border-color:var(--verde)}
+.btn{font:600 12.5px var(--sans);background:transparent;color:inherit;border:1px solid currentColor;border-radius:2px;padding:5px 10px;cursor:pointer}
+.btn:hover{background:rgba(255,255,255,.12)}
+.status .espaco{margin-left:auto;display:flex;gap:7px;flex-wrap:wrap}
+.status select{font:600 12px var(--mono);background:#33362f;color:#F2EEE3;border:1px solid #4B5049;border-radius:2px;padding:5px 6px}
+
+/* ---------------- layout ---------------- */
+.corpo{max-width:1180px;margin:0 auto;padding:0 24px;display:grid;grid-template-columns:264px 1fr;gap:30px;align-items:start}
+nav.etapas{position:sticky;top:52px;padding:24px 0;max-height:calc(100vh - 52px);overflow:auto}
+nav.etapas ol{list-style:none;margin:0;padding:0}
+nav.etapas li{margin-bottom:2px}
+nav.etapas a{display:grid;grid-template-columns:30px 1fr auto;align-items:center;gap:8px;padding:6px 7px;
+ color:var(--tinta);text-decoration:none;font-size:12.5px;border-left:2px solid transparent}
+nav.etapas a .nn{font-family:var(--mono);font-size:11px;color:var(--tinta-60)}
+nav.etapas a .pp{font-family:var(--mono);font-size:10.5px;color:var(--tinta-60)}
+nav.etapas a:hover{background:var(--papel-2)}
+nav.etapas a.ativo{border-left-color:var(--ambar);background:var(--ambar-luz);font-weight:600}
+nav.etapas a.completo .pp{color:var(--verde);font-weight:600}
+main{padding:24px 0 90px;min-width:0}
+
+section.etapa{padding:24px 0 8px;border-top:2px solid var(--tinta)}
+section.etapa:first-child{border-top:0;padding-top:6px}
+.rotulo{font:700 12.5px var(--mono);letter-spacing:.05em;text-transform:uppercase;color:var(--ambar)}
+section.etapa h2{font-size:23px;margin:2px 0 4px;color:var(--azul)}
+.dim{font:600 12.5px var(--mono);color:var(--tinta-60);margin:0 0 12px}
+.nota{color:var(--tinta-60);font-size:13.5px;margin:0 0 14px}
+
+.barra-secao{display:flex;align-items:center;gap:10px;margin:0 0 16px;font:600 12px var(--mono);color:var(--tinta-60)}
+.barra-secao .barra-fundo{flex:1;background:var(--linha);height:8px}
+.barra-secao .barra-fundo i{background:var(--verde)}
+
+/* ---------------- itens ---------------- */
+.lista{border:1px solid var(--linha);background:#fff}
+.item{display:grid;grid-template-columns:34px 1fr 132px 1fr;gap:12px;align-items:start;
+ padding:10px 12px;border-bottom:1px solid var(--linha)}
+.item:last-child{border-bottom:0}
+.item:nth-child(even){background:rgba(203,194,164,.16)}
+.item.feito{background:var(--verde-luz)}
+.item .num{font:600 11px var(--mono);color:var(--tinta-60);padding-top:2px}
+.item .desc{font-size:14px;padding-top:1px}
+.item.feito .desc{text-decoration:line-through;color:var(--tinta-60)}
+.check{appearance:none;width:20px;height:20px;border:2px solid var(--azul);border-radius:2px;cursor:pointer;
+ position:relative;flex:0 0 auto;background:#fff}
+.check:checked{background:var(--verde);border-color:var(--verde)}
+.check:checked::after{content:"";position:absolute;left:5px;top:1px;width:5px;height:10px;
+ border:solid #fff;border-width:0 2px 2px 0;transform:rotate(40deg)}
+.check:focus-visible{outline:2px solid var(--ambar);outline-offset:2px}
+.item input[type=date]{width:100%;border:0;border-bottom:1.5px solid var(--azul);background:transparent;
+ font:500 12.5px var(--mono);color:var(--azul);padding:2px 1px}
+.item input[type=text]{width:100%;border:0;border-bottom:1.5px solid var(--linha);background:transparent;
+ font:400 13px var(--sans);color:var(--tinta);padding:2px 1px}
+.item input:focus{outline:2px solid var(--ambar);outline-offset:1px}
+.cab-item{display:grid;grid-template-columns:34px 1fr 132px 1fr;gap:12px;padding:6px 12px;
+ font:600 10.5px var(--mono);letter-spacing:.04em;text-transform:uppercase;color:var(--tinta-60);
+ background:var(--papel-2);border-bottom:1px solid var(--linha)}
+
+/* ---------------- painel geral ---------------- */
+.painel-geral{border:1px solid var(--linha);background:#fff}
+.linha-painel{display:grid;grid-template-columns:230px 1fr 58px;gap:12px;align-items:center;
+ padding:8px 14px;border-bottom:1px solid var(--linha);font-size:13px}
+.linha-painel:last-child{border-bottom:0}
+.linha-painel a{color:var(--tinta);text-decoration:none}
+.linha-painel a:hover{color:var(--azul)}
+.linha-painel .barra-fundo{height:9px;background:var(--linha)}
+.linha-painel .barra-fundo i{background:var(--verde)}
+.linha-painel .pct{font:600 12px var(--mono);text-align:right;color:var(--tinta-60)}
+
+/* ---------------- financeiro ---------------- */
+.resumo-fin{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:1px;background:var(--linha);
+ border:1px solid var(--linha);margin:14px 0}
+.resumo-fin div{background:#fff;padding:12px 14px}
+.resumo-fin .v{font:700 22px var(--mono);color:var(--azul);display:block}
+.resumo-fin .v.alerta{color:var(--vermelho)}
+.resumo-fin .n{font-size:12px;color:var(--tinta-60);display:block;margin-top:2px}
+table.pag{border-collapse:collapse;width:100%;font-size:13.5px;background:#fff;border:1px solid var(--linha)}
+table.pag th{background:var(--papel-2);font:600 10.5px var(--mono);text-transform:uppercase;letter-spacing:.03em;
+ color:var(--tinta-60);padding:7px 8px;text-align:left;border-bottom:1px solid var(--linha)}
+table.pag td{padding:6px 8px;border-bottom:1px solid var(--linha);vertical-align:middle}
+table.pag tr:nth-child(even) td{background:rgba(203,194,164,.16)}
+table.pag tr.paga td{background:var(--verde-luz)}
+table.pag input[type=text],table.pag input[type=date],table.pag input[type=number]{
+ width:100%;border:0;border-bottom:1.5px solid var(--azul);background:transparent;font:500 13px var(--mono);color:var(--azul);padding:2px 2px}
+table.pag input:focus{outline:2px solid var(--ambar);outline-offset:1px}
+.bancarios{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:2px 20px;margin:14px 0;
+ background:#fff;border:1px solid var(--linha);padding:14px 18px}
+.bancarios div{font-size:13.5px}
+.bancarios b{display:block;font:600 10.5px var(--mono);text-transform:uppercase;letter-spacing:.03em;color:var(--tinta-60)}
+
+/* ---------------- nota ---------------- */
+.aviso{background:var(--azul-luz);border-left:3px solid var(--azul);padding:12px 16px;font-size:13.5px;
+ color:var(--tinta);margin:16px 0;max-width:78ch}
+.checks{padding:0;margin:12px 0}
+.checks li{margin:5px 0;font-size:14px;list-style:none}
+.checks .marca{font-weight:700;margin-right:7px;font-family:var(--mono)}
+
+@media (max-width:900px){
+ .corpo{grid-template-columns:1fr;gap:0;padding:0 16px}
+ nav.etapas{position:static;max-height:none;padding:16px 0 0;border-bottom:2px solid var(--tinta)}
+ nav.etapas ol{display:flex;gap:2px;overflow-x:auto;padding-bottom:10px}
+ nav.etapas a{grid-template-columns:auto;white-space:nowrap;border-left:0;border-bottom:2px solid transparent;padding:6px 10px}
+ nav.etapas a .pp{display:none}
+ nav.etapas a.ativo{border-bottom-color:var(--ambar)}
+ .capa-int{padding:22px 16px 20px}
+ .status-int{padding:8px 16px}
+ .item{grid-template-columns:28px 1fr;grid-template-areas:"c d" ". e" ". f"}
+ .item .num{grid-area:c}.item .desc{grid-area:d}
+ .item input[type=date]{grid-area:e}.item input[type=text]{grid-area:f}
+ .cab-item{display:none}
+ .linha-painel{grid-template-columns:1fr 44px;grid-template-areas:"n n" "b p"}
+ .linha-painel a{grid-area:n}.linha-painel .barra-fundo{grid-area:b}.linha-painel .pct{grid-area:p}
+ table.pag{display:block;overflow-x:auto}
+}
+@media print{
+ .status,nav.etapas,.btn,.naoimprime{display:none!important}
+ .corpo{display:block;max-width:none}
+ body{background:#fff;font-size:11px}
+ section.etapa{page-break-inside:avoid}
+ .capa{min-height:auto;page-break-after:always;border:0}
+ .capa-int{padding:0}
+ .iniciar{display:none}
+ .item.feito{background:#f0f0f0!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+</style>
+</head>
+<body>
+
+<header class="capa">
+ <div class="faixa" aria-hidden="true"></div>
+ <div class="capa-int">
+  <div class="topo"><span>Acompanhamento de obra · Baseado no orçamento assinado</span><span><b id="capa_data"></b></span></div>
+  <div>
+   <span class="selo">Conforme proposta assinada · 4 páginas</span>
+   <h1>Checklist do orçamento de reforma</h1>
+   <p class="sub">Reforma de apartamento de 60 m². Cada item abaixo reproduz literalmente o escopo assinado entre as partes, organizado por ambiente, para acompanhamento de execução e controle financeiro.</p>
+  </div>
+  <dl class="dados-obra">
+   <div><dt>Proprietário</dt><dd>Roberto Brandão</dd></div>
+   <div><dt>Responsável pela obra</dt><dd>Renato da Silva</dd></div>
+   <div><dt>Endereço da obra</dt><dd>Rua Arídio Martins, 50, Bloco 09 — Apartamento 303</dd></div>
+   <div><dt>Área aproximada</dt><dd>60 m²</dd></div>
+   <div><dt>Valor total dos serviços</dt><dd>R$ 17.900,00 (mão de obra)</dd></div>
+   <div><dt>Forma de pagamento</dt><dd>Retiradas semanais de R$ 1.700,00, toda sexta-feira</dd></div>
+  </dl>
+  <div class="ficha">
+   <h2>Datas de referência</h2>
+   <div class="ident">
+    <label>Início da obra<input id="id_inicio" type="date"></label>
+    <label>Previsão de entrega<input id="id_prev" type="date"></label>
+    <label>Atualizado em<input id="id_att" type="date"></label>
+    <label>Nº da caçamba / retirada<input id="id_cacamba" placeholder="contratada pelo proprietário"></label>
+   </div>
+  </div>
+  <div class="pe">
+   <p style="margin:0;max-width:44ch">O preenchimento é salvo automaticamente neste navegador. Use "Salvar arquivo" para ter uma cópia de segurança ou levar para outro dispositivo.</p>
+   <a class="iniciar" href="#e0">Começar o checklist</a>
+  </div>
+ </div>
+</header>
+
+<div class="status">
+ <div class="status-int">
+  <div class="barra-geral">
+   <div class="rot"><span>Avanço geral</span><span id="pct_geral">0%</span></div>
+   <div class="barra-fundo"><i id="barra_geral" style="width:0%"></i></div>
+  </div>
+  <span class="chip" id="chip_itens">0 / 0 itens</span>
+  <span class="chip" id="st_salvo">verificando…</span>
+  <span class="espaco">
+   <select id="filtro" onchange="aplicarFiltro()">
+    <option value="todos">Mostrar todos</option>
+    <option value="pendentes">Somente pendentes</option>
+    <option value="feitos">Somente concluídos</option>
+   </select>
+   <button class="btn" onclick="exportar()">Salvar arquivo</button>
+   <button class="btn" onclick="document.getElementById('arq').click()">Abrir arquivo</button>
+   <button class="btn" onclick="window.print()">Imprimir</button>
+   <button class="btn" onclick="limpar()">Limpar tudo</button>
+   <input type="file" id="arq" accept=".json" hidden onchange="importar(event)">
+  </span>
+ </div>
+</div>
+
+<div class="corpo">
+<nav class="etapas" aria-label="Etapas da obra">
+ <ol id="menu"></ol>
+</nav>
+<main id="main"></main>
+</div>
+
+<script>
+"use strict";
+const el=id=>document.getElementById(id);
+
+/* ===================== DADOS DO CHECKLIST (fiel ao orçamento assinado) ===================== */
+const SECOES=[
+{t:"Proteção, preparação e limpeza", itens:[
+ "Proteção dos ambientes durante a execução dos serviços.",
+ "Proteção de portas, esquadrias e demais elementos existentes.",
+ "Manutenção da área de trabalho organizada.",
+ "Retirada do entulho e colocação em caçamba, sendo a caçamba contratada e custeada pelo proprietário.",
+ "Limpeza durante a execução da obra.",
+ "Limpeza grossa ao término da obra."]},
+{t:"Quarto principal", dim:"aprox. 1,20 × 2,40 m", itens:[
+ "Retirada da janela para posterior reinstalação.",
+ "Retirada dos portais de concreto, havendo mais de um portal no cômodo.",
+ "Retirada dos rodapés existentes.",
+ "Alteração de ponto de luz existente para tomada, mantendo-se o ponto inferior.",
+ "Fechamento do ponto de ar-condicionado antigo e execução de novo ponto 220V.",
+ "Corte no gesso/teto para cortina embutida na janela.",
+ "Rebaixo, alinhamento e regularização total da parede da janela.",
+ "Execução de boneca em alvenaria para nova parede alinhada.",
+ "Nivelamento, emassamento, lixamento e pintura de paredes e teto.",
+ "Preparação para recebimento e instalação de ar-condicionado split 12.000 BTUs.",
+ "Instalação de porta de correr."]},
+{t:"Quarto menor", dim:"2,54 × 2,39 m", itens:[
+ "Retirada da janela.",
+ "Instalação de tomada inferior.",
+ "Execução de ponto 220V para ar-condicionado de janela (ACJ), compreendendo abertura e tomada.",
+ "Nivelamento da parede e retirada de elemento antigo de fixação.",
+ "Corte no teto para cortina embutida.",
+ "Emassamento, lixamento e pintura de paredes e teto.",
+ "Preparação do vão para recebimento e instalação de aparelho de ar-condicionado de janela (ACJ).",
+ "Instalação de porta camarão."]},
+{t:"Área de televisão", itens:[
+ "Instalação de tomada em altura para televisão.",
+ "Manutenção de tomada inferior existente.",
+ "Emassamento, lixamento e pintura da parede."]},
+{t:"Corredor", itens:[
+ "Fechamento de pontos elétricos antigos, não havendo ponto de luz próprio no corredor.",
+ "Fechamento dos rasgos e regularização das paredes.",
+ "Emassamento, lixamento e pintura de paredes e teto."]},
+{t:"Sala", dim:"3,10 × 3,40 m", itens:[
+ "Regularização e nivelamento das paredes e teto.",
+ "Regularização de laterais e teto após demolição.",
+ "Tratamento na parede maior trincada.",
+ "Retirada de todos os portais de concreto do apartamento.",
+ "Nivelamento e regularização de todas as janelas, quanto a vãos e encontros.",
+ "Retirada e retorno da janela, com corte no teto para cortina embutida.",
+ "Adequação de tomadas 110V e ponto de NET.",
+ "Novo ponto de iluminação embutido, com sistema three-way.",
+ "Demolição da parede que separa sala e cozinha, para integração dos ambientes.",
+ "Adequação da abertura da janela e alinhamento.",
+ "Emassamento, lixamento e pintura de paredes e teto."]},
+{t:"Banheiro — reforma total", itens:[
+ "Retirada de piso, revestimentos, louças e instalações.",
+ "Manutenção do ponto de luz existente e criação de novo ponto.",
+ "Novo circuito de iluminação em LED, com rasgo no teto.",
+ "Retirada do portal de concreto e da porta.",
+ "Instalação de nova porta de correr.",
+ "Execução de nicho embutido.",
+ "Assentamento de novos revestimentos e piso, com o respectivo rejuntamento.",
+ "Instalação de louças e metais, compreendendo vaso, cuba, torneiras, chuveiro e registro.",
+ "Emassamento, lixamento e pintura do teto e das áreas não revestidas."]},
+{t:"Impermeabilização", itens:[
+ "Avaliação das áreas molhadas e correção de pontos comprometidos.",
+ "Impermeabilização do piso do banheiro.",
+ "Impermeabilização da área e das paredes do box.",
+ "Tratamento de ralos e encontros piso/parede."]},
+{t:"Cozinha / lavanderia", dim:"2,10 × 2,70 m", itens:[
+ "Demolição da parede da cozinha, com execução de nova parede de menor comprimento, visando à ampliação do ambiente e à integração visual com a sala.",
+ "Fechamento do basculante que conecta com o banheiro.",
+ "Retirada de soleiras, sancas e acabamentos.",
+ "Retirada da bancada e pia existentes.",
+ "Remoção de revestimentos de parede e piso.",
+ "Nova bancada aérea com fogão embutido, pia e bancada.",
+ "Instalação da bancada da pia em L.",
+ "Geladeira: 1 tomada 110V e 1 tomada 220V.",
+ "Balcão: 2 tomadas 110V e 2 tomadas 220V.",
+ "Parte superior: 1 tomada 220V.",
+ "Pia: 1 tomada 110V e 1 tomada 220V.",
+ "Bancada nova, em duas torres, com fiação preparada para 2 pontos de 110V e 2 pontos de 220V.",
+ "Iluminação integrada ao sistema three-way com a sala e a área de serviço.",
+ "Assentamento de novos revestimentos e pisos, com o respectivo rejuntamento.",
+ "Emassamento, lixamento e pintura do teto e das áreas não revestidas."]},
+{t:"Bancada da cozinha", itens:[
+ "Execução de ajustes de alvenaria necessários.",
+ "Preparação de base para recebimento da bancada."]},
+{t:"Hidráulica da cozinha / lavanderia", itens:[
+ "Adequação de pontos de água e esgoto.",
+ "Ajuste de posição de cuba.",
+ "Ponto para filtro ou purificador, se previsto.",
+ "Ponto para máquina de lavar, na lavanderia.",
+ "Fechamento de pontos antigos."]},
+{t:"Área de serviço", itens:[
+ "3 tomadas de 110V e 1 tomada de 220V.",
+ "1 ponto de iluminação, integrado ao sistema three-way da cozinha.",
+ "Elevação e adequação de uma janela existente, mantendo-se aproximadamente 20 cm na parte superior.",
+ "Eliminação de uma segunda janela.",
+ "Demolição de parede indicada, para acabamento mais limpo.",
+ "Emassamento, lixamento e pintura do teto e das áreas não revestidas."]},
+{t:"Nivelamento — cozinha e sala", itens:[
+ "Verificação de desníveis existentes entre cozinha e sala.",
+ "Regularização de contrapiso e correção de nível, cuja viabilidade será previamente verificada.",
+ "Conferência de transições entre ambientes.",
+ "Ajustes de altura de portas, quando necessário."]}
+];
+
+/* ===================== MONTAGEM DO DOM ===================== */
+let totalItens=0;
+const menu=el("menu"), main=el("main");
+let mHtml="", pHtml="";
+
+SECOES.forEach((s,si)=>{
+ const nsec=si+1, id="e"+nsec;
+ mHtml+=`<li><a href="#${id}" data-alvo="${id}" data-sec="${nsec}"><span class="nn">${String(nsec).padStart(2,"0")}</span><span>${s.t}</span><span class="pp" id="menupct_${nsec}">0%</span></a></li>`;
+
+ let itensHtml="";
+ s.itens.forEach((texto,ii)=>{
+  totalItens++;
+  const nn=ii+1, cid=`c_${nsec}_${nn}`;
+  itensHtml+=`
+  <div class="item" id="item_${nsec}_${nn}" data-sec="${nsec}">
+   <input type="checkbox" class="check" id="${cid}" data-sec="${nsec}">
+   <label class="desc" for="${cid}">${nn}. ${texto}</label>
+   <input type="date" id="d_${nsec}_${nn}" aria-label="Data de conclusão">
+   <input type="text" id="o_${nsec}_${nn}" placeholder="observação de campo">
+  </div>`;
+ });
+
+ main.innerHTML+=`
+ <section class="etapa" id="${id}">
+  <span class="rotulo">Etapa ${String(nsec).padStart(2,"0")} de ${SECOES.length}</span>
+  <h2>${nsec}. ${s.t}</h2>
+  ${s.dim?`<p class="dim">Dimensão aproximada do ambiente: ${s.dim}</p>`:""}
+  <div class="barra-secao"><span id="secfrac_${nsec}">0/${s.itens.length}</span>
+   <div class="barra-fundo"><i id="secbar_${nsec}" style="width:0%"></i></div>
+   <span id="secpct_${nsec}">0%</span></div>
+  <div class="lista">
+   <div class="cab-item"><span></span><span>Passo a passo</span><span>Data</span><span>Observação</span></div>
+   ${itensHtml}
+  </div>
+ </section>`;
+
+ pHtml+=`<div class="linha-painel"><a href="#${id}">${nsec}. ${s.t}</a>
+  <div class="barra-fundo"><i id="painelbar_${nsec}" style="width:0%"></i></div>
+  <span class="pct" id="painelpct_${nsec}">0%</span></div>`;
+});
+menu.innerHTML=mHtml;
+
+/* ---- retiradas semanais previstas pelo contrato (10 × R$1.700 + 1 × R$900 = R$17.900) ---- */
+const VALOR_TOTAL=17900, PARCELAS=[1700,1700,1700,1700,1700,1700,1700,1700,1700,1700,900];
+let pagHtml="";
+PARCELAS.forEach((v,i)=>{
+ const n=i+1;
+ pagHtml+=`<tr id="linhapag_${n}">
+  <td>${n}ª</td>
+  <td><input type="date" id="pg_data_${n}"></td>
+  <td><input type="number" id="pg_valor_${n}" value="${v}" step="50" inputmode="decimal"></td>
+  <td style="text-align:center"><input type="checkbox" class="check" id="pg_pago_${n}" style="width:18px;height:18px"></td>
+  <td><input type="text" id="pg_obs_${n}" placeholder="comprovante, observação"></td>
+ </tr>`;
+});
+
+main.innerHTML = `
+<section class="etapa" id="e0">
+ <span class="rotulo">Painel geral</span>
+ <h2>Avanço por etapa da obra</h2>
+ <p class="nota">Clique em qualquer etapa para ir direto a ela. As porcentagens são atualizadas conforme você marca os itens.</p>
+ <div class="painel-geral" id="painel">${pHtml}</div>
+</section>` + main.innerHTML + `
+<section class="etapa" id="efin">
+ <span class="rotulo">Etapa ${SECOES.length+1} de ${SECOES.length+1}</span>
+ <h2>Condições comerciais e pagamento</h2>
+ <p class="nota">Valor total de R$ 17.900,00 referente exclusivamente à mão de obra — não inclui materiais, caçamba nem serviços de fornecedores terceiros do Anexo I. Pagamento em retiradas semanais de R$ 1.700,00, toda sexta-feira, conforme cronograma da obra; havendo entrega antecipada, o saldo remanescente é pago de imediato. Os valores das parcelas abaixo são editáveis, caso o cronograma real se ajuste ao ritmo da obra.</p>
+
+ <div class="resumo-fin">
+  <div><span class="v" id="fin_total">R$ 17.900</span><span class="n">Valor total do contrato</span></div>
+  <div><span class="v" id="fin_pago">R$ 0</span><span class="n">Total já pago</span></div>
+  <div><span class="v" id="fin_saldo">R$ 17.900</span><span class="n">Saldo devedor</span></div>
+  <div><span class="v" id="fin_parcelas">0 / 11</span><span class="n">Retiradas quitadas</span></div>
+ </div>
+
+ <div class="rolagem" style="overflow-x:auto">
+  <table class="pag">
+   <thead><tr><th>Retirada</th><th>Data prevista/paga</th><th>Valor (R$)</th><th>Pago</th><th>Observação</th></tr></thead>
+   <tbody>${pagHtml}</tbody>
+  </table>
+ </div>
+
+ <h3 style="font-size:15px;margin-top:22px;color:var(--azul)">Dados bancários — Renato da Silva</h3>
+ <div class="bancarios">
+  <div><b>Chave PIX</b>21966609282</div>
+  <div><b>Banco</b>Bradesco</div>
+  <div><b>Periodicidade</b>Retirada semanal — toda sexta-feira</div>
+ </div>
+</section>
+<section class="etapa" id="efim">
+ <span class="rotulo">Nota</span>
+ <h2>Sobre este checklist</h2>
+ <div class="aviso">Os itens acima reproduzem literalmente o escopo do orçamento assinado por Roberto Brandão (proprietário) e Renato da Silva (responsável pela obra), organizados por ambiente na mesma ordem do documento. O Anexo I, com os serviços de fornecedores terceiros, não está detalhado aqui por não constar no corpo do orçamento.</div>
+ <h3 style="font-size:16px;margin-top:22px">Conferência antes de fechar a medição</h3>
+ <ul class="checks" id="checagens"></ul>
+</section>`;
+
+/* ===================== ESTADO / CÁLCULO ===================== */
+function coletar(){
+ const o={};
+ document.querySelectorAll("input").forEach(i=>{
+  if(!i.id||i.type==="file")return;
+  o[i.id]= i.type==="checkbox" ? i.checked : i.value;
+ });
+ return o;
+}
+
+function nfm(n){return (isFinite(n)?n:0).toLocaleString("pt-BR",{minimumFractionDigits:0,maximumFractionDigits:0});}
+
+function atualizarFinanceiro(){
+ let pago=0, qtd=0;
+ PARCELAS.forEach((_,i)=>{
+  const n=i+1, chk=el(`pg_pago_${n}`), val=parseFloat(el(`pg_valor_${n}`).value)||0;
+  const linha=el(`linhapag_${n}`);
+  linha.classList.toggle("paga",chk.checked);
+  if(chk.checked){ pago+=val; qtd++; }
+ });
+ const saldo=VALOR_TOTAL-pago;
+ el("fin_pago").textContent="R$ "+nfm(pago);
+ el("fin_saldo").textContent="R$ "+nfm(saldo);
+ el("fin_saldo").classList.toggle("alerta",saldo>0);
+ el("fin_parcelas").textContent=`${qtd} / ${PARCELAS.length}`;
+}
+
+function atualizar(){
+ let feitosGeral=0;
+ SECOES.forEach((s,si)=>{
+  const nsec=si+1;
+  let feitos=0;
+  s.itens.forEach((_,ii)=>{ if(el(`c_${nsec}_${ii+1}`).checked) feitos++; });
+  const pct=Math.round(feitos/s.itens.length*100);
+  feitosGeral+=feitos;
+  el(`secfrac_${nsec}`).textContent=`${feitos}/${s.itens.length}`;
+  el(`secbar_${nsec}`).style.width=pct+"%";
+  el(`secpct_${nsec}`).textContent=pct+"%";
+  el(`menupct_${nsec}`).textContent=pct+"%";
+  el(`painelbar_${nsec}`).style.width=pct+"%";
+  el(`painelpct_${nsec}`).textContent=pct+"%";
+  document.querySelector(`a[data-sec="${nsec}"]`).classList.toggle("completo",pct===100);
+ });
+ const pctGeral=Math.round(feitosGeral/totalItens*100);
+ el("pct_geral").textContent=pctGeral+"%";
+ el("barra_geral").style.width=pctGeral+"%";
+ el("chip_itens").textContent=`${feitosGeral} / ${totalItens} itens`;
+
+ document.querySelectorAll(".item").forEach(row=>{
+  const id=row.id.split("_"); const cb=el(`c_${id[1]}_${id[2]}`);
+  row.classList.toggle("feito",cb.checked);
+ });
+
+ atualizarFinanceiro();
+
+ const faltamData=[...document.querySelectorAll(".check[id^='c_']")].filter(c=>c.checked && !el("d_"+c.id.slice(2)).value).length;
+ const saldoZero = el("fin_saldo").textContent.replace(/\D/g,"")==="0";
+ const it=[
+  [`Todas as etapas foram revisadas ao menos uma vez`, pctGeral>0, "nenhum item foi marcado ainda"],
+  [`Itens concluídos têm data registrada`, faltamData===0, `${faltamData} item(ns) concluído(s) sem data`],
+  [`Checklist de execução 100% concluído`, pctGeral===100, `restam ${totalItens-feitosGeral} itens em aberto`],
+  [`Pagamento em dia com o cronograma`, saldoZero, "ainda há saldo devedor em aberto"],
+ ];
+ el("checagens").innerHTML=it.map(([t,ok,m])=>
+  `<li><span class="marca" style="color:${ok?"var(--verde)":"var(--vermelho)"}">${ok?"✓":"✗"}</span>${t}${ok?"":` <span style="color:var(--tinta-60)">— ${m}</span>`}</li>`).join("");
+}
+
+el("main").addEventListener("change",e=>{
+ if(e.target.matches(".check[id^='c_']")){
+  const [ ,sec,n]=e.target.id.split("_");
+  if(e.target.checked && !el(`d_${sec}_${n}`).value){
+   el(`d_${sec}_${n}`).value=new Date().toISOString().slice(0,10);
+  }
+ }
+ if(e.target.matches("[id^='pg_pago_']")){
+  const n=e.target.id.split("_")[2], dcampo=el(`pg_data_${n}`);
+  if(e.target.checked && !dcampo.value) dcampo.value=new Date().toISOString().slice(0,10);
+ }
+ atualizar(); agendarSalvamento();
+});
+el("main").addEventListener("input",e=>{
+ if(e.target.matches("input[type=text], input[type=number]")){ atualizar(); agendarSalvamento(); }
+});
+document.querySelector(".ficha").addEventListener("input",agendarSalvamento);
+document.querySelector(".ficha").addEventListener("change",agendarSalvamento);
+
+/* ===================== FILTRO ===================== */
+function aplicarFiltro(){
+ const modo=el("filtro").value;
+ document.querySelectorAll(".item").forEach(row=>{
+  const feito=row.classList.contains("feito");
+  row.style.display = modo==="todos" || (modo==="feitos"&&feito) || (modo==="pendentes"&&!feito) ? "" : "none";
+ });
+}
+
+/* ===================== SALVAMENTO AUTOMÁTICO ===================== */
+const CHAVE="obra-checklist-roberto-brandao-orcamento-v1";
+const temArmazenamento = typeof window.storage!=="undefined" && window.storage && typeof window.storage.set==="function";
+let tmr=null;
+function chipSalvo(txt,estado){ const c=el("st_salvo"); c.textContent=txt; c.className="chip"+(estado?" "+estado:""); }
+function agora(){return new Date().toLocaleTimeString("pt-BR",{hour:"2-digit",minute:"2-digit"});}
+async function salvar(){
+ if(!temArmazenamento)return;
+ try{ await window.storage.set(CHAVE,JSON.stringify(coletar()),false); chipSalvo("salvo às "+agora(),"ok"); }
+ catch(e){ chipSalvo("não foi possível salvar — use Salvar arquivo"); }
+}
+function agendarSalvamento(){ if(!temArmazenamento)return; chipSalvo("salvando…"); clearTimeout(tmr); tmr=setTimeout(salvar,900); }
+async function restaurar(){
+ if(!temArmazenamento){ chipSalvo("salve o arquivo ao terminar"); atualizar(); return; }
+ try{
+  const r=await window.storage.get(CHAVE);
+  if(r&&r.value){ const j=JSON.parse(r.value);
+   for(const k in j){ const e=el(k); if(!e)continue; if(e.type==="checkbox") e.checked=!!j[k]; else e.value=j[k]; }
+   chipSalvo("recuperado do último acesso","ok");
+  } else chipSalvo("será salvo enquanto você preenche");
+ }catch(e){ chipSalvo("será salvo enquanto você preenche"); }
+ atualizar();
+}
+async function apagarSalvo(){ if(temArmazenamento){ try{ await window.storage.delete(CHAVE,false);}catch(e){} } }
+
+function limpar(){
+ if(!confirm("Isso apaga todo o preenchimento salvo neste dispositivo. Continuar?"))return;
+ document.querySelectorAll("input").forEach(i=>{
+  if(i.type==="file")return;
+  if(i.type==="checkbox") i.checked=false;
+  else if(i.id.startsWith("pg_valor_")){ /* mantém o valor padrão da parcela */ }
+  else i.value="";
+ });
+ PARCELAS.forEach((v,i)=>{ el(`pg_valor_${i+1}`).value=v; });
+ atualizar(); apagarSalvo(); chipSalvo("apagado — comece de novo");
+}
+
+function exportar(){
+ const b=new Blob([JSON.stringify({versao:1,dados:coletar()},null,1)],{type:"application/json"});
+ const a=document.createElement("a"); a.href=URL.createObjectURL(b); a.download="checklist-obra-roberto-brandao.json"; a.click(); URL.revokeObjectURL(a.href);
+}
+function importar(ev){
+ const f=ev.target.files[0]; if(!f)return;
+ const r=new FileReader();
+ r.onload=()=>{ try{
+   const j=JSON.parse(r.result).dados||{};
+   for(const k in j){ const e=el(k); if(!e)continue; if(e.type==="checkbox") e.checked=!!j[k]; else e.value=j[k]; }
+   atualizar(); agendarSalvamento();
+  }catch(e){ alert("Arquivo inválido. Use um arquivo gerado pelo botão Salvar arquivo."); } };
+ r.readAsText(f); ev.target.value="";
+}
+
+/* ===================== NAVEGAÇÃO ATIVA ===================== */
+if("IntersectionObserver" in window){
+ const obs=new IntersectionObserver(es=>{es.forEach(x=>{
+  if(x.isIntersecting) document.querySelectorAll("nav.etapas a").forEach(a=>a.classList.toggle("ativo",a.dataset.alvo===x.target.id));
+ });},{rootMargin:"-45% 0px -50% 0px"});
+ document.querySelectorAll("section.etapa").forEach(s=>obs.observe(s));
+}
+
+el("capa_data").textContent=new Date().toLocaleDateString("pt-BR",{day:"2-digit",month:"long",year:"numeric"});
+if(!el("id_att").value) el("id_att").value=new Date().toISOString().slice(0,10);
+restaurar();
+</script>
+</body>
+</html>
