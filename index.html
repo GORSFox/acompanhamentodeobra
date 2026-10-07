@@ -1,659 +1,573 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Acompanhamento de Obra — Checklist do Orçamento Assinado</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Condensed:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#14213D">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Minha Obra">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%2314213D'/%3E%3Cpath d='M20 70V45l30-22 30 22v25z' fill='%23FCA311'/%3E%3Crect x='42' y='50' width='16' height='20' fill='%2314213D'/%3E%3C/svg%3E">
+<title>Minha Obra</title>
 <style>
 :root{
- --papel:#F2EEE3;--papel-2:#E9E3D1;--linha:#D3CBB1;--tinta:#22272B;--tinta-60:#697066;
- --azul:#1F3A52;--azul-2:#2F5D82;--azul-luz:#E6EDF2;--ambar:#C97F1F;--ambar-2:#E4A24A;--ambar-luz:#FBF0DE;
- --verde:#3F6B4C;--verde-luz:#E6EEE8;--vermelho:#A3372B;--r:14px;--ease:cubic-bezier(.22,.7,.2,1);
- --sombra:0 1px 0 #fff inset,0 1px 2px rgba(31,58,82,.07),0 14px 30px -18px rgba(31,58,82,.35);
- --anel:color-mix(in srgb,var(--ambar) 40%,transparent);
- --sans:"IBM Plex Sans",-apple-system,"Segoe UI",sans-serif;--cond:"IBM Plex Sans Condensed",var(--sans);--mono:"IBM Plex Mono",ui-monospace,monospace;
- color-scheme:light}
-*,*::before,*::after{box-sizing:border-box}
-html{scroll-behavior:smooth;scroll-padding-top:84px;-webkit-text-size-adjust:100%}
-body{margin:0;color:var(--tinta);font:400 15px/1.55 var(--sans);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
- background:linear-gradient(rgba(31,58,82,.045) 1px,transparent 1px) 0 0/28px 28px,linear-gradient(90deg,rgba(31,58,82,.045) 1px,transparent 1px) 0 0/28px 28px,
- radial-gradient(900px 480px at 95% -8%,rgba(201,127,31,.16),transparent 62%),radial-gradient(800px 500px at -10% 40%,rgba(31,58,82,.08),transparent 60%),var(--papel)}
-::selection{background:var(--ambar-2);color:#1b1d1f}
-h1,h2,h3{font-family:var(--cond);font-weight:700;letter-spacing:-.005em;margin:0;text-transform:uppercase;text-wrap:balance}
-p{max-width:70ch;text-wrap:pretty}
-:focus-visible{outline:3px solid var(--ambar);outline-offset:2px}
-/* capa */
-.capa{min-height:100vh;display:grid;grid-template-columns:30px 1fr;border-bottom:4px solid var(--azul);position:relative;isolation:isolate;overflow:hidden;
- background:radial-gradient(700px 420px at 100% 0,rgba(201,127,31,.2),transparent 65%),linear-gradient(rgba(31,58,82,.06) 1px,transparent 1px) 0 0/28px 28px,linear-gradient(90deg,rgba(31,58,82,.06) 1px,transparent 1px) 0 0/28px 28px,var(--papel)}
-.capa::after{content:"";position:absolute;z-index:-1;right:-140px;top:12%;width:520px;aspect-ratio:1;border-radius:50%;
- border:1.5px dashed rgba(31,58,82,.28);background:radial-gradient(circle,transparent 0 38%,rgba(31,58,82,.18) 38.3% 38.9%,transparent 39.2% 62%,rgba(201,127,31,.3) 62.3% 62.9%,transparent 63.2%),
- conic-gradient(from 0deg,transparent 0 24deg,rgba(31,58,82,.18) 24deg 24.6deg,transparent 24.6deg 90deg,rgba(31,58,82,.18) 90deg 90.6deg,transparent 90.6deg 180deg,rgba(31,58,82,.18) 180deg 180.6deg,transparent 180.6deg 270deg,rgba(31,58,82,.18) 270deg 270.6deg,transparent 270.6deg);opacity:.8}
-.capa .faixa{background:repeating-linear-gradient(-45deg,var(--ambar) 0 10px,var(--azul) 10px 20px);box-shadow:inset -6px 0 12px -6px rgba(0,0,0,.35)}
-.capa-int{max-width:1180px;margin:0 auto;width:100%;padding:clamp(26px,6vh,64px) 30px clamp(22px,4vh,40px);display:flex;flex-direction:column;gap:clamp(16px,3vh,30px);justify-content:space-between}
-.capa .topo{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;border-bottom:2px solid var(--tinta);padding-bottom:10px;font:600 12px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--tinta-60)}
-.capa .topo b{color:var(--azul)}
-.capa .selo{display:inline-flex;align-items:center;gap:10px;font:700 12px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:#fff;margin-bottom:16px;padding:8px 18px 8px 14px;
- background:linear-gradient(135deg,var(--azul-2),var(--azul));clip-path:polygon(0 0,calc(100% - 12px) 0,100% 50%,calc(100% - 12px) 100%,0 100%);box-shadow:0 8px 16px -8px rgba(31,58,82,.6)}
-.capa .selo::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--ambar-2);box-shadow:0 0 0 3px rgba(228,162,74,.35);animation:pulso 2.4s ease-in-out infinite}
-@keyframes pulso{50%{box-shadow:0 0 0 7px rgba(228,162,74,0)}}
-.capa h1{font-size:clamp(30px,6.2vw,64px);line-height:1;max-width:16ch;background:linear-gradient(100deg,var(--azul) 10%,var(--azul-2) 55%,var(--ambar) 100%);-webkit-background-clip:text;background-clip:text;color:transparent;animation:sobe .9s var(--ease) both}
-.capa .sub{font-size:clamp(15px,1.8vw,18px);color:var(--tinta-60);margin-top:14px;max-width:60ch}
-@keyframes sobe{from{opacity:0;transform:translateY(14px)}}
-.dados-obra{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:0 28px;max-width:940px;padding:18px 24px 20px;background:linear-gradient(180deg,#fff,#fcfaf5);border:1px solid var(--linha);border-top:4px solid var(--ambar);border-radius:6px var(--r) var(--r) 6px;box-shadow:var(--sombra)}
-.dados-obra dt{font:600 10.5px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--tinta-60);margin-top:12px}
-.dados-obra dd{margin:3px 0 0;font:500 15px/1.4 var(--sans)}
-.ficha{max-width:940px;padding:18px 24px;background:#fff;border:1px solid var(--linha);border-top:4px solid var(--azul);border-radius:6px var(--r) var(--r) 6px;box-shadow:var(--sombra)}
-.ficha h2{font-size:14px;letter-spacing:.06em;margin-bottom:10px;color:var(--azul)}
-.ident{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px 22px}
-.ident label{display:block;font:600 10.5px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--tinta-60)}
-.ident input,.item input[type=date],.item input[type=text],table.pag input[type=text],table.pag input[type=date],table.pag input[type=number]{width:100%;border:1px solid var(--linha);border-radius:8px;background:var(--papel);color:var(--azul);transition:border-color .2s,box-shadow .25s,background .2s}
-.ident input{font:500 15px var(--sans);padding:9px 11px;margin-top:5px}
-.ident input:hover,.item input:hover,table.pag input:hover{border-color:var(--ambar-2)}
-.ident input:focus,.item input:focus,table.pag input:focus{outline:0;border-color:var(--ambar);background:#fff;box-shadow:0 0 0 4px var(--anel)}
-.capa .pe{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;border-top:1px solid var(--linha);padding-top:14px;font-size:13px;color:var(--tinta-60)}
-.iniciar{display:inline-flex;align-items:center;gap:12px;font:700 14px var(--cond);text-transform:uppercase;letter-spacing:.08em;color:#fff;text-decoration:none;padding:15px 30px;cursor:pointer;border:0;
- background:linear-gradient(135deg,var(--azul-2),var(--azul));clip-path:polygon(0 0,calc(100% - 14px) 0,100% 50%,calc(100% - 14px) 100%,0 100%);padding-right:40px;transition:filter .25s,transform .25s var(--ease)}
-.iniciar::after{content:"→";transition:transform .25s var(--ease)}
-.iniciar:hover{filter:brightness(1.15)}.iniciar:hover::after{transform:translateX(5px)}
-/* barra de status */
-.status{position:sticky;top:0;z-index:30;color:#F2EEE3;background:color-mix(in srgb,var(--tinta) 90%,transparent);-webkit-backdrop-filter:saturate(1.5) blur(14px);backdrop-filter:saturate(1.5) blur(14px);box-shadow:0 12px 28px -16px rgba(0,0,0,.6),0 -3px 0 var(--ambar) inset}
-.status-int{max-width:1180px;margin:0 auto;padding:10px 24px;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
-.barra-geral{flex:1 1 230px;min-width:170px;max-width:360px}
-.barra-geral .rot{display:flex;justify-content:space-between;font:600 11px var(--mono);letter-spacing:.06em;text-transform:uppercase;margin-bottom:5px}
-.barra-fundo{height:8px;background:rgba(255,255,255,.14);border-radius:8px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.35) inset}
-.barra-fundo i{display:block;height:100%;border-radius:8px;transition:width .5s var(--ease);background:repeating-linear-gradient(-45deg,rgba(255,255,255,.22) 0 6px,transparent 6px 12px),linear-gradient(90deg,var(--ambar),var(--ambar-2));background-size:24px 24px,100% 100%;animation:listra 1.2s linear infinite}
-@keyframes listra{to{background-position:24px 0,0 0}}
-.chip{font:500 12px var(--mono);padding:5px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.06);white-space:nowrap}
-.chip.ok{background:color-mix(in srgb,var(--verde) 55%,transparent);border-color:color-mix(in srgb,var(--verde) 80%,#fff 20%)}
-.btn{font:600 12.5px var(--sans);color:inherit;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.3);border-radius:8px;padding:7px 13px;cursor:pointer;transition:background .2s,border-color .2s,transform .2s var(--ease)}
-.btn:hover{background:rgba(228,162,74,.25);border-color:var(--ambar-2)}.btn:active{transform:translateY(1px)}
-.status .espaco{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}
-.status select{font:600 12px var(--mono);color:#F2EEE3;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.3);border-radius:8px;padding:7px 8px;cursor:pointer}
-.status select option{color:#222}
-/* layout */
-.corpo{max-width:1180px;margin:0 auto;padding:0 24px;display:grid;grid-template-columns:268px minmax(0,1fr);gap:34px;align-items:start}
-nav.etapas{position:sticky;top:64px;margin-top:26px;padding:14px 10px 16px;max-height:calc(100vh - 80px);overflow:auto;background:rgba(255,255,255,.72);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border:1px solid var(--linha);border-radius:var(--r);box-shadow:var(--sombra);scrollbar-width:thin}
-nav.etapas ol{list-style:none;margin:0;padding:0}nav.etapas li{margin-bottom:2px}
-nav.etapas a{position:relative;display:grid;grid-template-columns:28px 1fr auto;align-items:center;gap:8px;padding:8px 9px;border-radius:9px;color:var(--tinta);text-decoration:none;font-size:12.5px;line-height:1.3;transition:background .2s,color .2s}
-nav.etapas a .nn,nav.etapas a .pp{font-family:var(--mono);font-size:11px;color:var(--tinta-60)}
-nav.etapas a:hover{background:var(--papel-2)}
-nav.etapas a::before{content:"";position:absolute;left:0;top:50%;width:3px;height:0;border-radius:3px;background:linear-gradient(var(--ambar-2),var(--ambar));transform:translateY(-50%);transition:height .3s var(--ease)}
-nav.etapas a.ativo{background:linear-gradient(90deg,var(--ambar-luz),rgba(251,240,222,.3));font-weight:600}nav.etapas a.ativo::before{height:70%}
-nav.etapas a.completo .pp{color:#fff;background:var(--verde);border-radius:999px;padding:1px 7px;font-weight:600}
-main{padding:26px 0 90px;min-width:0}
-section.etapa{position:relative;margin:0 0 26px;padding:28px clamp(18px,3vw,32px) 22px;background:linear-gradient(180deg,#fff,#fdfbf7);border:1px solid var(--linha);border-radius:var(--r);box-shadow:var(--sombra)}
-section.etapa::before{content:"";position:absolute;left:clamp(18px,3vw,32px);top:-1px;width:72px;height:4px;border-radius:0 0 4px 4px;background:linear-gradient(90deg,var(--ambar),var(--ambar-2))}
-@supports (animation-timeline:view()){section.etapa{animation:aparece linear both;animation-timeline:view();animation-range:entry 0% entry 30%}@keyframes aparece{from{opacity:.25;transform:translateY(22px)}}}
-.rotulo{font:700 11.5px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ambar)}
-section.etapa h2{font-size:clamp(20px,2.6vw,26px);margin:4px 0 6px;color:var(--azul)}
-.dim{display:inline-block;font:600 12px var(--mono);color:var(--azul);background:var(--azul-luz);border-radius:999px;padding:3px 12px;margin:0 0 14px}
-.nota{color:var(--tinta-60);font-size:14px;margin:0 0 16px}
-.barra-secao{display:flex;align-items:center;gap:12px;margin:2px 0 18px;font:600 12px var(--mono);color:var(--tinta-60)}
-.barra-secao .barra-fundo{flex:1;background:var(--papel-2);box-shadow:none;height:9px}
-.barra-secao .barra-fundo i,.linha-painel .barra-fundo i{background:linear-gradient(90deg,var(--verde),#5a9370);animation:none}
-/* itens */
-.lista{border:1px solid var(--linha);border-radius:12px;background:#fff;overflow:hidden}
-.item,.cab-item{display:grid;grid-template-columns:34px 1fr 140px 1fr;gap:12px}
-.item{align-items:start;padding:12px 14px;border-bottom:1px solid var(--linha);position:relative;transition:background .25s}
-.item:last-child{border-bottom:0}.item:nth-child(even){background:rgba(211,203,177,.13)}
-.item:hover{background:var(--ambar-luz)}
-.item.feito{background:var(--verde-luz)}.item.feito::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--verde)}
-.item .num{font:600 11px var(--mono);color:var(--tinta-60);padding-top:3px}
-.item .desc{font-size:14.5px;line-height:1.5;cursor:pointer;transition:color .25s}
-.item.feito .desc{text-decoration:line-through;text-decoration-color:rgba(63,107,76,.5);color:var(--tinta-60)}
-.check{appearance:none;flex:none;width:22px;height:22px;margin:0;border:2px solid var(--azul);border-radius:6px;background:#fff;cursor:pointer;position:relative;transition:background .2s,border-color .2s,transform .2s var(--ease)}
-.check:hover{border-color:var(--ambar);transform:scale(1.08)}
-.check::after{content:"";position:absolute;left:6px;top:1px;width:6px;height:12px;border:solid #fff;border-width:0 2.5px 2.5px 0;transform:rotate(40deg) scale(0);transition:transform .2s var(--ease)}
-.check:checked{background:linear-gradient(135deg,#5a9370,var(--verde));border-color:var(--verde)}.check:checked::after{transform:rotate(40deg) scale(1)}
-.item input[type=date],.item input[type=text]{padding:6px 9px;font:500 12.5px var(--mono)}
-.item input[type=text]{font:400 13px var(--sans);color:var(--tinta)}
-.cab-item{padding:9px 14px;font:600 10.5px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:#fff;background:linear-gradient(135deg,var(--azul),#2a4d6b)}
-/* painel */
-.painel-geral{border:1px solid var(--linha);border-radius:12px;background:#fff;overflow:hidden}
-.linha-painel{display:grid;grid-template-columns:240px 1fr 58px;gap:14px;align-items:center;padding:11px 16px;border-bottom:1px solid var(--linha);font-size:13.5px;transition:background .2s}
-.linha-painel:last-child{border-bottom:0}.linha-painel:hover{background:var(--ambar-luz)}
-.linha-painel a{color:var(--tinta);text-decoration:none;font-weight:500}.linha-painel a:hover{color:var(--azul-2)}
-.linha-painel .barra-fundo{height:10px;background:var(--papel-2);box-shadow:none}
-.linha-painel .pct{font:600 12px var(--mono);text-align:right;color:var(--azul)}
-/* financeiro */
-.resumo-fin{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px;margin:16px 0}
-.resumo-fin div{position:relative;overflow:hidden;padding:16px 18px;background:linear-gradient(180deg,#fff,var(--papel));border:1px solid var(--linha);border-radius:12px}
-.resumo-fin div::before{content:"";position:absolute;inset:0 0 auto 0;height:4px;background:linear-gradient(90deg,var(--azul),var(--azul-2))}
-.resumo-fin div:nth-child(3)::before{background:linear-gradient(90deg,var(--ambar),var(--ambar-2))}
-.resumo-fin .v{display:block;font:700 clamp(20px,2.4vw,26px)/1.2 var(--mono);color:var(--azul);margin-top:4px;font-variant-numeric:tabular-nums}
-.resumo-fin .v.alerta{color:var(--vermelho)}.resumo-fin .n{display:block;font:600 11px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--tinta-60);margin-top:4px}
-.rolagem{border:1px solid var(--linha);border-radius:12px;background:#fff}
-table.pag{border-collapse:separate;border-spacing:0;width:100%;font-size:13.5px;font-variant-numeric:tabular-nums}
-table.pag th{background:linear-gradient(135deg,var(--azul),#2a4d6b);color:#fff;font:600 10.5px var(--mono);text-transform:uppercase;letter-spacing:.1em;padding:11px 10px;text-align:left}
-table.pag th:first-child{border-top-left-radius:11px}table.pag th:last-child{border-top-right-radius:11px}
-table.pag td{padding:8px 10px;border-bottom:1px solid var(--linha);vertical-align:middle;transition:background .2s}
-table.pag tbody tr:hover td{background:var(--ambar-luz)}table.pag tr:last-child td{border-bottom:0}
-table.pag tr.paga td{background:var(--verde-luz)}
-table.pag input[type=text],table.pag input[type=date],table.pag input[type=number]{padding:6px 8px;font:500 13px var(--mono)}
-.bancarios{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px 22px;margin:14px 0;padding:18px 22px;background:linear-gradient(135deg,var(--azul),#27465f);color:#fff;border-radius:12px;box-shadow:var(--sombra)}
-.bancarios div{font:500 15px var(--mono)}.bancarios b{display:block;font:600 10.5px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ambar-2);margin-bottom:3px}
-.aviso{background:linear-gradient(90deg,var(--azul-luz),rgba(230,237,242,.4));border-left:4px solid var(--azul);border-radius:0 10px 10px 0;padding:14px 18px;font-size:14px;margin:16px 0;max-width:78ch}
-.checks{padding:0;margin:12px 0}.checks li{margin:8px 0;font-size:14.5px;list-style:none;padding:9px 14px;background:var(--papel);border:1px solid var(--linha);border-radius:10px}
-.checks .marca{font-weight:700;margin-right:9px;font-family:var(--mono)}
-/* responsivo, movimento e impressão */
-@media(max-width:900px){
- .corpo{grid-template-columns:1fr;gap:0;padding:0 14px}
- nav.etapas{position:static;max-height:none;margin:16px 0 0;padding:8px}
- nav.etapas ol{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;mask-image:linear-gradient(90deg,#000 88%,transparent)}
- nav.etapas a{grid-template-columns:auto;white-space:nowrap;padding:9px 14px;border-radius:999px;background:var(--papel)}
- nav.etapas a .nn,nav.etapas a .pp{display:none}nav.etapas a::before{display:none}
- nav.etapas a.ativo{background:var(--ambar);color:#fff}
- .capa{grid-template-columns:16px 1fr}.capa::after{opacity:.35}.capa-int{padding:22px 16px 20px}.status-int{padding:9px 14px}
- section.etapa{padding:24px 16px 18px}
- .item{grid-template-columns:30px 1fr;grid-template-areas:"c d" ". e" ". f"}
- .item .num{grid-area:c}.item .desc{grid-area:d}.item input[type=date]{grid-area:e}.item input[type=text]{grid-area:f}
- .cab-item{display:none}
- .linha-painel{grid-template-columns:1fr 44px;grid-template-areas:"n n" "b p"}.linha-painel a{grid-area:n}.linha-painel .barra-fundo{grid-area:b}.linha-painel .pct{grid-area:p}
- table.pag{min-width:640px}.rolagem{overflow-x:auto}
- .status .espaco{margin-left:0}.btn,.status select{min-height:40px}
+  --black:#000;--navy:#14213D;--navy2:#1f3160;--yellow:#FCA311;--gray:#E5E5E5;--white:#fff;
+  --ok:#2e9e5b;--warn:#FCA311;--muted:#6b7280;--line:#e3e5ea;
+  --safe-b:env(safe-area-inset-bottom,0px);--safe-t:env(safe-area-inset-top,0px);
 }
-@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
-@media print{
- .status,nav.etapas,.btn,.naoimprime,.iniciar,.capa::after{display:none!important}
- .corpo{display:block;max-width:none;padding:0}body{background:#fff;font-size:11px}
- section.etapa{break-inside:avoid;box-shadow:none;animation:none;background:#fff}
- .capa{min-height:auto;break-after:page;border:0}.capa-int{padding:0}.capa h1{color:var(--azul);background:none}
- .item.feito{background:#f0f0f0!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
- .bancarios{background:#fff;color:#000;border:1px solid #999}.bancarios b{color:#555}
-}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;height:100%}
+body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;background:#f1f2f5;color:#111;overscroll-behavior-y:none}
+button{font:inherit;cursor:pointer;border:0;color:inherit}
+input,select,textarea{font:inherit;width:100%;padding:13px 12px;border:1.5px solid #cfd3da;border-radius:12px;background:#fff;color:#111}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--navy);box-shadow:0 0 0 3px rgba(20,33,61,.12)}
+textarea{min-height:70px;resize:vertical}
+label.l{display:block;font-size:13px;font-weight:700;color:var(--navy);margin:14px 0 6px}
 
-/* ===== Adaptação para celular ===== */
-@media(max-width:900px){
- html{scroll-padding-top:66px}
- .corpo{padding:0 max(14px,env(safe-area-inset-left))}
- nav.etapas{position:sticky;top:0;z-index:25;margin:0 -14px;padding:8px 14px;border-radius:0;border-width:0 0 1px;background:rgba(255,255,255,.92);box-shadow:0 10px 24px -18px rgba(31,58,82,.6)}
- nav.etapas a{min-height:40px;display:inline-grid;align-items:center}
- .item .check{grid-area:c}
+/* layout */
+#app{max-width:720px;margin:0 auto;min-height:100%;padding-bottom:calc(84px + var(--safe-b))}
+.topbar{position:sticky;top:0;z-index:20;background:var(--navy);color:#fff;padding:calc(12px + var(--safe-t)) 16px 12px;display:flex;align-items:center;gap:12px}
+.topbar .t{flex:1;min-width:0}
+.topbar h1{margin:0;font-size:18px;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.topbar small{opacity:.8;font-size:12px}
+.ring{--p:0;width:46px;height:46px;border-radius:50%;background:conic-gradient(var(--yellow) calc(var(--p)*1%),rgba(255,255,255,.2) 0);display:grid;place-items:center;flex:none}
+.ring span{width:36px;height:36px;border-radius:50%;background:var(--navy);display:grid;place-items:center;font-size:12px;font-weight:800}
+.save-ind{font-size:11px;opacity:.75}
+.view{display:none;padding:14px}
+.view.active{display:block;animation:fade .18s ease}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.card{background:#fff;border-radius:16px;padding:16px;margin-bottom:14px;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.card h2{margin:0 0 4px;font-size:17px;color:var(--navy)}
+.sub{color:var(--muted);font-size:13px;margin:0 0 4px}
+.empty{text-align:center;color:var(--muted);padding:26px 10px}
+.empty b{display:block;font-size:34px;margin-bottom:6px}
+
+/* bottom nav */
+nav{position:fixed;left:0;right:0;bottom:0;z-index:30;background:#fff;border-top:1px solid var(--line);display:flex;justify-content:center;padding-bottom:var(--safe-b)}
+nav .in{display:flex;width:100%;max-width:720px}
+nav button{flex:1;background:none;padding:9px 4px 8px;display:flex;flex-direction:column;align-items:center;gap:3px;font-size:11px;font-weight:700;color:#8a90a0;position:relative}
+nav button svg{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+nav button.on{color:var(--navy)}
+nav button.on::before{content:"";position:absolute;top:0;left:28%;right:28%;height:3px;border-radius:0 0 3px 3px;background:var(--yellow)}
+nav .badge{position:absolute;top:5px;left:calc(50% + 6px);background:var(--yellow);color:#000;border-radius:10px;font-size:10px;padding:1px 6px;min-width:16px}
+
+/* home */
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px}
+.stat{background:#f6f7f9;border-radius:12px;padding:10px 6px;text-align:center}
+.stat b{display:block;font-size:22px;color:var(--navy)}
+.stat span{font-size:11px;color:var(--muted);font-weight:600}
+.bigbar{height:12px;border-radius:12px;background:#e6e8ee;overflow:hidden;margin-top:12px}
+.bigbar i{display:block;height:100%;width:0;background:var(--yellow);border-radius:12px;transition:width .3s}
+.bigpct{font-size:34px;font-weight:800;color:var(--navy)}
+.roomrow{display:flex;align-items:center;gap:12px;padding:12px 0;border-top:1px solid var(--line);background:none;width:100%;text-align:left}
+.roomrow:first-of-type{border-top:0}
+.roomrow .n{flex:1;min-width:0}
+.roomrow .n b{display:block;font-size:15px}
+.mini{height:6px;background:#e6e8ee;border-radius:6px;overflow:hidden;margin-top:6px}
+.mini i{display:block;height:100%;background:var(--yellow);width:0;transition:width .3s}
+.mini i.full{background:var(--ok)}
+.roomrow .p{font-weight:800;color:var(--navy);font-size:14px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+
+/* rooms */
+.tools{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
+.pill{background:#fff;border:1.5px solid var(--navy);color:var(--navy);padding:9px 14px;border-radius:22px;font-weight:700;font-size:13px}
+.pill.fill{background:var(--navy);color:#fff}
+.pill.y{background:var(--yellow);border-color:var(--yellow);color:#000}
+.rgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.rc{background:#fff;border:2px solid #dfe2e8;border-radius:14px;padding:14px 12px;font-weight:700;font-size:14px;text-align:left;display:flex;align-items:center;gap:10px;min-height:56px;transition:.15s}
+.rc .ck{width:22px;height:22px;border-radius:7px;border:2px solid #b8bdc9;flex:none;display:grid;place-items:center;color:transparent;font-size:14px}
+.rc.on{border-color:var(--navy);background:#eef1f8}
+.rc.on .ck{background:var(--navy);border-color:var(--navy);color:#fff}
+
+/* tracking */
+.picker{display:flex;gap:8px;overflow-x:auto;padding:2px 0 10px;margin:0 -14px;padding-left:14px;padding-right:14px;scrollbar-width:none;position:sticky;top:calc(70px + var(--safe-t));z-index:10;background:#f1f2f5}
+.picker::-webkit-scrollbar{display:none}
+.chip{flex:none;background:#fff;border:1.5px solid #d3d7df;border-radius:22px;padding:8px 14px;font-weight:700;font-size:13px;white-space:nowrap;display:flex;gap:6px;align-items:center}
+.chip small{color:var(--muted);font-weight:700}
+.chip.on{background:var(--navy);border-color:var(--navy);color:#fff}
+.chip.on small{color:var(--yellow)}
+.filters{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.filters .chip{padding:6px 11px;font-size:12px}
+.filters .chip.on{background:var(--yellow);border-color:var(--yellow);color:#000}
+.roomhead{background:var(--navy);color:#fff;border-radius:16px;padding:16px;margin-bottom:12px}
+.roomhead h2{margin:0;color:#fff;font-size:19px}
+.roomhead .mini{background:rgba(255,255,255,.2)}
+.roomhead .row{display:flex;justify-content:space-between;font-size:13px;opacity:.9;margin-top:6px}
+.stage{background:#fff;border-radius:14px;padding:14px;margin-bottom:10px;border-left:5px solid #cfd3da}
+.stage[data-s=andamento]{border-left-color:var(--warn)}
+.stage[data-s=concluida]{border-left-color:var(--ok)}
+.stage[data-s=na]{border-left-color:#9aa0ac;opacity:.7}
+.stage .h{display:flex;gap:10px;align-items:center;margin-bottom:10px}
+.stage .num{width:26px;height:26px;border-radius:50%;background:#eef1f8;color:var(--navy);font-weight:800;font-size:12px;display:grid;place-items:center;flex:none}
+.stage .nm{font-weight:700;font-size:15px;flex:1}
+.seg{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.seg button{background:#f1f2f5;border-radius:10px;padding:10px 2px;font-size:12px;font-weight:700;color:#4b5160;line-height:1.1}
+.seg button.on[data-v=pendente]{background:#d9dce3;color:#111}
+.seg button.on[data-v=andamento]{background:var(--yellow);color:#000}
+.seg button.on[data-v=concluida]{background:var(--ok);color:#fff}
+.seg button.on[data-v=na]{background:#6b7280;color:#fff}
+.more{display:grid;grid-template-columns:1fr;gap:8px;margin-top:10px}
+.det{background:none;color:var(--navy);font-weight:700;font-size:12px;padding:8px 0 0}
+
+/* more list */
+.item{display:flex;align-items:center;gap:14px;width:100%;background:#fff;border-radius:14px;padding:15px;margin-bottom:10px;text-align:left;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.item .ic{width:42px;height:42px;border-radius:12px;background:#eef1f8;display:grid;place-items:center;font-size:20px;flex:none}
+.item b{display:block;font-size:15px}
+.item span{font-size:12px;color:var(--muted)}
+.item.danger .ic{background:#fde8e8}
+.item.danger b{color:#b42318}
+
+/* sheet + toast */
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:50;display:none;align-items:flex-end;justify-content:center}
+.scrim.on{display:flex}
+.sheet{background:#fff;width:100%;max-width:720px;border-radius:22px 22px 0 0;padding:20px 18px calc(20px + var(--safe-b));animation:up .2s ease}
+@keyframes up{from{transform:translateY(40px);opacity:.4}to{transform:none;opacity:1}}
+.sheet h3{margin:0 0 6px;color:var(--navy)}
+.sheet p{margin:0 0 12px;color:var(--muted);font-size:14px}
+.sheet .btns{display:flex;gap:10px;margin-top:16px}
+.sheet .btns button{flex:1;padding:14px;border-radius:12px;font-weight:700}
+.b1{background:var(--yellow);color:#000}.b2{background:#eceef3;color:var(--navy)}.b3{background:#b42318;color:#fff}
+#toast{position:fixed;left:50%;bottom:calc(92px + var(--safe-b));transform:translateX(-50%) translateY(20px);background:#111;color:#fff;padding:11px 18px;border-radius:24px;font-size:14px;opacity:0;pointer-events:none;transition:.25s;z-index:60;max-width:90%;text-align:center}
+#toast.on{opacity:1;transform:translateX(-50%)}
+
+/* print report */
+#report{display:none}
+@media print{
+  body{background:#fff}
+  #app,nav,#toast,.scrim{display:none!important}
+  #report{display:block;font-size:12px;color:#000}
+  #report h1{color:var(--navy);margin:0 0 4px}
+  #report h2{background:var(--navy);color:#fff;padding:6px 10px;margin:16px 0 0;font-size:14px;break-after:avoid}
+  #report table{width:100%;border-collapse:collapse}
+  #report td,#report th{border:1px solid #bbb;padding:5px 7px;text-align:left;vertical-align:top}
+  #report th{background:#eee}
+  #report .meta{margin:0 0 8px;color:#333}
+  #report tr{break-inside:avoid}
 }
-@media(max-width:700px){
- body{font-size:16px;padding-bottom:calc(64px + env(safe-area-inset-bottom,0px))}
- /* capa */
- .capa{min-height:auto;grid-template-columns:12px 1fr}.capa::after{display:none}
- .capa-int{padding:22px 16px 20px;gap:20px}
- .capa .topo{font-size:11px;gap:4px}
- .capa h1{font-size:clamp(28px,9.5vw,42px);max-width:none}
- .capa .sub{font-size:15px}
- .dados-obra{grid-template-columns:1fr;padding:6px 16px 14px}.dados-obra dd{font-size:15px}
- .ficha{padding:14px 16px}.ident{grid-template-columns:1fr 1fr;gap:12px}.ident label:last-child{grid-column:1/-1}
- .capa .pe{flex-direction:column;align-items:stretch}.iniciar{width:100%;justify-content:center;padding:17px 24px}
- /* barra de status: o avanço fica fixo embaixo, no alcance do polegar */
- .status{position:static;box-shadow:0 -3px 0 var(--ambar) inset}
- .status-int{padding:12px 14px 14px;gap:8px}
- .barra-geral{position:fixed;left:0;right:0;bottom:0;z-index:40;max-width:none;min-width:0;padding:10px 16px calc(10px + env(safe-area-inset-bottom,0px));
-  background:color-mix(in srgb,var(--tinta) 94%,transparent);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);box-shadow:0 -10px 24px -14px rgba(0,0,0,.6),0 3px 0 var(--ambar) inset;color:#F2EEE3}
- .barra-geral .rot{font-size:12px;margin-bottom:6px}.barra-fundo{height:10px}
- .status .espaco{flex:1 1 100%;margin:0;display:grid;grid-template-columns:1fr 1fr;gap:8px}
- .status select{grid-column:1/-1;width:100%}
- .btn,.status select{min-height:44px;font-size:14px}
- /* seções e itens */
- section.etapa{margin-bottom:18px;padding:24px 14px 16px;border-radius:12px}
- .item{padding:14px 12px;gap:8px 12px;grid-template-columns:32px 1fr}
- .check{width:26px;height:26px;border-radius:7px}
- .check::after{left:8px;top:2px;width:7px;height:13px}
- .item .desc{font-size:15.5px;line-height:1.45}
- .item input[type=date],.item input[type=text],.ident input,table.pag input[type=text],table.pag input[type=date],table.pag input[type=number]{font-size:16px;min-height:44px}
- .barra-secao{font-size:12.5px}
- .linha-painel{padding:13px 14px;gap:8px 12px}.linha-painel a{font-size:14.5px}
- /* financeiro */
- .resumo-fin{grid-template-columns:1fr 1fr;gap:10px}.resumo-fin div{padding:13px 14px}.resumo-fin .v{font-size:19px}
- .rolagem{border:0;background:transparent;overflow:visible}
- table.pag,table.pag tbody{display:block;min-width:0;background:transparent}table.pag thead{display:none}
- table.pag tbody{display:grid;gap:12px}
- table.pag tr{display:grid;grid-template-columns:1fr 1fr;gap:10px 12px;padding:14px;background:#fff;border:1px solid var(--linha);border-radius:12px;box-shadow:var(--sombra)}
- table.pag tr.paga{background:var(--verde-luz);border-color:var(--verde)}
- table.pag td,table.pag tr.paga td,table.pag tbody tr:hover td{display:block;padding:0;border:0;background:transparent}
- table.pag td::before{display:block;margin-bottom:4px;font:600 10.5px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--tinta-60)}
- table.pag td:nth-child(1){grid-column:1/-1;font:700 17px var(--cond);color:var(--azul)}
- table.pag td:nth-child(1)::after{content:" retirada"}
- table.pag td:nth-child(2)::before{content:"Data"}table.pag td:nth-child(3)::before{content:"Valor (R$)"}
- table.pag td:nth-child(4){grid-column:1/-1;display:flex!important;align-items:center;gap:12px;text-align:left!important}
- table.pag td:nth-child(4)::before{margin:0;content:"Pago"}
- table.pag td:nth-child(4) .check{width:28px!important;height:28px!important}
- table.pag td:nth-child(5){grid-column:1/-1}table.pag td:nth-child(5)::before{content:"Observação"}
- .bancarios{grid-template-columns:1fr;padding:16px}.bancarios div{font-size:14.5px;overflow-wrap:anywhere}
- .aviso{padding:12px 14px}.checks li{padding:11px 12px}
-}
-@media(max-width:360px){.ident,.resumo-fin{grid-template-columns:1fr}}
+@media(min-width:720px){.view{padding:20px}}
 </style>
 </head>
 <body>
 
-<header class="capa">
- <div class="faixa" aria-hidden="true"></div>
- <div class="capa-int">
-  <div class="topo"><span>Acompanhamento de obra · Baseado no orçamento assinado</span><span><b id="capa_data"></b></span></div>
-  <div>
-   <span class="selo">Conforme proposta assinada · 4 páginas</span>
-   <h1>Checklist do orçamento de reforma</h1>
-   <p class="sub">Reforma de apartamento de 60 m². Cada item abaixo reproduz literalmente o escopo assinado entre as partes, organizado por ambiente, para acompanhamento de execução e controle financeiro.</p>
+<div id="app">
+  <div class="topbar">
+    <div class="t">
+      <h1 id="tbTitle">Minha Obra</h1>
+      <small id="tbSub">Acompanhamento de obra</small>
+    </div>
+    <div style="text-align:right">
+      <div class="ring" id="ring"><span id="ringTxt">0%</span></div>
+    </div>
   </div>
-  <dl class="dados-obra">
-   <div><dt>Proprietário</dt><dd>Roberto Brandão</dd></div>
-   <div><dt>Responsável pela obra</dt><dd>Renato da Silva</dd></div>
-   <div><dt>Endereço da obra</dt><dd>Rua Arídio Martins, 50, Bloco 09 — Apartamento 303</dd></div>
-   <div><dt>Área aproximada</dt><dd>60 m²</dd></div>
-   <div><dt>Valor total dos serviços</dt><dd>R$ 17.900,00 (mão de obra)</dd></div>
-   <div><dt>Forma de pagamento</dt><dd>Retiradas semanais de R$ 1.700,00, toda sexta-feira</dd></div>
-  </dl>
-  <div class="ficha">
-   <h2>Datas de referência</h2>
-   <div class="ident">
-    <label>Início da obra<input id="id_inicio" type="date"></label>
-    <label>Previsão de entrega<input id="id_prev" type="date"></label>
-    <label>Atualizado em<input id="id_att" type="date"></label>
-    <label>Nº da caçamba / retirada<input id="id_cacamba" placeholder="contratada pelo proprietário"></label>
-   </div>
-  </div>
-  <div class="pe">
-   <p style="margin:0;max-width:44ch">O preenchimento é salvo automaticamente neste navegador. Use "Salvar arquivo" para ter uma cópia de segurança ou levar para outro dispositivo.</p>
-   <a class="iniciar" href="#e0">Começar o checklist</a>
-  </div>
- </div>
-</header>
 
-<div class="status">
- <div class="status-int">
-  <div class="barra-geral">
-   <div class="rot"><span>Avanço geral</span><span id="pct_geral">0%</span></div>
-   <div class="barra-fundo"><i id="barra_geral" style="width:0%"></i></div>
-  </div>
-  <span class="chip" id="chip_itens">0 / 0 itens</span>
-  <span class="chip" id="st_salvo">verificando…</span>
-  <span class="espaco">
-   <select id="filtro" onchange="aplicarFiltro()">
-    <option value="todos">Mostrar todos</option>
-    <option value="pendentes">Somente pendentes</option>
-    <option value="feitos">Somente concluídos</option>
-   </select>
-   <button class="btn" onclick="exportar()">Salvar arquivo</button>
-   <button class="btn" onclick="document.getElementById('arq').click()">Abrir arquivo</button>
-   <button class="btn" onclick="window.print()">Imprimir</button>
-   <button class="btn" onclick="limpar()">Limpar tudo</button>
-   <input type="file" id="arq" accept=".json" hidden onchange="importar(event)">
-  </span>
- </div>
+  <!-- INÍCIO -->
+  <section class="view active" id="v-home">
+    <div class="card">
+      <h2>Progresso geral</h2>
+      <p class="sub" id="homeSub">Comece cadastrando sua obra e escolhendo os cômodos.</p>
+      <div class="bigpct" id="bigPct">0%</div>
+      <div class="bigbar"><i id="bigBar"></i></div>
+      <div class="stats">
+        <div class="stat"><b id="stDone">0</b><span>Concluídas</span></div>
+        <div class="stat"><b id="stDoing">0</b><span>Em andamento</span></div>
+        <div class="stat"><b id="stPend">0</b><span>Pendentes</span></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Dados da obra</h2>
+      <label class="l" for="obra">Nome da obra</label>
+      <input id="obra" placeholder="Ex.: Reforma do apartamento" autocomplete="off">
+      <label class="l" for="responsavel">Responsável</label>
+      <input id="responsavel" placeholder="Nome do responsável" autocomplete="off">
+      <div class="grid2">
+        <div>
+          <label class="l" for="tipo">Tipo de imóvel</label>
+          <select id="tipo">
+            <option value="">Selecione...</option>
+            <option>Casa</option><option>Apartamento</option><option>Casa em condomínio</option>
+            <option>Sala comercial</option><option>Loja</option><option>Escritório</option>
+            <option>Imóvel rural</option><option>Outro</option>
+          </select>
+        </div>
+        <div>
+          <label class="l" for="area">Área (m²)</label>
+          <input id="area" type="number" inputmode="decimal" min="0" step="0.01" placeholder="85">
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Andamento por cômodo</h2>
+      <div id="homeRooms"></div>
+    </div>
+  </section>
+
+  <!-- CÔMODOS -->
+  <section class="view" id="v-rooms">
+    <div class="card">
+      <h2>Cômodos e áreas</h2>
+      <p class="sub" id="roomsHint">Toque nos cômodos que fazem parte da obra.</p>
+      <div class="tools">
+        <button class="pill" id="selAll">Selecionar todos</button>
+        <button class="pill" id="selNone">Limpar seleção</button>
+        <button class="pill y" id="addRoom">+ Novo cômodo</button>
+      </div>
+      <div class="rgrid" id="roomGrid"></div>
+    </div>
+  </section>
+
+  <!-- ETAPAS -->
+  <section class="view" id="v-track">
+    <div id="trackBody"></div>
+  </section>
+
+  <!-- MAIS -->
+  <section class="view" id="v-more">
+    <button class="item" id="actPdf"><div class="ic">📄</div><div><b>Relatório em PDF</b><span>Gera um relatório completo para salvar ou imprimir</span></div></button>
+    <button class="item" id="actExport"><div class="ic">💾</div><div><b>Exportar backup</b><span>Baixa um arquivo com todos os dados da obra</span></div></button>
+    <button class="item" id="actImport"><div class="ic">📂</div><div><b>Importar backup</b><span>Restaura os dados de um arquivo salvo</span></div></button>
+    <input type="file" id="fileIn" accept="application/json,.json" hidden>
+    <button class="item danger" id="actClear"><div class="ic">🗑️</div><div><b>Limpar acompanhamento</b><span>Apaga todos os dados deste dispositivo</span></div></button>
+    <div class="card" style="margin-top:6px">
+      <h2>Dica</h2>
+      <p class="sub">Tudo é salvo automaticamente neste dispositivo. Para ter como aplicativo, abra a página no navegador e use <b>“Adicionar à tela inicial”</b>. Exporte um backup de vez em quando para não perder dados.</p>
+      <p class="sub" id="savedAt"></p>
+    </div>
+  </section>
 </div>
 
-<div class="corpo">
-<nav class="etapas" aria-label="Etapas da obra">
- <ol id="menu"></ol>
+<nav>
+  <div class="in">
+    <button data-tab="home" class="on"><svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>Início</button>
+    <button data-tab="rooms"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="8" height="8" rx="2"/><rect x="13" y="3" width="8" height="8" rx="2"/><rect x="3" y="13" width="8" height="8" rx="2"/><rect x="13" y="13" width="8" height="8" rx="2"/></svg>Cômodos<span class="badge" id="bdgRooms" hidden>0</span></button>
+    <button data-tab="track"><svg viewBox="0 0 24 24"><path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9"/></svg>Etapas</button>
+    <button data-tab="more"><svg viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></svg>Mais</button>
+  </div>
 </nav>
-<main id="main"></main>
-</div>
+
+<div class="scrim" id="scrim"><div class="sheet" id="sheet"></div></div>
+<div id="toast"></div>
+<div id="report"></div>
 
 <script>
+(function(){
 "use strict";
-const el=id=>document.getElementById(id);
 
-/* ===================== DADOS DO CHECKLIST (fiel ao orçamento assinado) ===================== */
-const SECOES=[
-{t:"Proteção, preparação e limpeza", itens:[
- "Proteção dos ambientes durante a execução dos serviços.",
- "Proteção de portas, esquadrias e demais elementos existentes.",
- "Manutenção da área de trabalho organizada.",
- "Retirada do entulho e colocação em caçamba, sendo a caçamba contratada e custeada pelo proprietário.",
- "Limpeza durante a execução da obra.",
- "Limpeza grossa ao término da obra."]},
-{t:"Quarto principal", dim:"aprox. 1,20 × 2,40 m", itens:[
- "Retirada da janela para posterior reinstalação.",
- "Retirada dos portais de concreto, havendo mais de um portal no cômodo.",
- "Retirada dos rodapés existentes.",
- "Alteração de ponto de luz existente para tomada, mantendo-se o ponto inferior.",
- "Fechamento do ponto de ar-condicionado antigo e execução de novo ponto 220V.",
- "Corte no gesso/teto para cortina embutida na janela.",
- "Rebaixo, alinhamento e regularização total da parede da janela.",
- "Execução de boneca em alvenaria para nova parede alinhada.",
- "Nivelamento, emassamento, lixamento e pintura de paredes e teto.",
- "Preparação para recebimento e instalação de ar-condicionado split 12.000 BTUs.",
- "Instalação de porta de correr."]},
-{t:"Quarto menor", dim:"2,54 × 2,39 m", itens:[
- "Retirada da janela.",
- "Instalação de tomada inferior.",
- "Execução de ponto 220V para ar-condicionado de janela (ACJ), compreendendo abertura e tomada.",
- "Nivelamento da parede e retirada de elemento antigo de fixação.",
- "Corte no teto para cortina embutida.",
- "Emassamento, lixamento e pintura de paredes e teto.",
- "Preparação do vão para recebimento e instalação de aparelho de ar-condicionado de janela (ACJ).",
- "Instalação de porta camarão."]},
-{t:"Área de televisão", itens:[
- "Instalação de tomada em altura para televisão.",
- "Manutenção de tomada inferior existente.",
- "Emassamento, lixamento e pintura da parede."]},
-{t:"Corredor", itens:[
- "Fechamento de pontos elétricos antigos, não havendo ponto de luz próprio no corredor.",
- "Fechamento dos rasgos e regularização das paredes.",
- "Emassamento, lixamento e pintura de paredes e teto."]},
-{t:"Sala", dim:"3,10 × 3,40 m", itens:[
- "Regularização e nivelamento das paredes e teto.",
- "Regularização de laterais e teto após demolição.",
- "Tratamento na parede maior trincada.",
- "Retirada de todos os portais de concreto do apartamento.",
- "Nivelamento e regularização de todas as janelas, quanto a vãos e encontros.",
- "Retirada e retorno da janela, com corte no teto para cortina embutida.",
- "Adequação de tomadas 110V e ponto de NET.",
- "Novo ponto de iluminação embutido, com sistema three-way.",
- "Demolição da parede que separa sala e cozinha, para integração dos ambientes.",
- "Adequação da abertura da janela e alinhamento.",
- "Emassamento, lixamento e pintura de paredes e teto."]},
-{t:"Banheiro — reforma total", itens:[
- "Retirada de piso, revestimentos, louças e instalações.",
- "Manutenção do ponto de luz existente e criação de novo ponto.",
- "Novo circuito de iluminação em LED, com rasgo no teto.",
- "Retirada do portal de concreto e da porta.",
- "Instalação de nova porta de correr.",
- "Execução de nicho embutido.",
- "Assentamento de novos revestimentos e piso, com o respectivo rejuntamento.",
- "Instalação de louças e metais, compreendendo vaso, cuba, torneiras, chuveiro e registro.",
- "Emassamento, lixamento e pintura do teto e das áreas não revestidas."]},
-{t:"Impermeabilização", itens:[
- "Avaliação das áreas molhadas e correção de pontos comprometidos.",
- "Impermeabilização do piso do banheiro.",
- "Impermeabilização da área e das paredes do box.",
- "Tratamento de ralos e encontros piso/parede."]},
-{t:"Cozinha / lavanderia", dim:"2,10 × 2,70 m", itens:[
- "Demolição da parede da cozinha, com execução de nova parede de menor comprimento, visando à ampliação do ambiente e à integração visual com a sala.",
- "Fechamento do basculante que conecta com o banheiro.",
- "Retirada de soleiras, sancas e acabamentos.",
- "Retirada da bancada e pia existentes.",
- "Remoção de revestimentos de parede e piso.",
- "Nova bancada aérea com fogão embutido, pia e bancada.",
- "Instalação da bancada da pia em L.",
- "Geladeira: 1 tomada 110V e 1 tomada 220V.",
- "Balcão: 2 tomadas 110V e 2 tomadas 220V.",
- "Parte superior: 1 tomada 220V.",
- "Pia: 1 tomada 110V e 1 tomada 220V.",
- "Bancada nova, em duas torres, com fiação preparada para 2 pontos de 110V e 2 pontos de 220V.",
- "Iluminação integrada ao sistema three-way com a sala e a área de serviço.",
- "Assentamento de novos revestimentos e pisos, com o respectivo rejuntamento.",
- "Emassamento, lixamento e pintura do teto e das áreas não revestidas."]},
-{t:"Bancada da cozinha", itens:[
- "Execução de ajustes de alvenaria necessários.",
- "Preparação de base para recebimento da bancada."]},
-{t:"Hidráulica da cozinha / lavanderia", itens:[
- "Adequação de pontos de água e esgoto.",
- "Ajuste de posição de cuba.",
- "Ponto para filtro ou purificador, se previsto.",
- "Ponto para máquina de lavar, na lavanderia.",
- "Fechamento de pontos antigos."]},
-{t:"Área de serviço", itens:[
- "3 tomadas de 110V e 1 tomada de 220V.",
- "1 ponto de iluminação, integrado ao sistema three-way da cozinha.",
- "Elevação e adequação de uma janela existente, mantendo-se aproximadamente 20 cm na parte superior.",
- "Eliminação de uma segunda janela.",
- "Demolição de parede indicada, para acabamento mais limpo.",
- "Emassamento, lixamento e pintura do teto e das áreas não revestidas."]},
-{t:"Nivelamento — cozinha e sala", itens:[
- "Verificação de desníveis existentes entre cozinha e sala.",
- "Regularização de contrapiso e correção de nível, cuja viabilidade será previamente verificada.",
- "Conferência de transições entre ambientes.",
- "Ajustes de altura de portas, quando necessário."]}
-];
+const DATA = {
+  "Casa":["Sala de estar","Sala de jantar","Cozinha","Lavanderia / Área de serviço","Suíte","Quarto 1","Quarto 2","Quarto 3","Banheiro social","Lavabo","Escritório","Área de TV","Varanda","Garagem","Corredor","Hall / Entrada","Área externa","Área gourmet","Depósito"],
+  "Apartamento":["Sala de estar","Sala de jantar","Cozinha","Lavanderia / Área de serviço","Suíte","Quarto 1","Quarto 2","Quarto 3","Banheiro social","Lavabo","Escritório","Varanda","Área de TV","Corredor","Hall / Entrada","Depósito"],
+  "Casa em condomínio":["Sala de estar","Sala de jantar","Cozinha","Lavanderia / Área de serviço","Suíte","Quarto 1","Quarto 2","Quarto 3","Banheiro social","Lavabo","Escritório","Área de TV","Varanda","Garagem","Corredor","Hall / Entrada","Área externa","Área gourmet","Depósito"],
+  "Sala comercial":["Recepção","Sala de atendimento","Sala de reunião","Sala de trabalho","Diretoria","Copa","Banheiro","Depósito","Circulação"],
+  "Loja":["Área de vendas","Vitrine","Caixa","Estoque","Escritório","Copa","Banheiro","Depósito","Área de serviço"],
+  "Escritório":["Recepção","Sala de trabalho","Sala de reunião","Diretoria","Copa","Banheiro","Arquivo / Depósito","Circulação"],
+  "Imóvel rural":["Sala de estar","Sala de jantar","Cozinha","Lavanderia / Área de serviço","Suíte","Quarto 1","Quarto 2","Quarto 3","Banheiro","Varanda","Garagem","Área externa","Área gourmet","Depósito"],
+  "Outro":["Sala","Quarto","Cozinha","Banheiro","Lavanderia / Área de serviço","Escritório","Varanda","Área externa","Garagem","Depósito","Outra área"]
+};
+const STAGES = ["Planejamento e preparação","Demolição e retiradas","Alvenaria e regularização","Instalações elétricas","Instalações hidráulicas","Impermeabilização","Revestimentos e pisos","Forros e tetos","Esquadrias e portas","Bancadas, louças e metais","Pintura e acabamentos","Limpeza e finalização","Vistoria e entrega"];
+const ST = [["pendente","Pendente"],["andamento","Em andamento"],["concluida","Concluída"],["na","N/A"]];
+const KEY = "acompanhamento_obra_app_v7";
+const OLD = "acompanhamento_obra_v6_final";
 
-/* ===================== MONTAGEM DO DOM ===================== */
-let totalItens=0;
-const menu=el("menu"), main=el("main");
-let mHtml="", pHtml="";
+const $ = s => document.querySelector(s);
+const $$ = s => [...document.querySelectorAll(s)];
+const esc = v => String(v==null?"":v).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 
-SECOES.forEach((s,si)=>{
- const nsec=si+1, id="e"+nsec;
- mHtml+=`<li><a href="#${id}" data-alvo="${id}" data-sec="${nsec}"><span class="nn">${String(nsec).padStart(2,"0")}</span><span>${s.t}</span><span class="pp" id="menupct_${nsec}">0%</span></a></li>`;
+function fresh(){ return {obra:"",responsavel:"",tipo:"",area:"",custom:[],selected:[],data:{},current:null,filter:"todas",savedAt:null}; }
+let S = load();
+let memoryOnly = false;
+let tab = "home";
 
- let itensHtml="";
- s.itens.forEach((texto,ii)=>{
-  totalItens++;
-  const nn=ii+1, cid=`c_${nsec}_${nn}`;
-  itensHtml+=`
-  <div class="item" id="item_${nsec}_${nn}" data-sec="${nsec}">
-   <input type="checkbox" class="check" id="${cid}" data-sec="${nsec}">
-   <label class="desc" for="${cid}">${nn}. ${texto}</label>
-   <input type="date" id="d_${nsec}_${nn}" aria-label="Data de conclusão">
-   <input type="text" id="o_${nsec}_${nn}" placeholder="observação de campo">
-  </div>`;
- });
-
- main.innerHTML+=`
- <section class="etapa" id="${id}">
-  <span class="rotulo">Etapa ${String(nsec).padStart(2,"0")} de ${SECOES.length}</span>
-  <h2>${nsec}. ${s.t}</h2>
-  ${s.dim?`<p class="dim">Dimensão aproximada do ambiente: ${s.dim}</p>`:""}
-  <div class="barra-secao"><span id="secfrac_${nsec}">0/${s.itens.length}</span>
-   <div class="barra-fundo"><i id="secbar_${nsec}" style="width:0%"></i></div>
-   <span id="secpct_${nsec}">0%</span></div>
-  <div class="lista">
-   <div class="cab-item"><span></span><span>Passo a passo</span><span>Data</span><span>Observação</span></div>
-   ${itensHtml}
-  </div>
- </section>`;
-
- pHtml+=`<div class="linha-painel"><a href="#${id}">${nsec}. ${s.t}</a>
-  <div class="barra-fundo"><i id="painelbar_${nsec}" style="width:0%"></i></div>
-  <span class="pct" id="painelpct_${nsec}">0%</span></div>`;
-});
-menu.innerHTML=mHtml;
-
-/* ---- retiradas semanais previstas pelo contrato (10 × R$1.700 + 1 × R$900 = R$17.900) ---- */
-const VALOR_TOTAL=17900, PARCELAS=[1700,1700,1700,1700,1700,1700,1700,1700,1700,1700,900];
-let pagHtml="";
-PARCELAS.forEach((v,i)=>{
- const n=i+1;
- pagHtml+=`<tr id="linhapag_${n}">
-  <td>${n}ª</td>
-  <td><input type="date" id="pg_data_${n}"></td>
-  <td><input type="number" id="pg_valor_${n}" value="${v}" step="50" inputmode="decimal"></td>
-  <td style="text-align:center"><input type="checkbox" class="check" id="pg_pago_${n}" style="width:18px;height:18px"></td>
-  <td><input type="text" id="pg_obs_${n}" placeholder="comprovante, observação"></td>
- </tr>`;
-});
-
-main.innerHTML = `
-<section class="etapa" id="e0">
- <span class="rotulo">Painel geral</span>
- <h2>Avanço por etapa da obra</h2>
- <p class="nota">Clique em qualquer etapa para ir direto a ela. As porcentagens são atualizadas conforme você marca os itens.</p>
- <div class="painel-geral" id="painel">${pHtml}</div>
-</section>` + main.innerHTML + `
-<section class="etapa" id="efin">
- <span class="rotulo">Etapa ${SECOES.length+1} de ${SECOES.length+1}</span>
- <h2>Condições comerciais e pagamento</h2>
- <p class="nota">Valor total de R$ 17.900,00 referente exclusivamente à mão de obra — não inclui materiais, caçamba nem serviços de fornecedores terceiros do Anexo I. Pagamento em retiradas semanais de R$ 1.700,00, toda sexta-feira, conforme cronograma da obra; havendo entrega antecipada, o saldo remanescente é pago de imediato. Os valores das parcelas abaixo são editáveis, caso o cronograma real se ajuste ao ritmo da obra.</p>
-
- <div class="resumo-fin">
-  <div><span class="v" id="fin_total">R$ 17.900</span><span class="n">Valor total do contrato</span></div>
-  <div><span class="v" id="fin_pago">R$ 0</span><span class="n">Total já pago</span></div>
-  <div><span class="v" id="fin_saldo">R$ 17.900</span><span class="n">Saldo devedor</span></div>
-  <div><span class="v" id="fin_parcelas">0 / 11</span><span class="n">Retiradas quitadas</span></div>
- </div>
-
- <div class="rolagem" style="overflow-x:auto">
-  <table class="pag">
-   <thead><tr><th>Retirada</th><th>Data prevista/paga</th><th>Valor (R$)</th><th>Pago</th><th>Observação</th></tr></thead>
-   <tbody>${pagHtml}</tbody>
-  </table>
- </div>
-
- <h3 style="font-size:15px;margin-top:22px;color:var(--azul)">Dados bancários — Renato da Silva</h3>
- <div class="bancarios">
-  <div><b>Chave PIX</b>21966609282</div>
-  <div><b>Banco</b>Bradesco</div>
-  <div><b>Periodicidade</b>Retirada semanal — toda sexta-feira</div>
- </div>
-</section>
-<section class="etapa" id="efim">
- <span class="rotulo">Nota</span>
- <h2>Sobre este checklist</h2>
- <div class="aviso">Os itens acima reproduzem literalmente o escopo do orçamento assinado por Roberto Brandão (proprietário) e Renato da Silva (responsável pela obra), organizados por ambiente na mesma ordem do documento. O Anexo I, com os serviços de fornecedores terceiros, não está detalhado aqui por não constar no corpo do orçamento.</div>
- <h3 style="font-size:16px;margin-top:22px">Conferência antes de fechar a medição</h3>
- <ul class="checks" id="checagens"></ul>
-</section>`;
-
-/* ===================== ESTADO / CÁLCULO ===================== */
-function coletar(){
- const o={};
- document.querySelectorAll("input").forEach(i=>{
-  if(!i.id||i.type==="file")return;
-  o[i.id]= i.type==="checkbox" ? i.checked : i.value;
- });
- return o;
+function load(){
+  try{
+    const raw = localStorage.getItem(KEY);
+    if(raw){ return Object.assign(fresh(), JSON.parse(raw)); }
+    const old = localStorage.getItem(OLD);
+    if(old) return migrate(JSON.parse(old));
+  }catch(e){ memoryOnly = true; }
+  return fresh();
+}
+function migrate(o){
+  const s = fresh();
+  s.obra=o.obra||""; s.responsavel=o.responsavel||""; s.tipo=o.tipo||""; s.area=o.area||"";
+  s.selected = Array.isArray(o.selected)?o.selected:[];
+  const base = DATA[s.tipo]||[];
+  s.custom = s.selected.filter(n=>!base.includes(n));
+  (o.rooms||[]).forEach(r=>{
+    const name = s.selected.find(n=>String(r.name).startsWith(n));
+    if(!name) return;
+    s.data[name] = STAGES.map((_,i)=>{
+      const x=(r.stages||[])[i]||{};
+      const map={"Pendente":"pendente","Em andamento":"andamento","Concluída":"concluida","Não se aplica":"na"};
+      return {s:map[x.status]||"pendente",d:x.date||"",o:x.obs||""};
+    });
+  });
+  return s;
+}
+let saveTimer;
+function save(){
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(()=>{
+    S.savedAt = new Date().toISOString();
+    try{ localStorage.setItem(KEY, JSON.stringify(S)); memoryOnly=false; }catch(e){ memoryOnly=true; }
+    renderSaved();
+  },350);
+}
+function renderSaved(){
+  const el=$("#savedAt");
+  if(memoryOnly){ el.textContent="⚠️ Salvamento automático indisponível neste navegador. Use “Exportar backup”."; return; }
+  el.textContent = S.savedAt ? "Salvo automaticamente em "+new Date(S.savedAt).toLocaleString("pt-BR") : "";
 }
 
-function nfm(n){return (isFinite(n)?n:0).toLocaleString("pt-BR",{minimumFractionDigits:0,maximumFractionDigits:0});}
-
-function atualizarFinanceiro(){
- let pago=0, qtd=0;
- PARCELAS.forEach((_,i)=>{
-  const n=i+1, chk=el(`pg_pago_${n}`), val=parseFloat(el(`pg_valor_${n}`).value)||0;
-  const linha=el(`linhapag_${n}`);
-  linha.classList.toggle("paga",chk.checked);
-  if(chk.checked){ pago+=val; qtd++; }
- });
- const saldo=VALOR_TOTAL-pago;
- el("fin_pago").textContent="R$ "+nfm(pago);
- el("fin_saldo").textContent="R$ "+nfm(saldo);
- el("fin_saldo").classList.toggle("alerta",saldo>0);
- el("fin_parcelas").textContent=`${qtd} / ${PARCELAS.length}`;
+function available(){ return (DATA[S.tipo]||[]).concat(S.custom.filter(c=>!(DATA[S.tipo]||[]).includes(c))); }
+function roomData(name){
+  if(!S.data[name]) S.data[name]=STAGES.map(()=>({s:"pendente",d:"",o:""}));
+  return S.data[name];
+}
+function roomStats(name){
+  const d=roomData(name);
+  const app=d.filter(x=>x.s!=="na");
+  const done=app.filter(x=>x.s==="concluida").length;
+  return {total:app.length,done,doing:d.filter(x=>x.s==="andamento").length,pend:d.filter(x=>x.s==="pendente").length,pct:app.length?Math.round(done/app.length*100):(d.length?100:0)};
+}
+function overall(){
+  let total=0,done=0,doing=0,pend=0;
+  S.selected.forEach(n=>{const r=roomStats(n);total+=r.total;done+=r.done;doing+=r.doing;pend+=r.pend;});
+  return {total,done,doing,pend,pct:total?Math.round(done/total*100):0};
 }
 
-function atualizar(){
- let feitosGeral=0;
- SECOES.forEach((s,si)=>{
-  const nsec=si+1;
-  let feitos=0;
-  s.itens.forEach((_,ii)=>{ if(el(`c_${nsec}_${ii+1}`).checked) feitos++; });
-  const pct=Math.round(feitos/s.itens.length*100);
-  feitosGeral+=feitos;
-  el(`secfrac_${nsec}`).textContent=`${feitos}/${s.itens.length}`;
-  el(`secbar_${nsec}`).style.width=pct+"%";
-  el(`secpct_${nsec}`).textContent=pct+"%";
-  el(`menupct_${nsec}`).textContent=pct+"%";
-  el(`painelbar_${nsec}`).style.width=pct+"%";
-  el(`painelpct_${nsec}`).textContent=pct+"%";
-  document.querySelector(`a[data-sec="${nsec}"]`).classList.toggle("completo",pct===100);
- });
- const pctGeral=Math.round(feitosGeral/totalItens*100);
- el("pct_geral").textContent=pctGeral+"%";
- el("barra_geral").style.width=pctGeral+"%";
- el("chip_itens").textContent=`${feitosGeral} / ${totalItens} itens`;
+/* ---------- UI helpers ---------- */
+let toastT;
+function toast(msg){
+  const t=$("#toast"); t.textContent=msg; t.classList.add("on");
+  clearTimeout(toastT); toastT=setTimeout(()=>t.classList.remove("on"),2200);
+}
+function sheet(html, onReady){
+  $("#sheet").innerHTML=html; $("#scrim").classList.add("on");
+  if(onReady) onReady($("#sheet"));
+}
+function closeSheet(){ $("#scrim").classList.remove("on"); }
+function confirmSheet(title,text,okLabel,danger,cb){
+  sheet('<h3>'+esc(title)+'</h3><p>'+esc(text)+'</p><div class="btns"><button class="b2" data-x="no">Cancelar</button><button class="'+(danger?'b3':'b1')+'" data-x="ok">'+esc(okLabel)+'</button></div>',sh=>{
+    sh.querySelector('[data-x=no]').onclick=closeSheet;
+    sh.querySelector('[data-x=ok]').onclick=()=>{closeSheet();cb();};
+  });
+}
+$("#scrim").addEventListener("click",e=>{ if(e.target.id==="scrim") closeSheet(); });
 
- document.querySelectorAll(".item").forEach(row=>{
-  const id=row.id.split("_"); const cb=el(`c_${id[1]}_${id[2]}`);
-  row.classList.toggle("feito",cb.checked);
- });
+function go(t){
+  tab=t;
+  $$(".view").forEach(v=>v.classList.toggle("active",v.id==="v-"+t));
+  $$("nav button").forEach(b=>b.classList.toggle("on",b.dataset.tab===t));
+  if(t==="track") renderTrack();
+  if(t==="rooms") renderRooms();
+  if(t==="home") renderHome();
+  window.scrollTo({top:0});
+}
+$$("nav button").forEach(b=>b.addEventListener("click",()=>go(b.dataset.tab)));
 
- atualizarFinanceiro();
-
- const faltamData=[...document.querySelectorAll(".check[id^='c_']")].filter(c=>c.checked && !el("d_"+c.id.slice(2)).value).length;
- const saldoZero = el("fin_saldo").textContent.replace(/\D/g,"")==="0";
- const it=[
-  [`Todas as etapas foram revisadas ao menos uma vez`, pctGeral>0, "nenhum item foi marcado ainda"],
-  [`Itens concluídos têm data registrada`, faltamData===0, `${faltamData} item(ns) concluído(s) sem data`],
-  [`Checklist de execução 100% concluído`, pctGeral===100, `restam ${totalItens-feitosGeral} itens em aberto`],
-  [`Pagamento em dia com o cronograma`, saldoZero, "ainda há saldo devedor em aberto"],
- ];
- el("checagens").innerHTML=it.map(([t,ok,m])=>
-  `<li><span class="marca" style="color:${ok?"var(--verde)":"var(--vermelho)"}">${ok?"✓":"✗"}</span>${t}${ok?"":` <span style="color:var(--tinta-60)">— ${m}</span>`}</li>`).join("");
+/* ---------- progress / header ---------- */
+function updateProgress(){
+  const o=overall();
+  $("#ring").style.setProperty("--p",o.pct);
+  $("#ringTxt").textContent=o.pct+"%";
+  $("#bigPct").textContent=o.pct+"%";
+  $("#bigBar").style.width=o.pct+"%";
+  $("#stDone").textContent=o.done; $("#stDoing").textContent=o.doing; $("#stPend").textContent=o.pend;
+  $("#tbTitle").textContent=S.obra.trim()||"Minha Obra";
+  $("#tbSub").textContent=[S.tipo,S.area?S.area+" m²":""].filter(Boolean).join(" • ")||"Acompanhamento de obra";
+  $("#homeSub").textContent = S.selected.length ? S.selected.length+" cômodo(s) em acompanhamento" : "Comece cadastrando sua obra e escolhendo os cômodos.";
+  const b=$("#bdgRooms"); b.hidden=!S.selected.length; b.textContent=S.selected.length;
 }
 
-el("main").addEventListener("change",e=>{
- if(e.target.matches(".check[id^='c_']")){
-  const [ ,sec,n]=e.target.id.split("_");
-  if(e.target.checked && !el(`d_${sec}_${n}`).value){
-   el(`d_${sec}_${n}`).value=new Date().toISOString().slice(0,10);
+/* ---------- HOME ---------- */
+function renderHome(){
+  $("#obra").value=S.obra; $("#responsavel").value=S.responsavel; $("#area").value=S.area; $("#tipo").value=S.tipo;
+  const box=$("#homeRooms");
+  if(!S.selected.length){
+    box.innerHTML='<div class="empty"><b>🏠</b>Nenhum cômodo selecionado ainda.<br><br><button class="pill y" id="goRooms">Escolher cômodos</button></div>';
+    $("#goRooms").onclick=()=>go("rooms");
+  }else{
+    box.innerHTML=S.selected.map(n=>{
+      const r=roomStats(n);
+      return '<button class="roomrow" data-room="'+esc(n)+'"><div class="n"><b>'+esc(n)+'</b><div class="mini"><i class="'+(r.pct===100?'full':'')+'" style="width:'+r.pct+'%"></i></div></div><div class="p">'+r.pct+'%</div></button>';
+    }).join("");
+    $$("#homeRooms .roomrow").forEach(b=>b.onclick=()=>{S.current=b.dataset.room;save();go("track");});
   }
- }
- if(e.target.matches("[id^='pg_pago_']")){
-  const n=e.target.id.split("_")[2], dcampo=el(`pg_data_${n}`);
-  if(e.target.checked && !dcampo.value) dcampo.value=new Date().toISOString().slice(0,10);
- }
- atualizar(); agendarSalvamento();
+  updateProgress();
+}
+["obra","responsavel","area"].forEach(id=>{
+  $("#"+id).addEventListener("input",e=>{S[id]=e.target.value;updateProgress();save();});
 });
-el("main").addEventListener("input",e=>{
- if(e.target.matches("input[type=text], input[type=number]")){ atualizar(); agendarSalvamento(); }
+$("#tipo").addEventListener("change",e=>{
+  const novo=e.target.value;
+  const apply=()=>{
+    S.tipo=novo; S.selected=[]; S.custom=[]; S.current=null;
+    save(); updateProgress(); renderHome();
+    if(novo){ toast("Agora escolha os cômodos"); go("rooms"); }
+  };
+  if(S.selected.length && novo!==S.tipo){
+    confirmSheet("Trocar tipo de imóvel?","A seleção de cômodos será reiniciada. Os dados já preenchidos de cada cômodo são mantidos caso você selecione o mesmo cômodo novamente.","Trocar",false,apply);
+    e.target.value=S.tipo;
+  }else apply();
 });
-document.querySelector(".ficha").addEventListener("input",agendarSalvamento);
-document.querySelector(".ficha").addEventListener("change",agendarSalvamento);
 
-/* ===================== FILTRO ===================== */
-function aplicarFiltro(){
- const modo=el("filtro").value;
- document.querySelectorAll(".item").forEach(row=>{
-  const feito=row.classList.contains("feito");
-  row.style.display = modo==="todos" || (modo==="feitos"&&feito) || (modo==="pendentes"&&!feito) ? "" : "none";
- });
+/* ---------- ROOMS ---------- */
+function renderRooms(){
+  const list=available();
+  const grid=$("#roomGrid");
+  $("#roomsHint").textContent = S.tipo ? "Toque nos cômodos que fazem parte da obra. ("+S.selected.length+" selecionado(s))" : "Selecione o tipo de imóvel na aba Início para ver os cômodos sugeridos.";
+  if(!S.tipo && !S.custom.length){
+    grid.innerHTML='<div class="empty" style="grid-column:1/-1"><b>🏗️</b>Escolha o tipo de imóvel primeiro.<br><br><button class="pill y" id="goHome">Ir para Início</button></div>';
+    $("#goHome").onclick=()=>go("home"); return;
+  }
+  grid.innerHTML=list.map(n=>'<button class="rc'+(S.selected.includes(n)?' on':'')+'" data-n="'+esc(n)+'"><span class="ck">✓</span>'+esc(n)+'</button>').join("");
+  $$("#roomGrid .rc").forEach(b=>b.onclick=()=>{
+    const n=b.dataset.n;
+    if(S.selected.includes(n)) S.selected=S.selected.filter(x=>x!==n); else S.selected.push(n);
+    if(S.current && !S.selected.includes(S.current)) S.current=null;
+    b.classList.toggle("on");
+    $("#roomsHint").textContent="Toque nos cômodos que fazem parte da obra. ("+S.selected.length+" selecionado(s))";
+    save(); updateProgress();
+  });
 }
+$("#selAll").onclick=()=>{ S.selected=available().slice(); save(); updateProgress(); renderRooms(); };
+$("#selNone").onclick=()=>{ S.selected=[]; S.current=null; save(); updateProgress(); renderRooms(); };
+$("#addRoom").onclick=()=>{
+  sheet('<h3>Novo cômodo ou área</h3><p>Digite o nome do ambiente que deseja acompanhar.</p><input id="newRoom" placeholder="Ex.: Closet, Piscina, Quarto de hóspedes" maxlength="40" autocomplete="off"><div class="btns"><button class="b2" data-x="no">Cancelar</button><button class="b1" data-x="ok">Adicionar</button></div>',sh=>{
+    const inp=sh.querySelector("#newRoom"); setTimeout(()=>inp.focus(),120);
+    const add=()=>{
+      const name=inp.value.trim().replace(/\s+/g," ");
+      if(!name){ inp.focus(); return; }
+      if(available().some(x=>x.toLowerCase()===name.toLowerCase())){ toast("Esse cômodo já existe"); return; }
+      S.custom.push(name); S.selected.push(name);
+      save(); closeSheet(); updateProgress(); renderRooms(); toast("“"+name+"” adicionado");
+    };
+    sh.querySelector("[data-x=no]").onclick=closeSheet;
+    sh.querySelector("[data-x=ok]").onclick=add;
+    inp.addEventListener("keydown",e=>{ if(e.key==="Enter") add(); });
+  });
+};
 
-/* ===================== SALVAMENTO AUTOMÁTICO ===================== */
-const CHAVE="obra-checklist-roberto-brandao-orcamento-v1";
-const _ls=(()=>{try{localStorage.setItem("_t","1");localStorage.removeItem("_t");return localStorage}catch(e){return null}})();
-const ST=(typeof window.storage!=="undefined"&&window.storage&&typeof window.storage.set==="function")?window.storage:(_ls?{set:async(k,v)=>_ls.setItem(k,v),get:async k=>{const v=_ls.getItem(k);return v==null?null:{value:v}},delete:async k=>_ls.removeItem(k)}:null);
-const temArmazenamento=!!ST;
-let tmr=null;
-function chipSalvo(txt,estado){ const c=el("st_salvo"); c.textContent=txt; c.className="chip"+(estado?" "+estado:""); }
-function agora(){return new Date().toLocaleTimeString("pt-BR",{hour:"2-digit",minute:"2-digit"});}
-async function salvar(){
- if(!temArmazenamento)return;
- try{ await ST.set(CHAVE,JSON.stringify(coletar()),false); chipSalvo("salvo às "+agora(),"ok"); }
- catch(e){ chipSalvo("não foi possível salvar — use Salvar arquivo"); }
-}
-function agendarSalvamento(){ if(!temArmazenamento)return; chipSalvo("salvando…"); clearTimeout(tmr); tmr=setTimeout(salvar,900); }
-async function restaurar(){
- if(!temArmazenamento){ chipSalvo("salve o arquivo ao terminar"); atualizar(); return; }
- try{
-  const r=await ST.get(CHAVE);
-  if(r&&r.value){ const j=JSON.parse(r.value);
-   for(const k in j){ const e=el(k); if(!e)continue; if(e.type==="checkbox") e.checked=!!j[k]; else e.value=j[k]; }
-   chipSalvo("recuperado do último acesso","ok");
-  } else chipSalvo("será salvo enquanto você preenche");
- }catch(e){ chipSalvo("será salvo enquanto você preenche"); }
- atualizar();
-}
-async function apagarSalvo(){ if(temArmazenamento){ try{ await ST.delete(CHAVE,false);}catch(e){} } }
+/* ---------- TRACK ---------- */
+function renderTrack(){
+  const body=$("#trackBody");
+  if(!S.selected.length){
+    body.innerHTML='<div class="card"><div class="empty"><b>📋</b>Selecione os cômodos para iniciar o acompanhamento das etapas.<br><br><button class="pill y" id="goRooms2">Escolher cômodos</button></div></div>';
+    $("#goRooms2").onclick=()=>go("rooms"); return;
+  }
+  if(!S.current || !S.selected.includes(S.current)) S.current=S.selected[0];
+  const room=S.current, d=roomData(room), r=roomStats(room);
 
-function limpar(){
- if(!confirm("Isso apaga todo o preenchimento salvo neste dispositivo. Continuar?"))return;
- document.querySelectorAll("input").forEach(i=>{
-  if(i.type==="file")return;
-  if(i.type==="checkbox") i.checked=false;
-  else if(i.id.startsWith("pg_valor_")){ /* mantém o valor padrão da parcela */ }
-  else i.value="";
- });
- PARCELAS.forEach((v,i)=>{ el(`pg_valor_${i+1}`).value=v; });
- atualizar(); apagarSalvo(); chipSalvo("apagado — comece de novo");
+  let h='<div class="picker">'+S.selected.map(n=>'<button class="chip'+(n===room?' on':'')+'" data-room="'+esc(n)+'">'+esc(n)+' <small data-pc="'+esc(n)+'">'+roomStats(n).pct+'%</small></button>').join("")+'</div>';
+  h+='<div class="roomhead"><h2>'+esc(room)+'</h2><div class="mini"><i id="rhBar" class="'+(r.pct===100?'full':'')+'" style="width:'+r.pct+'%"></i></div><div class="row"><span id="rhTxt">'+r.done+' de '+r.total+' etapas concluídas</span><b id="rhPct">'+r.pct+'%</b></div></div>';
+  h+='<div class="filters">'+[["todas","Todas"],["pendente","Pendentes"],["andamento","Em andamento"],["concluida","Concluídas"]].map(f=>'<button class="chip'+(S.filter===f[0]?' on':'')+'" data-f="'+f[0]+'">'+f[1]+'</button>').join("")+'</div>';
+  let shown=0;
+  STAGES.forEach((name,i)=>{
+    const x=d[i];
+    if(S.filter!=="todas" && x.s!==S.filter) return;
+    shown++;
+    h+='<div class="stage" data-i="'+i+'" data-s="'+x.s+'"><div class="h"><div class="num">'+(i+1)+'</div><div class="nm">'+esc(name)+'</div></div>'+
+      '<div class="seg">'+ST.map(s=>'<button data-v="'+s[0]+'" class="'+(x.s===s[0]?'on':'')+'">'+s[1]+'</button>').join("")+'</div>'+
+      '<button class="det" data-det>'+((x.d||x.o)?'▾ Data e observação':'＋ Data e observação')+'</button>'+
+      '<div class="more" '+((x.d||x.o)?'':'hidden')+'><input type="date" class="date" value="'+esc(x.d)+'" aria-label="Data"><textarea class="obs" placeholder="Observação desta etapa...">'+esc(x.o)+'</textarea></div></div>';
+  });
+  if(!shown) h+='<div class="card"><div class="empty">Nenhuma etapa neste filtro.</div></div>';
+  body.innerHTML=h;
 }
+function refreshRoomProgress(){
+  const room=S.current; if(!room) return;
+  const r=roomStats(room);
+  const bar=$("#rhBar"); if(bar){ bar.style.width=r.pct+"%"; bar.classList.toggle("full",r.pct===100); }
+  const t=$("#rhTxt"); if(t) t.textContent=r.done+" de "+r.total+" etapas concluídas";
+  const p=$("#rhPct"); if(p) p.textContent=r.pct+"%";
+  $$("[data-pc]").forEach(el=>el.textContent=roomStats(el.dataset.pc).pct+"%");
+  updateProgress();
+}
+$("#trackBody").addEventListener("click",e=>{
+  const chip=e.target.closest(".chip[data-room]");
+  if(chip){ S.current=chip.dataset.room; save(); renderTrack(); window.scrollTo({top:0}); return; }
+  const f=e.target.closest(".chip[data-f]");
+  if(f){ S.filter=f.dataset.f; save(); renderTrack(); return; }
+  const st=e.target.closest(".stage"); if(!st) return;
+  const i=+st.dataset.i;
+  const seg=e.target.closest(".seg button");
+  if(seg){
+    const v=seg.dataset.v; const x=roomData(S.current)[i];
+    x.s=v;
+    if(v==="concluida" && !x.d){ x.d=new Date().toISOString().slice(0,10); st.querySelector(".date").value=x.d; st.querySelector(".more").hidden=false; st.querySelector("[data-det]").textContent="▾ Data e observação"; }
+    st.dataset.s=v;
+    st.querySelectorAll(".seg button").forEach(b=>b.classList.toggle("on",b===seg));
+    save(); refreshRoomProgress();
+    if(S.filter!=="todas" && S.filter!==v) setTimeout(renderTrack,350);
+    return;
+  }
+  if(e.target.closest("[data-det]")){
+    const m=st.querySelector(".more"); m.hidden=!m.hidden;
+    e.target.closest("[data-det]").textContent=(m.hidden?"＋":"▾")+" Data e observação";
+  }
+});
+$("#trackBody").addEventListener("input",e=>{
+  const st=e.target.closest(".stage"); if(!st) return;
+  const x=roomData(S.current)[+st.dataset.i];
+  if(e.target.classList.contains("date")) x.d=e.target.value;
+  if(e.target.classList.contains("obs")) x.o=e.target.value;
+  save();
+});
 
-function exportar(){
- const b=new Blob([JSON.stringify({versao:1,dados:coletar()},null,1)],{type:"application/json"});
- const a=document.createElement("a"); a.href=URL.createObjectURL(b); a.download="checklist-obra-roberto-brandao.json"; a.click(); URL.revokeObjectURL(a.href);
+/* ---------- MORE ---------- */
+function buildReport(){
+  const o=overall();
+  const lab={pendente:"Pendente",andamento:"Em andamento",concluida:"Concluída",na:"Não se aplica"};
+  const fmt=d=>d?d.split("-").reverse().join("/"):"";
+  let h='<h1>'+esc(S.obra||"Acompanhamento de Obra")+'</h1><p class="meta">';
+  h+=[S.responsavel&&"Responsável: "+esc(S.responsavel),S.tipo&&"Imóvel: "+esc(S.tipo),S.area&&"Área: "+esc(S.area)+" m²","Emitido em "+new Date().toLocaleDateString("pt-BR")].filter(Boolean).join(" &nbsp;•&nbsp; ");
+  h+='</p><p><b>Progresso geral: '+o.pct+'%</b> — '+o.done+' concluídas, '+o.doing+' em andamento, '+o.pend+' pendentes.</p>';
+  S.selected.forEach(n=>{
+    const r=roomStats(n), d=roomData(n);
+    h+='<h2>'+esc(n)+' — '+r.pct+'%</h2><table><tr><th style="width:34%">Etapa</th><th style="width:16%">Situação</th><th style="width:12%">Data</th><th>Observação</th></tr>';
+    STAGES.forEach((s,i)=>{ h+='<tr><td>'+esc(s)+'</td><td>'+lab[d[i].s]+'</td><td>'+fmt(d[i].d)+'</td><td>'+esc(d[i].o)+'</td></tr>'; });
+    h+='</table>';
+  });
+  $("#report").innerHTML=h;
 }
-function importar(ev){
- const f=ev.target.files[0]; if(!f)return;
- const r=new FileReader();
- r.onload=()=>{ try{
-   const j=JSON.parse(r.result).dados||{};
-   for(const k in j){ const e=el(k); if(!e)continue; if(e.type==="checkbox") e.checked=!!j[k]; else e.value=j[k]; }
-   atualizar(); agendarSalvamento();
-  }catch(e){ alert("Arquivo inválido. Use um arquivo gerado pelo botão Salvar arquivo."); } };
- r.readAsText(f); ev.target.value="";
-}
+window.addEventListener("beforeprint",buildReport);
+$("#actPdf").onclick=()=>{
+  if(!S.selected.length){ toast("Selecione cômodos antes de gerar o relatório"); return; }
+  buildReport(); setTimeout(()=>window.print(),50);
+};
+$("#actExport").onclick=()=>{
+  const blob=new Blob([JSON.stringify(S,null,2)],{type:"application/json"});
+  const a=document.createElement("a");
+  a.href=URL.createObjectURL(blob);
+  a.download="obra-"+(S.obra.trim().toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"")||"backup")+".json";
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+  toast("Backup exportado");
+};
+$("#actImport").onclick=()=>$("#fileIn").click();
+$("#fileIn").addEventListener("change",e=>{
+  const f=e.target.files[0]; if(!f) return;
+  const rd=new FileReader();
+  rd.onload=()=>{
+    try{
+      const o=JSON.parse(rd.result);
+      if(typeof o!=="object"||!o||!Array.isArray(o.selected)) throw 0;
+      S=Object.assign(fresh(),o); save(); go("home"); toast("Backup importado");
+    }catch(_){ toast("Arquivo de backup inválido"); }
+  };
+  rd.readAsText(f); e.target.value="";
+});
+$("#actClear").onclick=()=>confirmSheet("Limpar tudo?","Todos os dados desta obra serão apagados deste dispositivo. Esta ação não pode ser desfeita.","Apagar tudo",true,()=>{
+  S=fresh(); try{localStorage.removeItem(KEY);localStorage.removeItem(OLD);}catch(_){}
+  go("home"); toast("Acompanhamento limpo");
+});
 
-/* ===================== NAVEGAÇÃO ATIVA ===================== */
-if("IntersectionObserver" in window){
- const obs=new IntersectionObserver(es=>{es.forEach(x=>{
-  if(x.isIntersecting) document.querySelectorAll("nav.etapas a").forEach(a=>{const on=a.dataset.alvo===x.target.id;a.classList.toggle("ativo",on);if(on&&innerWidth<=900)a.parentElement.parentElement.scrollTo({left:a.offsetLeft-40,behavior:"smooth"})});
- });},{rootMargin:"-45% 0px -50% 0px"});
- document.querySelectorAll("section.etapa").forEach(s=>obs.observe(s));
-}
-
-el("capa_data").textContent=new Date().toLocaleDateString("pt-BR",{day:"2-digit",month:"long",year:"numeric"});
-if(!el("id_att").value) el("id_att").value=new Date().toISOString().slice(0,10);
-restaurar();
+/* ---------- init ---------- */
+renderHome(); renderSaved();
+})();
 </script>
 </body>
 </html>
