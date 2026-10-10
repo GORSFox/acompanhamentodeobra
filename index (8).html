@@ -1,0 +1,1455 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#14213D">
+<meta name="description" content="Orça Aqui: organize a obra, acompanhe cada etapa e peça orçamentos com clareza.">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Orça Aqui">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23FCA311'/%3E%3Cpath d='M14 31 32 16l18 15' fill='none' stroke='%2314213D' stroke-width='5' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M20 29v18h24V29' fill='none' stroke='%2314213D' stroke-width='5' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='m26 38 5 5 8-10' fill='none' stroke='%2314213D' stroke-width='5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<title>Orça Aqui — Planeje, acompanhe e peça orçamentos</title>
+<style>
+:root{
+  --black:#000;--navy:#14213D;--navy-2:#1d3057;--navy-3:#0d1730;--yellow:#FCA311;--yellow-2:#ffb94a;--gray:#E5E5E5;--white:#fff;
+  --bg:#eef0f4;--ink:#101828;--muted:#667085;--line:#e4e7ec;--ok:#16a34a;--ok-bg:#e8f6ee;--warn-bg:#fff4dc;--danger:#b42318;
+  --r:16px;--r-sm:12px;
+  --sh1:0 1px 2px rgba(16,24,40,.05),0 1px 3px rgba(16,24,40,.07);
+  --sh2:0 4px 6px -2px rgba(16,24,40,.05),0 12px 20px -4px rgba(16,24,40,.10);
+  --safe-b:env(safe-area-inset-bottom,0px);--safe-t:env(safe-area-inset-top,0px);
+  --hdr-h:96px;
+  --font:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+[hidden]{display:none!important}
+html,body{margin:0;min-height:100%}
+body{font-family:var(--font);background:var(--bg);color:var(--ink);line-height:1.45;-webkit-font-smoothing:antialiased;overscroll-behavior-y:none;font-variant-numeric:tabular-nums}
+body.lock{overflow:hidden}
+button{font:inherit;cursor:pointer;border:0;color:inherit;background:none}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid rgba(252,163,17,.55);outline-offset:2px}
+input,select,textarea{font:inherit;width:100%;min-height:48px;padding:12px 14px;border:1.5px solid #d0d5dd;border-radius:var(--r-sm);background:#fff;color:var(--ink);transition:border-color .15s,box-shadow .15s}
+input::placeholder,textarea::placeholder{color:#98a2b3}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--navy);box-shadow:0 0 0 4px rgba(20,33,61,.10)}
+select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23667085' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:40px}
+textarea{min-height:76px;resize:vertical}
+label.l{display:block;font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:#475467;margin:16px 0 6px}
+label.l:first-child{margin-top:0}
+
+/* ===== buttons ===== */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 20px;border-radius:var(--r-sm);font-weight:700;font-size:15px;letter-spacing:-.005em;transition:transform .08s,box-shadow .15s,background .15s}
+.btn:active{transform:scale(.98)}
+.btn svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.btn-y{background:var(--yellow);color:#111;box-shadow:0 1px 2px rgba(0,0,0,.12),0 6px 14px -4px rgba(252,163,17,.55)}
+.btn-y:hover{background:var(--yellow-2)}
+.btn-n{background:var(--navy);color:#fff;box-shadow:var(--sh1)}
+.btn-o{background:#fff;color:var(--navy);border:1.5px solid #cdd3df}
+.btn-o:hover{border-color:var(--navy)}
+.btn-g{background:#25D366;color:#fff;box-shadow:0 6px 14px -4px rgba(37,211,102,.55)}
+.btn-danger{background:var(--danger);color:#fff}
+.btn-block{width:100%}
+.btn[disabled]{opacity:.45;pointer-events:none}
+.btn-row{display:flex;gap:10px;flex-wrap:wrap}
+.btn-row .btn{flex:1;min-width:140px}
+.linkbtn{color:var(--navy);font-weight:700;text-decoration:underline;text-underline-offset:3px;padding:10px}
+
+/* ===== WELCOME / ENTRADA ===== */
+#welcome{position:fixed;inset:0;z-index:100;overflow-y:auto;color:#fff;
+  background:
+   radial-gradient(900px 500px at 85% -10%,rgba(252,163,17,.22),transparent 60%),
+   radial-gradient(700px 500px at -10% 110%,rgba(80,120,220,.25),transparent 60%),
+   linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px) 0 0/32px 32px,
+   linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px) 0 0/32px 32px,
+   linear-gradient(165deg,var(--navy-3),var(--navy) 55%,var(--navy-2));
+  transition:opacity .35s ease,visibility .35s,transform .35s ease}
+#welcome.out{opacity:0;visibility:hidden;pointer-events:none;transform:scale(1.02)}
+.w-inner{max-width:480px;margin:0 auto;padding:calc(36px + var(--safe-t)) 22px calc(28px + var(--safe-b));min-height:100%;display:flex;flex-direction:column}
+.w-brand{text-align:center;margin-bottom:26px;animation:rise .6s ease both}
+.w-logo{width:76px;height:76px;margin:0 auto 14px;display:block;filter:drop-shadow(0 12px 24px rgba(0,0,0,.35))}
+.w-brand h1{margin:0;font-size:38px;line-height:1.05;font-weight:800;letter-spacing:-.03em}
+.w-brand h1 span{color:var(--yellow)}
+.w-brand p{margin:12px auto 0;max-width:340px;color:rgba(255,255,255,.78);font-size:16px}
+.w-feats{display:grid;gap:10px;margin-bottom:22px;animation:rise .6s .1s ease both}
+.w-feat{display:flex;gap:14px;align-items:center;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);backdrop-filter:blur(6px);border-radius:14px;padding:13px 14px}
+.w-feat .ic{width:40px;height:40px;border-radius:11px;background:rgba(252,163,17,.16);display:grid;place-items:center;flex:none}
+.w-feat .ic svg{width:22px;height:22px;stroke:var(--yellow);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.w-feat b{display:block;font-size:15px}
+.w-feat span{font-size:13px;color:rgba(255,255,255,.7)}
+.w-q{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.6);margin:6px 0 10px;text-align:center;animation:rise .6s .2s ease both}
+.w-roles{display:grid;gap:10px;margin-bottom:18px;animation:rise .6s .2s ease both}
+.role-card{display:flex;gap:14px;align-items:center;text-align:left;width:100%;background:#fff;color:var(--ink);border:2.5px solid transparent;border-radius:16px;padding:15px;transition:.15s;box-shadow:0 10px 24px -10px rgba(0,0,0,.45)}
+.role-card .ic{width:46px;height:46px;border-radius:13px;background:#eef1f8;display:grid;place-items:center;flex:none;transition:.15s}
+.role-card .ic svg{width:25px;height:25px;stroke:var(--navy);fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.role-card b{display:block;font-size:16px;color:var(--navy)}
+.role-card span{font-size:13px;color:var(--muted);line-height:1.35;display:block;margin-top:2px}
+.role-card .rd{width:24px;height:24px;border-radius:50%;border:2px solid #c5cad6;margin-left:auto;flex:none;display:grid;place-items:center;transition:.15s}
+.role-card.on{border-color:var(--yellow);box-shadow:0 0 0 4px rgba(252,163,17,.25),0 10px 24px -10px rgba(0,0,0,.45)}
+.role-card.on .ic{background:var(--yellow)}
+.role-card.on .rd{background:var(--yellow);border-color:var(--yellow)}
+.role-card.on .rd::after{content:"";width:10px;height:6px;border-left:3px solid #111;border-bottom:3px solid #111;transform:rotate(-45deg) translate(1px,-1px)}
+.w-cta{margin-top:auto;animation:rise .6s .3s ease both}
+.w-cta .btn{min-height:54px;font-size:16px}
+.w-new{display:block;margin:10px auto 0;color:rgba(255,255,255,.75);font-weight:600;font-size:14px;text-decoration:underline;text-underline-offset:3px;padding:10px}
+.w-foot{text-align:center;font-size:12px;color:rgba(255,255,255,.5);margin-top:10px}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+/* ===== HEADER ===== */
+#app{max-width:760px;margin:0 auto;min-height:100vh;padding-bottom:calc(88px + var(--safe-b))}
+.hdr{position:sticky;top:0;z-index:20;color:#fff;
+  background:linear-gradient(135deg,var(--navy-3),var(--navy) 60%,var(--navy-2));
+  padding:calc(10px + var(--safe-t)) 16px 12px;box-shadow:0 6px 18px -8px rgba(13,23,48,.6)}
+.hdr::after{content:"";position:absolute;left:0;right:0;bottom:0;height:3px;background:linear-gradient(90deg,var(--yellow),var(--yellow-2) 40%,transparent)}
+.hdr-top{display:flex;align-items:center;gap:10px}
+.brand{display:flex;align-items:center;gap:10px;text-align:left;min-width:0;flex:1;border-radius:12px}
+.brand svg{width:36px;height:36px;flex:none}
+.brand b{display:block;font-size:17px;letter-spacing:-.02em;line-height:1.1}
+.brand b span{color:var(--yellow)}
+.brand small{display:block;font-size:11px;color:rgba(255,255,255,.65);margin-top:1px;white-space:nowrap}
+.role-chip{font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;background:rgba(252,163,17,.16);color:var(--yellow);border:1px solid rgba(252,163,17,.4);padding:5px 10px;border-radius:20px;white-space:nowrap}
+.ring{--p:0;width:44px;height:44px;border-radius:50%;background:conic-gradient(var(--yellow) calc(var(--p)*1%),rgba(255,255,255,.18) 0);display:grid;place-items:center;flex:none}
+.ring span{width:35px;height:35px;border-radius:50%;background:var(--navy);display:grid;place-items:center;font-size:11px;font-weight:800}
+.hdr-obra{display:flex;align-items:center;gap:8px;margin-top:10px;padding-top:9px;border-top:1px solid rgba(255,255,255,.1);min-width:0}
+.hdr-obra svg{width:16px;height:16px;stroke:var(--yellow);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.hdr-obra b{font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hdr-obra span{font-size:12px;color:rgba(255,255,255,.65);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* ===== views / cards ===== */
+.view{display:none;padding:16px 14px}
+.view.active{display:block;animation:fade .22s ease}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.card{background:#fff;border:1px solid rgba(16,24,40,.05);border-radius:var(--r);padding:18px;margin-bottom:14px;box-shadow:var(--sh1)}
+.card h2{margin:0;font-size:17px;letter-spacing:-.015em;color:var(--navy)}
+.sub{color:var(--muted);font-size:13.5px;margin:3px 0 0}
+.sec-title{display:flex;align-items:center;justify-content:space-between;margin:20px 2px 10px;font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#667085}
+.empty{text-align:center;color:var(--muted);padding:28px 12px}
+.empty .ei{width:60px;height:60px;border-radius:18px;background:#eef1f8;display:grid;place-items:center;margin:0 auto 12px}
+.empty .ei svg{width:30px;height:30px;stroke:var(--navy);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.empty .btn{margin-top:14px}
+
+/* hero */
+.hero{border-radius:20px;padding:20px;color:#fff;margin-bottom:14px;position:relative;overflow:hidden;
+  background:
+   radial-gradient(400px 220px at 100% 0,rgba(252,163,17,.25),transparent 60%),
+   linear-gradient(135deg,var(--navy-3),var(--navy) 55%,var(--navy-2));box-shadow:var(--sh2)}
+.hero small{display:block;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--yellow)}
+.hero h2{margin:4px 0 6px;color:#fff;font-size:22px;letter-spacing:-.02em}
+.hero p{margin:0;color:rgba(255,255,255,.75);font-size:14px;max-width:460px}
+.hero .pc{display:flex;align-items:flex-end;gap:10px;margin-top:16px}
+.hero .pc b{font-size:46px;line-height:1;letter-spacing:-.04em;font-weight:800}
+.hero .pc span{color:rgba(255,255,255,.7);font-size:13px;padding-bottom:6px}
+.bar{height:10px;border-radius:10px;background:rgba(255,255,255,.18);overflow:hidden;margin-top:12px}
+.bar i{display:block;height:100%;width:0;border-radius:10px;background:linear-gradient(90deg,var(--yellow),var(--yellow-2));transition:width .4s}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:16px}
+.stat{background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:10px 6px;text-align:center}
+.stat b{display:block;font-size:22px;line-height:1.1}
+.stat span{font-size:11px;color:rgba(255,255,255,.7);font-weight:600}
+.shortcuts{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:6px}
+.sc{background:#fff;border:1px solid rgba(16,24,40,.05);border-radius:14px;padding:14px 8px;text-align:center;box-shadow:var(--sh1);font-size:12.5px;font-weight:700;color:var(--navy);display:flex;flex-direction:column;align-items:center;gap:8px;transition:transform .1s}
+.sc:active{transform:scale(.97)}
+.sc .ic{width:40px;height:40px;border-radius:12px;background:var(--warn-bg);display:grid;place-items:center}
+.sc .ic svg{width:21px;height:21px;stroke:var(--navy);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.roomrow{display:flex;align-items:center;gap:12px;padding:13px 0;border-top:1px solid var(--line);width:100%;text-align:left}
+.roomrow:first-child{border-top:0}
+.roomrow .n{flex:1;min-width:0}
+.roomrow .n b{display:block;font-size:15px}
+.mini{height:6px;background:#e6e9f0;border-radius:6px;overflow:hidden;margin-top:7px}
+.mini i{display:block;height:100%;background:var(--yellow);width:0;border-radius:6px;transition:width .35s}
+.mini i.full{background:var(--ok)}
+.roomrow .p{font-weight:800;color:var(--navy);font-size:14px;min-width:40px;text-align:right}
+.roomrow svg{width:18px;height:18px;stroke:#98a2b3;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+/* ===== nav ===== */
+nav{position:fixed;left:0;right:0;bottom:0;z-index:30;background:rgba(255,255,255,.94);backdrop-filter:saturate(1.6) blur(14px);border-top:1px solid var(--line);padding-bottom:var(--safe-b)}
+nav .in{display:flex;max-width:760px;margin:0 auto;padding:0 6px}
+nav button{flex:1;padding:9px 2px 8px;display:flex;flex-direction:column;align-items:center;gap:3px;font-size:11px;font-weight:700;color:#98a2b3;position:relative;transition:color .15s}
+nav button svg{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;transition:transform .15s}
+nav button.on{color:var(--navy)}
+nav button.on svg{transform:translateY(-1px);stroke:var(--navy)}
+nav button.on::before{content:"";position:absolute;top:0;left:30%;right:30%;height:3px;border-radius:0 0 4px 4px;background:var(--yellow)}
+nav .badge{position:absolute;top:4px;left:calc(50% + 6px);background:var(--yellow);color:#111;border-radius:10px;font-size:10px;font-weight:800;padding:1px 6px;min-width:16px;text-align:center}
+
+/* ===== rooms ===== */
+.tools{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}
+.pill{background:#fff;border:1.5px solid #cdd3df;color:var(--navy);padding:9px 14px;border-radius:22px;font-weight:700;font-size:13px;transition:.15s}
+.pill:hover{border-color:var(--navy)}
+.pill.y{background:var(--yellow);border-color:var(--yellow);color:#111}
+.rgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:10px}
+.rc{background:#fff;border:2px solid #e1e5ec;border-radius:14px;padding:14px 12px;font-weight:700;font-size:14px;text-align:left;display:flex;align-items:center;gap:10px;min-height:58px;transition:.15s}
+.rc .ck{width:22px;height:22px;border-radius:7px;border:2px solid #c3c9d5;flex:none;display:grid;place-items:center;color:transparent;font-size:13px;transition:.15s}
+.rc.on{border-color:var(--navy);background:#eef2fb;box-shadow:0 0 0 3px rgba(20,33,61,.07)}
+.rc.on .ck{background:var(--navy);border-color:var(--navy);color:#fff}
+
+/* ===== tracking ===== */
+.picker{display:flex;gap:8px;overflow-x:auto;margin:-16px -14px 12px;padding:12px 14px 10px;scrollbar-width:none;position:sticky;top:var(--hdr-h);z-index:10;background:var(--bg)}
+.picker::-webkit-scrollbar{display:none}
+.chip{flex:none;background:#fff;border:1.5px solid #d6dbe5;border-radius:22px;padding:8px 14px;font-weight:700;font-size:13px;white-space:nowrap;display:flex;gap:7px;align-items:center;transition:.15s}
+.chip small{color:var(--muted);font-weight:800}
+.chip.on{background:var(--navy);border-color:var(--navy);color:#fff}
+.chip.on small{color:var(--yellow)}
+.filters{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.filters .chip{padding:6px 12px;font-size:12px}
+.filters .chip.on{background:var(--yellow);border-color:var(--yellow);color:#111}
+.roomhead{background:linear-gradient(135deg,var(--navy),var(--navy-2));color:#fff;border-radius:18px;padding:18px;margin-bottom:12px;box-shadow:var(--sh2)}
+.roomhead small{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--yellow)}
+.roomhead h2{margin:2px 0 0;color:#fff;font-size:21px;letter-spacing:-.02em}
+.roomhead .mini{background:rgba(255,255,255,.2);height:8px}
+.roomhead .row{display:flex;justify-content:space-between;align-items:baseline;font-size:13px;color:rgba(255,255,255,.8);margin-top:8px}
+.roomhead .row b{font-size:20px;color:#fff}
+.stage{background:#fff;border:1px solid rgba(16,24,40,.05);border-radius:14px;padding:14px;margin-bottom:10px;border-left:5px solid #cfd5e0;box-shadow:var(--sh1);transition:border-color .2s,opacity .2s}
+.stage[data-s=andamento]{border-left-color:var(--yellow)}
+.stage[data-s=concluida]{border-left-color:var(--ok)}
+.stage[data-s=na]{border-left-color:#98a2b3;opacity:.65}
+.stage .h{display:flex;gap:10px;align-items:center;margin-bottom:11px}
+.stage .num{width:26px;height:26px;border-radius:8px;background:#eef1f8;color:var(--navy);font-weight:800;font-size:12px;display:grid;place-items:center;flex:none}
+.stage .nm{font-weight:700;font-size:15px;flex:1;letter-spacing:-.01em}
+.seg{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;background:#f2f4f7;padding:4px;border-radius:12px}
+.seg button{border-radius:9px;padding:10px 2px;font-size:11.5px;font-weight:700;color:#667085;line-height:1.15;transition:.15s}
+.seg button.on{box-shadow:0 1px 3px rgba(16,24,40,.18)}
+.seg button.on[data-v=pendente]{background:#fff;color:#101828}
+.seg button.on[data-v=andamento]{background:var(--yellow);color:#111}
+.seg button.on[data-v=concluida]{background:var(--ok);color:#fff}
+.seg button.on[data-v=na]{background:#667085;color:#fff}
+.more{display:grid;gap:8px;margin-top:10px}
+.det{color:var(--navy);font-weight:700;font-size:12.5px;padding:10px 0 0}
+
+/* ===== quote ===== */
+.qhead{display:flex;gap:14px;align-items:center}
+.qhead .ic{width:48px;height:48px;border-radius:14px;background:var(--warn-bg);display:grid;place-items:center;flex:none}
+.qhead .ic svg{width:26px;height:26px;stroke:var(--navy);fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.qstats{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:14px 0}
+.qstats div{background:#f6f7fa;border-radius:12px;padding:10px;text-align:center}
+.qstats b{display:block;font-size:22px;color:var(--navy);line-height:1.1}
+.qstats span{font-size:11px;color:var(--muted);font-weight:700}
+.qroom{display:flex;align-items:center;justify-content:space-between;margin:18px 2px 8px}
+.qroom b{font-size:15px;color:var(--navy)}
+.qroom span{font-size:12px;color:var(--muted);font-weight:600;margin-left:8px}
+.qroom button{color:var(--navy);font-weight:800;font-size:13px;padding:6px 10px;background:#fff;border:1.5px solid #cdd3df;border-radius:20px}
+.svc{display:flex;gap:12px;align-items:flex-start;width:100%;text-align:left;background:#fff;border:1px solid rgba(16,24,40,.05);border-radius:14px;padding:13px;margin-bottom:8px;box-shadow:var(--sh1)}
+.svc .num{width:26px;height:26px;border-radius:8px;background:var(--warn-bg);color:#8a5a00;font-weight:800;font-size:12px;display:grid;place-items:center;flex:none;margin-top:1px}
+.svc .b{flex:1;min-width:0}
+.svc .b b{display:block;font-size:14.5px;letter-spacing:-.01em}
+.svc .m{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.tag{font-size:11.5px;font-weight:700;padding:3px 9px;border-radius:20px;background:#eef1f8;color:var(--navy)}
+.tag.q{background:var(--warn-bg);color:#8a5a00}
+.svc .note{font-size:12.5px;color:var(--muted);margin-top:6px}
+.svc>svg{width:18px;height:18px;stroke:#98a2b3;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;margin-top:3px;flex:none}
+.send{background:linear-gradient(135deg,var(--navy),var(--navy-2));color:#fff;border-radius:var(--r);padding:18px;box-shadow:var(--sh2)}
+.send h2{color:#fff}
+.send .sub{color:rgba(255,255,255,.7);margin-bottom:14px}
+.send .btn-row{flex-direction:column}
+.send .btn-o{background:rgba(255,255,255,.1);color:#fff;border-color:rgba(255,255,255,.3)}
+
+/* ===== more ===== */
+.item{display:flex;align-items:center;gap:14px;width:100%;background:#fff;border:1px solid rgba(16,24,40,.05);border-radius:14px;padding:14px;margin-bottom:10px;text-align:left;box-shadow:var(--sh1)}
+.item .ic{width:44px;height:44px;border-radius:12px;background:#eef1f8;display:grid;place-items:center;flex:none}
+.item .ic svg{width:22px;height:22px;stroke:var(--navy);fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.item b{display:block;font-size:15px}
+.item span{font-size:12.5px;color:var(--muted)}
+.item.danger .ic{background:#fde8e6}
+.item.danger .ic svg{stroke:var(--danger)}
+.item.danger b{color:var(--danger)}
+
+/* ===== sheet / toast ===== */
+.scrim{position:fixed;inset:0;background:rgba(13,23,48,.55);backdrop-filter:blur(2px);z-index:150;display:none;align-items:flex-end;justify-content:center}
+.scrim.on{display:flex}
+.sheet{background:#fff;width:100%;max-width:560px;max-height:92vh;overflow-y:auto;border-radius:24px 24px 0 0;padding:10px 18px calc(20px + var(--safe-b));animation:up .22s ease}
+.sheet::before{content:"";display:block;width:40px;height:4px;border-radius:4px;background:#d0d5dd;margin:0 auto 14px}
+@keyframes up{from{transform:translateY(50px);opacity:.3}to{transform:none;opacity:1}}
+.sheet h3{margin:0 0 4px;color:var(--navy);font-size:19px;letter-spacing:-.02em}
+.sheet>p{margin:0 0 14px;color:var(--muted);font-size:14px}
+.sheet .btns{display:flex;gap:10px;margin-top:18px}
+.sheet .btns .btn{flex:1}
+.suggest{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.suggest button{font-size:12.5px;font-weight:600;padding:7px 11px;border-radius:18px;background:var(--warn-bg);color:#6b4500;border:1px solid #f6dca3;text-align:left}
+#toast{position:fixed;left:50%;bottom:calc(96px + var(--safe-b));transform:translateX(-50%) translateY(20px);background:#101828;color:#fff;padding:12px 20px;border-radius:26px;font-size:14px;font-weight:600;opacity:0;pointer-events:none;transition:.25s;z-index:200;max-width:90%;text-align:center;box-shadow:var(--sh2)}
+#toast.on{opacity:1;transform:translateX(-50%)}
+body.sheet-open #toast{bottom:auto;top:calc(14px + var(--safe-t));transform:translateX(-50%) translateY(-20px)}
+body.sheet-open #toast.on{transform:translateX(-50%)}
+
+/* ===== editar listas / total / partes ===== */
+.mrow{display:flex;gap:8px;align-items:center;margin-bottom:8px}
+.mrow input{flex:1;min-height:46px}
+.mdel{min-width:46px;height:46px;border-radius:12px;background:#fde8e6;color:var(--danger);font-weight:800;flex:none;font-size:15px;padding:0 8px}
+.mdel.arm{background:var(--danger);color:#fff;font-size:12px;padding:0 12px}
+.addrow{display:flex;gap:8px;margin-top:10px}
+.addrow input{flex:1}
+.addrow .btn{flex:none;padding:0 16px}
+#ml{max-height:42vh;overflow-y:auto;margin:0 -4px;padding:0 4px}
+.money{position:relative}
+.money span{position:absolute;left:16px;top:50%;transform:translateY(-50%);font-weight:800;color:var(--navy);font-size:18px}
+.money input{padding-left:50px;font-size:24px;font-weight:800;color:var(--navy);min-height:60px;letter-spacing:-.01em}
+.totalcard{border:2px solid var(--yellow);background:linear-gradient(180deg,#fffaf0,#fff)}
+
+/* ===== seleção / ar-condicionado ===== */
+.chk{display:flex;align-items:center;gap:12px;background:#fff;border:1.5px solid #dfe3ea;border-radius:12px;padding:12px 14px;margin-bottom:8px;font-weight:600;font-size:14.5px;cursor:pointer}
+.chk input{width:22px;height:22px;min-height:22px;padding:0;flex:none;accent-color:var(--navy);margin:0}
+.chk:has(input:checked){border-color:var(--navy);background:#eef2fb}
+#cs_list{max-height:46vh;overflow-y:auto;margin:0 -4px;padding:2px 4px}
+.sugt{font-size:12px;font-weight:700;color:#667085;margin:12px 0 2px}
+.suggest button{transition:.12s}
+.suggest button.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+.suggest button.on::before{content:"✓ "}
+.acbox{margin-top:14px;padding:12px 14px 14px;border-radius:14px;background:#eef7ff;border:1.5px solid #c8e1f7}
+.acbox .acttl{font-weight:800;color:var(--navy);font-size:14px}
+.acbox .l:first-child{margin-top:8px}
+
+/* ===== print ===== */
+#report{display:none}
+@media print{
+  @page{margin:14mm}
+  body{background:#fff}
+  #app,nav,#toast,.scrim,#welcome{display:none!important}
+  #report{display:block;font-family:var(--font);font-size:11.5px;color:#000}
+  #report .rh{display:flex;align-items:center;gap:12px;border-bottom:3px solid var(--yellow);padding-bottom:10px;margin-bottom:12px}
+  #report .rh svg{width:40px;height:40px}
+  #report .rh b{font-size:16px;color:var(--navy)}
+  #report .rh small{display:block;color:#555}
+  #report h1{color:var(--navy);margin:0 0 4px;font-size:22px}
+  #report h2{background:var(--navy);color:#fff;padding:6px 10px;margin:16px 0 0;font-size:13px;break-after:avoid}
+  #report table{width:100%;border-collapse:collapse}
+  #report td,#report th{border:1px solid #bbb;padding:5px 7px;text-align:left;vertical-align:top}
+  #report th{background:#eee}
+  #report .meta{margin:0 0 8px;color:#333}
+  #report tr{break-inside:avoid}
+  #report .sign{margin-top:28px;display:flex;gap:30px}
+  #report .sign div{flex:1;border-top:1px solid #000;padding-top:4px;font-size:11px}
+  #report .parties{margin:6px 0 10px}
+  #report .parties td{width:50%}
+  #report .total{margin-top:14px;border:2px solid var(--navy);padding:10px 14px;display:flex;justify-content:space-between;align-items:flex-end;font-size:14px;font-weight:800;color:var(--navy)}
+  #report .total span:last-child{min-width:200px;border-bottom:1px solid #000;text-align:right;color:#000}
+  #report small{color:#555}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+@media(min-width:760px){.view{padding:22px}.picker{margin:-22px -22px 12px;padding:14px 22px 10px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* ===== serviços por etapa ===== */
+.stghead{display:flex;align-items:center;gap:10px;margin:20px 2px 9px}
+.stghead .num{width:26px;height:26px;border-radius:8px;background:var(--navy);color:#fff;font-weight:800;font-size:12px;display:grid;place-items:center;flex:none}
+.stghead b{flex:1;font-size:14px;color:var(--navy);letter-spacing:-.01em;line-height:1.25}
+.stghead small{font-weight:800;font-size:12px;color:var(--muted);background:#fff;border:1px solid var(--line);padding:3px 10px;border-radius:20px;flex:none}
+.csgrp{margin-bottom:10px}
+.chk.csh{background:#f2f4f9;border-color:#d6dbe5;font-weight:800;color:var(--navy);margin-bottom:6px}
+.chk.sub{margin-left:16px;padding:10px 12px;font-size:14px;font-weight:600}
+.mstage{border:1.5px solid #e4e7ec;border-radius:14px;padding:10px 10px 6px;margin-bottom:12px;background:#fafbfd}
+.mstage>.mrow input{font-weight:800;color:var(--navy)}
+.msvcs{margin:2px 0 4px 10px;padding-left:10px;border-left:3px solid var(--yellow)}
+.msvcs .mrow input{min-height:42px;font-size:14px}
+.msvcs .mdel{height:42px;min-width:42px}
+.addrow.sm{margin:4px 0 6px}
+.addrow.sm input{min-height:42px;font-size:14px}
+.addrow.sm .btn{min-height:42px;font-size:13px;padding:0 14px}
+.addsvc{margin-top:14px;padding:12px;border:1.5px dashed #cdd3df;border-radius:14px;background:#fafbfd}
+.addsvc>b{display:block;font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:#475467;margin-bottom:8px}
+.addsvc select{margin-bottom:8px}
+.addsvc .addrow{margin-top:0}
+</style>
+</head>
+<body class="lock">
+
+<!-- sprite -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="logo" viewBox="0 0 64 64">
+    <rect width="64" height="64" rx="16" fill="#FCA311"/>
+    <path d="M14 31 32 16l18 15" fill="none" stroke="#14213D" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M20 29v18h24V29" fill="none" stroke="#14213D" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="m26 38 5 5 8-10" fill="none" stroke="#14213D" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  </symbol>
+</svg>
+
+<!-- ===== ENTRADA ===== -->
+<div id="welcome">
+  <div class="w-inner">
+    <div class="w-brand">
+      <svg class="w-logo" viewBox="0 0 64 64" aria-hidden="true"><use href="#logo"/></svg>
+      <h1>Orça <span>Aqui</span></h1>
+      <p>Organize a obra, acompanhe cada etapa e peça orçamentos com clareza.</p>
+    </div>
+
+    <div class="w-feats">
+      <div class="w-feat"><div class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="8" height="8" rx="2"/><rect x="13" y="3" width="8" height="8" rx="2"/><rect x="3" y="13" width="8" height="8" rx="2"/><rect x="13" y="13" width="8" height="8" rx="2"/></svg></div><div><b>Planeje por cômodo</b><span>Etapas de obra por ambiente, do seu jeito</span></div></div>
+      <div class="w-feat"><div class="ic"><svg viewBox="0 0 24 24"><path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9"/></svg></div><div><b>Acompanhe o andamento</b><span>Progresso, datas e observações em tempo real</span></div></div>
+      <div class="w-feat"><div class="ic"><svg viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h4"/></svg></div><div><b>Peça orçamentos</b><span>Monte a lista de serviços e envie por WhatsApp ou PDF</span></div></div>
+    </div>
+
+    <div class="w-q">Como você vai usar?</div>
+    <div class="w-roles">
+      <button class="role-card" data-role="pro">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.4 2.4-2.6-.6-.6-2.6z"/></svg></div>
+        <div><b>Sou profissional</b><span>Arquiteto, engenheiro, mestre de obras ou gestor: planeje o escopo e organize as etapas.</span></div>
+        <div class="rd"></div>
+      </button>
+      <button class="role-card" data-role="dono">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></svg></div>
+        <div><b>Sou proprietário</b><span>Acompanhe a evolução da obra e solicite orçamentos com um escopo claro.</span></div>
+        <div class="rd"></div>
+      </button>
+    </div>
+
+    <div class="w-cta">
+      <button class="btn btn-y btn-block" id="wEnter" disabled>Escolha uma opção</button>
+      <button class="w-new" id="wNew" hidden>Começar uma nova obra</button>
+      <div class="w-foot">Seus dados ficam salvos neste dispositivo.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== APP ===== -->
+<div id="app">
+  <header class="hdr" id="hdr">
+    <div class="hdr-top">
+      <button class="brand" id="brandBtn" aria-label="Voltar à tela de entrada">
+        <svg viewBox="0 0 64 64" aria-hidden="true"><use href="#logo"/></svg>
+        <div><b>Orça <span>Aqui</span></b><small id="tbTag">Planeje • Acompanhe • Orce</small></div>
+      </button>
+      <span class="role-chip" id="roleChip">Profissional</span>
+      <div class="ring" id="ring"><span id="ringTxt">0%</span></div>
+    </div>
+    <div class="hdr-obra">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 21h18M5 21V9l7-5 7 5v12M10 21v-6h4v6"/></svg>
+      <b id="tbTitle">Nova obra</b>
+      <span id="tbMeta"></span>
+    </div>
+  </header>
+
+  <!-- INÍCIO -->
+  <section class="view active" id="v-home">
+    <div class="hero">
+      <small id="heroRole">Visão geral</small>
+      <h2 id="heroTitle">Sua obra, em ordem.</h2>
+      <p id="heroText"></p>
+      <div class="pc"><b id="bigPct">0%</b><span id="homeSub">concluído</span></div>
+      <div class="bar"><i id="bigBar"></i></div>
+      <div class="stats">
+        <div class="stat"><b id="stDone">0</b><span>Concluídas</span></div>
+        <div class="stat"><b id="stDoing">0</b><span>Em andamento</span></div>
+        <div class="stat"><b id="stPend">0</b><span>Pendentes</span></div>
+      </div>
+    </div>
+
+    <div class="shortcuts">
+      <button class="sc" data-go="rooms"><div class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="8" height="8" rx="2"/><rect x="13" y="3" width="8" height="8" rx="2"/><rect x="3" y="13" width="8" height="8" rx="2"/><rect x="13" y="13" width="8" height="8" rx="2"/></svg></div>Planejar cômodos</button>
+      <button class="sc" data-go="track"><div class="ic"><svg viewBox="0 0 24 24"><path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9"/></svg></div>Registrar etapas</button>
+      <button class="sc" data-go="quote"><div class="ic"><svg viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h4"/></svg></div>Pedir orçamento</button>
+    </div>
+
+    <div class="sec-title">Dados da obra</div>
+    <div class="card">
+      <label class="l" for="obra">Nome da obra</label>
+      <input id="obra" placeholder="Ex.: Reforma do apartamento" autocomplete="off">
+      <div class="grid2">
+        <div>
+          <label class="l" for="tipo">Tipo de imóvel</label>
+          <select id="tipo">
+            <option value="">Selecione...</option>
+            <option>Casa</option><option>Apartamento</option><option>Casa em condomínio</option>
+            <option>Sala comercial</option><option>Loja</option><option>Escritório</option>
+            <option>Imóvel rural</option><option>Outro</option>
+          </select>
+        </div>
+        <div>
+          <label class="l" for="area">Área (m²)</label>
+          <input id="area" type="number" inputmode="decimal" min="0" step="0.01" placeholder="85">
+        </div>
+      </div>
+    </div>
+
+    <div class="sec-title">Proprietário</div>
+    <div class="card">
+      <label class="l" for="dono_nome">Nome</label>
+      <input id="dono_nome" placeholder="Nome do proprietário" autocomplete="off">
+      <label class="l" for="dono_contato">Contato</label>
+      <input id="dono_contato" placeholder="Telefone / WhatsApp ou e-mail" autocomplete="off">
+    </div>
+
+    <div class="sec-title">Profissional</div>
+    <div class="card">
+      <label class="l" for="pro_nome">Nome</label>
+      <input id="pro_nome" placeholder="Nome do profissional ou empresa" autocomplete="off">
+      <label class="l" for="pro_contato">Contato</label>
+      <input id="pro_contato" placeholder="Telefone / WhatsApp ou e-mail" autocomplete="off">
+    </div>
+
+    <div class="sec-title">Andamento por cômodo</div>
+    <div class="card" id="homeRooms"></div>
+  </section>
+
+  <!-- CÔMODOS -->
+  <section class="view" id="v-rooms">
+    <div class="card">
+      <h2>Cômodos e áreas</h2>
+      <p class="sub" id="roomsHint">Toque nos cômodos que fazem parte da obra.</p>
+      <div class="tools">
+        <button class="pill" id="selAll">Selecionar todos</button>
+        <button class="pill" id="selNone">Limpar seleção</button>
+        <button class="pill y" id="addRoom">+ Novo cômodo</button>
+      </div>
+      <div class="rgrid" id="roomGrid"></div>
+    </div>
+  </section>
+
+  <!-- ETAPAS -->
+  <section class="view" id="v-track"><div id="trackBody"></div></section>
+
+  <!-- ORÇAR -->
+  <section class="view" id="v-quote"><div id="quoteBody"></div></section>
+
+  <!-- MAIS -->
+  <section class="view" id="v-more">
+    <button class="item" id="actStages"><div class="ic"><svg viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg></div><div><b>Etapas e serviços</b><span>Editar as etapas e os serviços de cada uma</span></div></button>
+    <button class="item" id="actTypes"><div class="ic"><svg viewBox="0 0 24 24"><path d="M20.6 13.4 13.4 20.6a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8z"/><path d="M7.5 7.5h.01"/></svg></div><div><b>Tipos de serviço</b><span>Categorias usadas na lista de orçamento</span></div></button>
+    <button class="item" id="actPdf"><div class="ic"><svg viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/></svg></div><div><b>Relatório de andamento (PDF)</b><span>Situação dos serviços marcados, por cômodo</span></div></button>
+    <button class="item" id="actExport"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg></div><div><b>Exportar backup</b><span>Baixa um arquivo com todos os dados da obra</span></div></button>
+    <button class="item" id="actImport"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 21V9M7 14l5-5 5 5M5 3h14"/></svg></div><div><b>Importar backup</b><span>Restaura os dados de um arquivo salvo</span></div></button>
+    <input type="file" id="fileIn" accept="application/json,.json" hidden>
+    <button class="item danger" id="actClear"><div class="ic"><svg viewBox="0 0 24 24"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"/></svg></div><div><b>Limpar acompanhamento</b><span>Apaga todos os dados deste dispositivo</span></div></button>
+    <div class="card" style="margin-top:6px">
+      <h2>Como instalar como app</h2>
+      <p class="sub">Abra esta página no navegador do celular e use <b>“Adicionar à tela inicial”</b>. Tudo é salvo automaticamente neste dispositivo; exporte um backup de vez em quando.</p>
+      <p class="sub" id="savedAt"></p>
+    </div>
+  </section>
+</div>
+
+<nav>
+  <div class="in">
+    <button data-tab="home" class="on"><svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>Início</button>
+    <button data-tab="rooms"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="8" height="8" rx="2"/><rect x="13" y="3" width="8" height="8" rx="2"/><rect x="3" y="13" width="8" height="8" rx="2"/><rect x="13" y="13" width="8" height="8" rx="2"/></svg>Cômodos<span class="badge" id="bdgRooms" hidden>0</span></button>
+    <button data-tab="track"><svg viewBox="0 0 24 24"><path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9"/></svg>Etapas</button>
+    <button data-tab="quote"><svg viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h4"/></svg>Orçar<span class="badge" id="bdgSvc" hidden>0</span></button>
+    <button data-tab="more"><svg viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></svg>Mais</button>
+  </div>
+</nav>
+
+<div class="scrim" id="scrim"><div class="sheet" id="sheet"></div></div>
+<div id="toast" role="status" aria-live="polite"></div>
+<div id="report"></div>
+
+<script>
+(function(){
+"use strict";
+
+const DATA = {
+  "Casa":["Sala de estar","Sala de jantar","Cozinha","Lavanderia / Área de serviço","Suíte","Quarto 1","Quarto 2","Quarto 3","Banheiro social","Lavabo","Escritório","Área de TV","Varanda","Garagem","Corredor","Hall / Entrada","Área externa","Área gourmet","Depósito"],
+  "Apartamento":["Sala de estar","Sala de jantar","Cozinha","Lavanderia / Área de serviço","Suíte","Quarto 1","Quarto 2","Quarto 3","Banheiro social","Lavabo","Escritório","Varanda","Área de TV","Corredor","Hall / Entrada","Depósito"],
+  "Casa em condomínio":["Sala de estar","Sala de jantar","Cozinha","Lavanderia / Área de serviço","Suíte","Quarto 1","Quarto 2","Quarto 3","Banheiro social","Lavabo","Escritório","Área de TV","Varanda","Garagem","Corredor","Hall / Entrada","Área externa","Área gourmet","Depósito"],
+  "Sala comercial":["Recepção","Sala de atendimento","Sala de reunião","Sala de trabalho","Diretoria","Copa","Banheiro","Depósito","Circulação"],
+  "Loja":["Área de vendas","Vitrine","Caixa","Estoque","Escritório","Copa","Banheiro","Depósito","Área de serviço"],
+  "Escritório":["Recepção","Sala de trabalho","Sala de reunião","Diretoria","Copa","Banheiro","Arquivo / Depósito","Circulação"],
+  "Imóvel rural":["Sala de estar","Sala de jantar","Cozinha","Lavanderia / Área de serviço","Suíte","Quarto 1","Quarto 2","Quarto 3","Banheiro","Varanda","Garagem","Área externa","Área gourmet","Depósito"],
+  "Outro":["Sala","Quarto","Cozinha","Banheiro","Lavanderia / Área de serviço","Escritório","Varanda","Área externa","Garagem","Depósito","Outra área"]
+};
+const DEF_STAGES = ["Planejamento e preparação","Demolição e retiradas","Alvenaria e regularização","Instalações elétricas","Instalações hidráulicas","Impermeabilização","Revestimentos e pisos","Forros e tetos","Esquadrias e portas","Bancadas, louças e metais","Pintura e acabamentos","Limpeza e finalização","Vistoria e entrega"];
+const DEF_SERVICES = [
+  ["Levantamento de medidas e projeto","Proteção de pisos e móveis","Acompanhamento técnico da obra"],
+  ["Demolição de piso e revestimento","Retirada de forro","Remoção de portas e esquadrias","Retirada de louças e metais","Retirada de entulho (caçamba)"],
+  ["Levantamento de parede em alvenaria","Reboco e regularização de paredes","Contrapiso e nivelamento"],
+  ["Pontos de tomada","Pontos de iluminação","Passagem de fiação","Troca do quadro de distribuição"],
+  ["Pontos de água fria e quente","Pontos de esgoto","Troca de registros e tubulações"],
+  ["Impermeabilização de piso / box","Impermeabilização de laje"],
+  ["Assentamento de piso / porcelanato","Assentamento de revestimento de parede","Rodapés","Rejuntamento"],
+  ["Forro de gesso","Sanca e iluminação embutida","Forro de PVC"],
+  ["Instalação de portas","Instalação de janelas","Instalação de box de vidro"],
+  ["Instalação de bancada","Instalação de cuba","Instalação de louças","Instalação de metais e torneiras"],
+  ["Massa corrida e lixamento","Pintura de paredes","Pintura de teto","Retoques finais"],
+  ["Limpeza pós-obra","Retirada de proteções"],
+  ["Vistoria final","Ajustes e correções","Entrega e termo de recebimento"]
+];
+const AC_SVCS = ["Infraestrutura (tubulação e dreno)","Instalação de ar-condicionado split","Instalação de ar-condicionado cassete","Manutenção / limpeza de ar-condicionado"];
+const acStage = () => ({id:"eac",name:"Ar-condicionado",items:AC_SVCS.map((m,j)=>({id:"eacs"+(j+1),name:m}))});
+const defStages = () => { const a=DEF_STAGES.map((n,i)=>({id:"e"+(i+1),name:n,items:DEF_SERVICES[i].map((m,j)=>({id:"e"+(i+1)+"s"+(j+1),name:m}))})); a.splice(5,0,acStage()); return a; };
+const DEF_TYPES = [
+  ["Planejamento e projeto",["Levantamento de medidas e projeto","Proteção de pisos e móveis","Acompanhamento técnico da obra"]],
+  ["Demolição e retiradas",["Demolição de piso e revestimento","Remoção de portas e esquadrias","Retirada de entulho (caçamba)"]],
+  ["Alvenaria e regularização",["Levantamento de parede em alvenaria","Reboco e regularização de paredes","Contrapiso e nivelamento"]],
+  ["Elétrica",["Pontos de tomada","Pontos de iluminação","Troca do quadro de distribuição","Passagem de fiação"]],
+  ["Hidráulica",["Pontos de água fria e quente","Pontos de esgoto","Troca de registros e tubulações"]],
+  ["Ar-condicionado",["Instalação de ar-condicionado split","Infraestrutura para ar-condicionado (tubulação e dreno)","Instalação de ar-condicionado cassete","Manutenção / limpeza de ar-condicionado"],"tac"],
+  ["Impermeabilização",["Impermeabilização de piso / box","Impermeabilização de laje"]],
+  ["Revestimentos e pisos",["Assentamento de piso / porcelanato","Assentamento de revestimento de parede","Rejuntamento"]],
+  ["Gesso e forros",["Forro de gesso","Sanca e iluminação embutida","Forro de PVC"]],
+  ["Esquadrias e portas",["Instalação de portas","Instalação de janelas","Instalação de box de vidro"]],
+  ["Marmoraria e louças",["Instalação de bancada","Instalação de louças e metais","Instalação de cuba e torneira"]],
+  ["Pintura",["Pintura de paredes","Pintura de teto","Massa corrida e lixamento"]],
+  ["Marcenaria",["Armários planejados","Painel de TV","Guarda-roupa sob medida"]],
+  ["Serralheria e vidraçaria",["Guarda-corpo","Portão ou grade","Espelhos e vidros sob medida"]],
+  ["Limpeza e entrega",["Limpeza pós-obra","Vistoria final e ajustes"]]
+];
+const defTypes = () => DEF_TYPES.map((t,i)=>({id:t[2]||"t"+(i+1),name:t[0],sug:t[1].slice()}));
+const STAGE_TYPE = {"Planejamento e preparação":"Planejamento e projeto","Demolição e retiradas":"Demolição e retiradas","Alvenaria e regularização":"Alvenaria e regularização","Instalações elétricas":"Elétrica","Instalações hidráulicas":"Hidráulica","Ar-condicionado":"Ar-condicionado","Impermeabilização":"Impermeabilização","Revestimentos e pisos":"Revestimentos e pisos","Forros e tetos":"Gesso e forros","Esquadrias e portas":"Esquadrias e portas","Bancadas, louças e metais":"Marmoraria e louças","Pintura e acabamentos":"Pintura","Limpeza e finalização":"Limpeza e entrega","Vistoria e entrega":"Limpeza e entrega"};
+const UNITS = ["vb","m²","m","un","pt","diária","h"];
+const UNIT_LABEL = {"vb":"vb (verba)","m²":"m²","m":"m (linear)","un":"un","pt":"pt (ponto)","diária":"diária","h":"hora"};
+const SUPPLY = ["Mão de obra","Mão de obra + materiais"];
+const ST = [["pendente","Pendente"],["andamento","Em andamento"],["concluida","Concluída"],["na","N/A"]];
+const KEY = "orca_aqui_v10", OLD9 = "orca_aqui_v9", OLD8 = "obra_clara_v8", OLD7 = "acompanhamento_obra_app_v7", OLD6 = "acompanhamento_obra_v6_final";
+const ROLE = {
+  pro:{chip:"Profissional",kicker:"Modo profissional",title:"Escopo e etapas sob controle.",text:"Organize os cômodos, defina cada etapa e monte a lista de serviços para orçar."},
+  dono:{chip:"Proprietário",kicker:"Modo proprietário",title:"Acompanhe sua obra de perto.",text:"Veja o andamento de cada cômodo e peça orçamentos com um escopo claro."}
+};
+
+const $ = s => document.querySelector(s);
+const $$ = s => [...document.querySelectorAll(s)];
+const esc = v => String(v==null?"":v).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const uid = () => Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+const CHEV = '<svg viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></svg>';
+const ICO_DOC = '<svg viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h4"/></svg>';
+const ICO_ROOMS = '<svg viewBox="0 0 24 24"><rect x="3" y="3" width="8" height="8" rx="2"/><rect x="13" y="3" width="8" height="8" rx="2"/><rect x="3" y="13" width="8" height="8" rx="2"/><rect x="13" y="13" width="8" height="8" rx="2"/></svg>';
+const ICO_CHECK = '<svg viewBox="0 0 24 24"><path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9"/></svg>';
+const ICO_HOME = '<svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>';
+
+function fresh(){
+  return {v:10,acStage:true,role:null,acAdded:true,obra:"",tipo:"",area:"",dono:{nome:"",contato:""},pro:{nome:"",contato:""},stages:defStages(),types:defTypes(),custom:[],selected:[],data:{},services:[],quote:{prazo:"",total:"",obs:""},current:null,filter:"todas",savedAt:null};
+}
+let memoryOnly = false, tab = "home", pickedRole = null, reportMode = "progress";
+let S = load();
+
+function load(){
+  try{
+    const raw = localStorage.getItem(KEY) || localStorage.getItem(OLD9) || localStorage.getItem(OLD8) || localStorage.getItem(OLD7);
+    if(raw) return normalize(JSON.parse(raw));
+    const old = localStorage.getItem(OLD6);
+    if(old) return normalize(migrate(JSON.parse(old)));
+  }catch(e){ memoryOnly = true; }
+  return fresh();
+}
+function normalize(o){
+  o = (o && typeof o==="object") ? o : {};
+  const s = Object.assign(fresh(),o);
+  s.dono = Object.assign({nome:"",contato:""},o.dono||{});
+  s.pro = Object.assign({nome:"",contato:""},o.pro||{});
+  s.quote = Object.assign({prazo:"",total:"",obs:""},o.quote||{});
+  // versões antigas: "responsável" e "contato" viram dados do proprietário/profissional
+  const target = o.role==="dono" ? s.dono : s.pro;
+  if(o.responsavel && !s.dono.nome && !s.pro.nome) target.nome = String(o.responsavel);
+  if(s.quote.contato && !target.contato) target.contato = String(s.quote.contato);
+  delete s.responsavel; delete s.quote.contato;
+  const legacy = o.v!==10;
+  if(!Array.isArray(s.stages)) s.stages=[];
+  s.stages = s.stages.filter(x=>x && x.id && typeof x.name==="string" && x.name.trim());
+  const oldStages = s.stages.length ? s.stages.map(x=>({id:String(x.id),name:x.name})) : DEF_STAGES.map((n,i)=>({id:"e"+(i+1),name:n}));
+  if(!s.stages.length) s.stages = defStages();
+  if(!Array.isArray(s.types)) s.types = defTypes();
+  s.types = s.types.filter(x=>x && x.id && typeof x.name==="string" && x.name.trim()).map(x=>({id:x.id,name:x.name,sug:Array.isArray(x.sug)?x.sug:[]}));
+  if(!o.acAdded && !s.types.some(t=>t.id==="tac"||t.name==="Ar-condicionado")){
+    const ac=DEF_TYPES.find(t=>t[2]==="tac"), rec={id:"tac",name:ac[0],sug:ac[1].slice()};
+    const k=s.types.findIndex(t=>t.name==="Hidráulica");
+    if(k>-1) s.types.splice(k+1,0,rec); else s.types.push(rec);
+  }
+  s.acAdded=true;
+  if(!Array.isArray(s.services)) s.services=[];
+  s.services.forEach(v=>{ if(typeof v.type!=="string") v.type=""; if(typeof v.modelo!=="string") v.modelo=""; if(typeof v.btus!=="string") v.btus=""; });
+  if(!Array.isArray(s.selected)) s.selected=[];
+  if(!Array.isArray(s.custom)) s.custom=[];
+  if(!s.data||typeof s.data!=="object"||Array.isArray(s.data)) s.data={};
+  // formato antigo: lista por posição -> objeto por id da etapa padrão
+  Object.keys(s.data).forEach(room=>{
+    const v=s.data[room];
+    if(Array.isArray(v)){
+      const m={}; defStages().forEach((st,i)=>{ m[st.id]=v[i]||{s:"pendente",d:"",o:""}; });
+      s.data[room]=m;
+    }else if(!v||typeof v!=="object") delete s.data[room];
+  });
+  if(legacy) convertLegacy(s,oldStages);
+  s.stages = s.stages.map(st=>({id:String(st.id),name:st.name,items:(Array.isArray(st.items)?st.items:[]).filter(i=>i&&i.id&&typeof i.name==="string"&&i.name.trim()).map(i=>({id:String(i.id),name:i.name}))}));
+  const okS = new Set(ST.map(x=>x[0]));
+  Object.keys(s.data).forEach(room=>{
+    const v=s.data[room];
+    if(!v||typeof v!=="object"||Array.isArray(v)){ delete s.data[room]; return; }
+    Object.keys(v).forEach(k=>{
+      const x=v[k];
+      if(!x||typeof x!=="object"){ delete v[k]; return; }
+      if(!okS.has(x.s)) x.s="pendente";
+      x.d=typeof x.d==="string"?x.d:""; x.o=typeof x.o==="string"?x.o:"";
+    });
+  });
+  if(!o.acStage && !s.stages.some(x=>x.id==="eac")){
+    const k=s.stages.findIndex(x=>x.id==="e5");
+    s.stages.splice(k>-1?k+1:s.stages.length,0,acStage());
+  }
+  s.acStage=true;
+  s.v=10;
+  return s;
+}
+/* versões anteriores: o status era por etapa; agora é por serviço. Etapas que não estavam N/A viram serviços marcados. */
+function convertLegacy(s,oldStages){
+  s.stages = oldStages.map(st=>{
+    const m=/^e(\d{1,2})$/.exec(st.id), k=m?+m[1]-1:-1;
+    const names=(k>=0&&k<DEF_SERVICES.length)?DEF_SERVICES[k]:[st.name];
+    return {id:st.id,name:st.name,items:names.map((n,j)=>({id:st.id+"s"+(j+1),name:n}))};
+  });
+  const data={};
+  Object.keys(s.data).forEach(room=>{
+    const v=s.data[room], out={};
+    if(!v||typeof v!=="object") return;
+    s.stages.forEach(st=>{
+      const x=v[st.id];
+      if(!x||typeof x!=="object"||x.s==="na") return;
+      st.items.forEach((it,j)=>{ out[it.id]={s:x.s||"pendente",d:j?"":(x.d||""),o:j?"":(x.o||"")}; });
+    });
+    data[room]=out;
+  });
+  s.data=data;
+}
+function migrate(o){
+  const s = fresh(); s.v=0;
+  s.obra=o.obra||""; s.responsavel=o.responsavel||""; s.tipo=o.tipo||""; s.area=o.area||"";
+  s.selected = Array.isArray(o.selected)?o.selected:[];
+  const base = DATA[s.tipo]||[];
+  s.custom = s.selected.filter(n=>!base.includes(n));
+  const map={"Pendente":"pendente","Em andamento":"andamento","Concluída":"concluida","Não se aplica":"na"};
+  (o.rooms||[]).forEach(r=>{
+    const name = s.selected.find(n=>String(r.name).startsWith(n));
+    if(!name) return;
+    s.data[name] = DEF_STAGES.map((_,i)=>{const x=(r.stages||[])[i]||{};return {s:map[x.status]||"pendente",d:x.date||"",o:x.obs||""};});
+  });
+  return s;
+}
+let saveTimer = null;
+function writeNow(){
+  saveTimer = null;
+  S.savedAt = new Date().toISOString();
+  try{ localStorage.setItem(KEY, JSON.stringify(S)); memoryOnly=false; }catch(e){ memoryOnly=true; }
+  renderSaved();
+}
+function save(){
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(writeNow,300);
+}
+function flushSave(){ if(saveTimer){ clearTimeout(saveTimer); writeNow(); } }
+window.addEventListener("pagehide",flushSave);
+document.addEventListener("visibilitychange",()=>{ if(document.visibilityState==="hidden") flushSave(); });
+function renderSaved(){
+  const el=$("#savedAt");
+  if(memoryOnly){ el.textContent="⚠️ Salvamento automático indisponível neste navegador. Use “Exportar backup”."; return; }
+  el.textContent = S.savedAt ? "Salvo automaticamente em "+new Date(S.savedAt).toLocaleString("pt-BR") : "";
+}
+
+function available(){ const b=DATA[S.tipo]||[]; return b.concat(S.custom.filter(c=>!b.includes(c))); }
+function roomData(name){
+  if(!S.data[name]||typeof S.data[name]!=="object") S.data[name]={};
+  return S.data[name];
+}
+/* serviços marcados no cômodo, na ordem das etapas */
+function roomItems(name){
+  const d=roomData(name), out=[];
+  S.stages.forEach(st=>st.items.forEach(it=>{ if(d[it.id]) out.push({st,it,x:d[it.id]}); }));
+  return out;
+}
+function roomStats(name){
+  const arr=roomItems(name).map(r=>r.x), app=arr.filter(x=>x.s!=="na"), done=app.filter(x=>x.s==="concluida").length;
+  return {count:arr.length,total:app.length,done,doing:arr.filter(x=>x.s==="andamento").length,pend:arr.filter(x=>x.s==="pendente").length,pct:app.length?Math.round(done/app.length*100):(arr.length?100:0)};
+}
+function overall(){
+  let total=0,done=0,doing=0,pend=0;
+  S.selected.forEach(n=>{const r=roomStats(n);total+=r.total;done+=r.done;doing+=r.doing;pend+=r.pend;});
+  return {total,done,doing,pend,pct:total?Math.round(done/total*100):0};
+}
+function pruneData(){
+  const ids=new Set(); S.stages.forEach(st=>st.items.forEach(i=>ids.add(i.id)));
+  Object.keys(S.data).forEach(r=>Object.keys(S.data[r]).forEach(k=>{ if(!ids.has(k)) delete S.data[r][k]; }));
+}
+
+/* ===== UI helpers ===== */
+let toastT;
+function toast(msg){ const t=$("#toast"); t.textContent=msg; t.classList.add("on"); clearTimeout(toastT); toastT=setTimeout(()=>t.classList.remove("on"),2400); }
+function sheet(html,onReady){ $("#sheet").innerHTML=html; $("#scrim").classList.add("on"); document.body.classList.add("sheet-open"); $("#sheet").scrollTop=0; if(onReady) onReady($("#sheet")); }
+function closeSheet(){ $("#scrim").classList.remove("on"); document.body.classList.remove("sheet-open"); }
+function confirmSheet(title,text,okLabel,danger,cb){
+  sheet('<h3>'+esc(title)+'</h3><p>'+esc(text)+'</p><div class="btns"><button class="btn btn-o" data-x="no">Cancelar</button><button class="btn '+(danger?'btn-danger':'btn-y')+'" data-x="ok">'+esc(okLabel)+'</button></div>',sh=>{
+    sh.querySelector('[data-x=no]').onclick=closeSheet;
+    sh.querySelector('[data-x=ok]').onclick=()=>{closeSheet();cb();};
+  });
+}
+$("#scrim").addEventListener("click",e=>{ if(e.target.id==="scrim") closeSheet(); });
+function setHdr(){ document.documentElement.style.setProperty("--hdr-h",$("#hdr").offsetHeight+"px"); }
+window.addEventListener("resize",setHdr);
+
+function go(t){
+  tab=t;
+  $$(".view").forEach(v=>v.classList.toggle("active",v.id==="v-"+t));
+  $$("nav button").forEach(b=>b.classList.toggle("on",b.dataset.tab===t));
+  ({home:renderHome,rooms:renderRooms,track:renderTrack,quote:renderQuote,more:()=>{}})[t]();
+  window.scrollTo({top:0});
+}
+$$("nav button").forEach(b=>b.addEventListener("click",()=>go(b.dataset.tab)));
+$$("[data-go]").forEach(b=>b.addEventListener("click",()=>go(b.dataset.go)));
+
+/* ===== ENTRADA ===== */
+function showWelcome(){
+  pickedRole=S.role||null;
+  const has=!!(S.obra||S.selected.length||S.services.length);
+  $$(".role-card").forEach(c=>c.classList.toggle("on",c.dataset.role===pickedRole));
+  $("#wNew").hidden=!has;
+  syncEnter(has);
+  $("#welcome").classList.remove("out"); document.body.classList.add("lock");
+  $("#welcome").scrollTop=0;
+}
+function syncEnter(has){
+  if(has===undefined) has=!!(S.obra||S.selected.length||S.services.length);
+  const b=$("#wEnter");
+  b.disabled=!pickedRole;
+  b.textContent = !pickedRole ? "Escolha uma opção" : (has ? "Continuar"+(S.obra?": "+S.obra:" minha obra") : "Começar");
+}
+$$(".role-card").forEach(c=>c.addEventListener("click",()=>{
+  pickedRole=c.dataset.role;
+  $$(".role-card").forEach(x=>x.classList.toggle("on",x===c));
+  syncEnter();
+}));
+$("#wEnter").addEventListener("click",()=>{
+  if(!pickedRole) return;
+  S.role=pickedRole; save();
+  $("#welcome").classList.add("out"); document.body.classList.remove("lock");
+  go("home"); setHdr();
+});
+$("#wNew").addEventListener("click",()=>confirmSheet("Começar uma nova obra?","Os dados da obra atual serão apagados deste dispositivo. Exporte um backup antes, se quiser guardá-los.","Apagar e começar",true,()=>{
+  const r=S.role; S=fresh(); S.role=r; try{[KEY,OLD9,OLD8,OLD7,OLD6].forEach(k=>localStorage.removeItem(k));}catch(_){}
+  save(); showWelcome();
+}));
+$("#brandBtn").addEventListener("click",showWelcome);
+
+/* ===== header / progress ===== */
+function updateProgress(){
+  const o=overall(), R=ROLE[S.role]||ROLE.pro;
+  $("#ring").style.setProperty("--p",o.pct);
+  $("#ringTxt").textContent=o.pct+"%";
+  $("#bigPct").textContent=o.pct+"%";
+  $("#bigBar").style.width=o.pct+"%";
+  $("#stDone").textContent=o.done; $("#stDoing").textContent=o.doing; $("#stPend").textContent=o.pend;
+  $("#tbTitle").textContent=S.obra.trim()||"Nova obra";
+  $("#tbMeta").textContent=[S.tipo,S.area?S.area+" m²":"",S.dono.nome&&"Prop.: "+S.dono.nome].filter(Boolean).join(" • ");
+  $("#roleChip").textContent=R.chip;
+  $("#heroRole").textContent=R.kicker; $("#heroTitle").textContent=R.title; $("#heroText").textContent=R.text;
+  $("#homeSub").textContent = S.selected.length ? "concluído • "+S.selected.length+" cômodo(s)" : "concluído • escolha os cômodos para começar";
+  const b=$("#bdgRooms"); b.hidden=!S.selected.length; b.textContent=S.selected.length;
+  const sv=$("#bdgSvc"); sv.hidden=!S.services.length; sv.textContent=S.services.length;
+  setHdr();
+}
+
+/* ===== HOME ===== */
+function renderHome(){
+  $("#obra").value=S.obra; $("#area").value=S.area; $("#tipo").value=S.tipo;
+  $("#dono_nome").value=S.dono.nome; $("#dono_contato").value=S.dono.contato; $("#pro_nome").value=S.pro.nome; $("#pro_contato").value=S.pro.contato;
+  const box=$("#homeRooms");
+  if(!S.selected.length){
+    box.innerHTML='<div class="empty"><div class="ei">'+ICO_HOME+'</div>Nenhum cômodo selecionado ainda.<br><button class="btn btn-y" id="goRooms">Escolher cômodos</button></div>';
+    $("#goRooms").onclick=()=>go("rooms");
+  }else{
+    box.innerHTML=S.selected.map(n=>{
+      const r=roomStats(n);
+      return '<button class="roomrow" data-room="'+esc(n)+'"><div class="n"><b>'+esc(n)+'</b><div class="mini"><i class="'+(r.pct===100?'full':'')+'" style="width:'+r.pct+'%"></i></div></div><div class="p">'+(r.count?r.pct+'%':'—')+'</div>'+CHEV+'</button>';
+    }).join("");
+    $$("#homeRooms .roomrow").forEach(b=>b.onclick=()=>{S.current=b.dataset.room;save();go("track");});
+  }
+  updateProgress();
+}
+const BIND={obra:["obra"],area:["area"],dono_nome:["dono","nome"],dono_contato:["dono","contato"],pro_nome:["pro","nome"],pro_contato:["pro","contato"]};
+Object.keys(BIND).forEach(id=>$("#"+id).addEventListener("input",e=>{
+  const p=BIND[id];
+  if(p.length===1) S[p[0]]=e.target.value; else S[p[0]][p[1]]=e.target.value;
+  updateProgress(); save();
+}));
+$("#tipo").addEventListener("change",e=>{
+  const novo=e.target.value;
+  const apply=()=>{
+    S.tipo=novo; S.selected=[]; S.custom=[]; S.current=null; save(); updateProgress(); renderHome();
+    if(novo){ toast("Agora escolha os cômodos"); go("rooms"); }
+  };
+  if(S.selected.length && novo!==S.tipo){
+    confirmSheet("Trocar tipo de imóvel?","A seleção de cômodos será reiniciada. Os dados já preenchidos de cada cômodo são mantidos caso você selecione o mesmo cômodo novamente.","Trocar",false,apply);
+    e.target.value=S.tipo;
+  }else apply();
+});
+
+/* ===== ROOMS ===== */
+function renderRooms(){
+  const list=available(), grid=$("#roomGrid");
+  $("#roomsHint").textContent = S.tipo ? "Toque nos cômodos que fazem parte da obra. ("+S.selected.length+" selecionado(s))" : "Escolha o tipo de imóvel na aba Início para ver os cômodos sugeridos, ou crie os seus.";
+  if(!list.length){
+    grid.innerHTML='<div class="empty" style="grid-column:1/-1"><div class="ei">'+ICO_ROOMS+'</div>Escolha o tipo de imóvel primeiro.<br><button class="btn btn-y" id="goHome">Ir para Início</button></div>';
+    $("#goHome").onclick=()=>go("home"); return;
+  }
+  grid.innerHTML=list.map(n=>'<button class="rc'+(S.selected.includes(n)?' on':'')+'" data-n="'+esc(n)+'"><span class="ck">✓</span>'+esc(n)+'</button>').join("");
+  $$("#roomGrid .rc").forEach(b=>b.onclick=()=>{
+    const n=b.dataset.n;
+    if(S.selected.includes(n)) S.selected=S.selected.filter(x=>x!==n); else S.selected.push(n);
+    if(S.current && !S.selected.includes(S.current)) S.current=null;
+    b.classList.toggle("on");
+    $("#roomsHint").textContent="Toque nos cômodos que fazem parte da obra. ("+S.selected.length+" selecionado(s))";
+    save(); updateProgress();
+  });
+}
+$("#selAll").onclick=()=>{ S.selected=available().slice(); save(); updateProgress(); renderRooms(); };
+$("#selNone").onclick=()=>{ S.selected=[]; S.current=null; save(); updateProgress(); renderRooms(); };
+$("#addRoom").onclick=()=>{
+  sheet('<h3>Novo cômodo ou área</h3><p>Digite o nome do ambiente que deseja acompanhar.</p><input id="newRoom" placeholder="Ex.: Closet, Piscina, Quarto de hóspedes" maxlength="40" autocomplete="off"><div class="btns"><button class="btn btn-o" data-x="no">Cancelar</button><button class="btn btn-y" data-x="ok">Adicionar</button></div>',sh=>{
+    const inp=sh.querySelector("#newRoom"); setTimeout(()=>inp.focus(),150);
+    const add=()=>{
+      const name=inp.value.trim().replace(/\s+/g," ");
+      if(!name){ inp.focus(); return; }
+      if(available().some(x=>x.toLowerCase()===name.toLowerCase())){ toast("Esse cômodo já existe"); return; }
+      S.custom.push(name); S.selected.push(name);
+      save(); closeSheet(); updateProgress(); renderRooms(); toast("“"+name+"” adicionado");
+    };
+    sh.querySelector("[data-x=no]").onclick=closeSheet;
+    sh.querySelector("[data-x=ok]").onclick=add;
+    inp.addEventListener("keydown",e=>{ if(e.key==="Enter") add(); });
+  });
+};
+
+/* ===== TRACK ===== */
+function stageCount(room,stg){
+  const d=roomData(room), a=stg.items.filter(i=>d[i.id]).map(i=>d[i.id]), app=a.filter(x=>x.s!=="na");
+  return {n:a.length,total:app.length,done:app.filter(x=>x.s==="concluida").length};
+}
+const stageBadge = c => c.total ? c.done+"/"+c.total : "N/A";
+const pctLabel = r => r.count ? r.pct+"%" : "—";
+function rhText(r){ return r.total ? r.done+" de "+r.total+" serviços concluídos" : (r.count ? "Todos os serviços marcados como N/A" : "Nenhum serviço marcado"); }
+function renderTrack(){
+  const body=$("#trackBody");
+  if(!S.selected.length){
+    body.innerHTML='<div class="card"><div class="empty"><div class="ei">'+ICO_CHECK+'</div>Selecione os cômodos para iniciar o acompanhamento.<br><button class="btn btn-y" id="goRooms2">Escolher cômodos</button></div></div>';
+    $("#goRooms2").onclick=()=>go("rooms"); return;
+  }
+  if(!S.current || !S.selected.includes(S.current)) S.current=S.selected[0];
+  const room=S.current, d=roomData(room), r=roomStats(room);
+  let h='<div class="picker">'+S.selected.map(n=>'<button class="chip'+(n===room?' on':'')+'" data-room="'+esc(n)+'">'+esc(n)+' <small data-pc="'+esc(n)+'">'+pctLabel(roomStats(n))+'</small></button>').join("")+'</div>';
+  h+='<div class="roomhead"><small>Cômodo</small><h2>'+esc(room)+'</h2><div class="row"><span id="rhTxt">'+rhText(r)+'</span><b id="rhPct">'+pctLabel(r)+'</b></div><div class="mini"><i id="rhBar" class="'+(r.count&&r.pct===100?'full':'')+'" style="width:'+r.pct+'%"></i></div></div>';
+  h+='<div class="filters">'+[["todas","Todos"],["pendente","Pendentes"],["andamento","Em andamento"],["concluida","Concluídos"]].map(f=>'<button class="chip'+(S.filter===f[0]?' on':'')+'" data-f="'+f[0]+'">'+f[1]+'</button>').join("")+'<button class="chip" id="chooseSvc" style="margin-left:auto">☑ Escolher serviços</button><button class="chip" id="editStages">✎ Editar etapas</button></div>';
+  if(!r.count){
+    h+='<div class="card"><div class="empty"><div class="ei">'+ICO_CHECK+'</div>Nenhum serviço marcado em '+esc(room)+'.<br>Escolha só o que será feito neste cômodo: o que não for marcado não aparece nem entra no progresso.<br><button class="btn btn-y" id="chooseSvc2">Escolher serviços</button></div></div>';
+    body.innerHTML=h; setHdr(); return;
+  }
+  let shown=0;
+  S.stages.forEach((stg,i)=>{
+    const rows=stg.items.filter(it=>d[it.id] && (S.filter==="todas" || d[it.id].s===S.filter));
+    if(!rows.length) return;
+    h+='<div class="stghead"><div class="num">'+(i+1)+'</div><b>'+esc(stg.name)+'</b><small data-sc="'+esc(stg.id)+'">'+stageBadge(stageCount(room,stg))+'</small></div>';
+    rows.forEach(it=>{
+      shown++;
+      const x=d[it.id];
+      h+='<div class="stage" data-id="'+esc(it.id)+'" data-s="'+x.s+'"><div class="h"><div class="nm">'+esc(it.name)+'</div></div>'+
+        '<div class="seg">'+ST.map(s=>'<button data-v="'+s[0]+'" class="'+(x.s===s[0]?'on':'')+'">'+s[1]+'</button>').join("")+'</div>'+
+        '<button class="det" data-det>'+((x.d||x.o)?'▾ Data e observação':'＋ Data e observação')+'</button>'+
+        '<div class="more" '+((x.d||x.o)?'':'hidden')+'><input type="date" class="date" value="'+esc(x.d)+'" aria-label="Data"><textarea class="obs" placeholder="Observação deste serviço...">'+esc(x.o)+'</textarea></div></div>';
+    });
+  });
+  if(!shown) h+='<div class="card"><div class="empty">Nenhum serviço neste filtro.</div></div>';
+  body.innerHTML=h;
+  setHdr();
+}
+function refreshRoomProgress(){
+  const room=S.current; if(!room) return;
+  const r=roomStats(room);
+  const bar=$("#rhBar"); if(bar){ bar.style.width=r.pct+"%"; bar.classList.toggle("full",r.count>0&&r.pct===100); }
+  const t=$("#rhTxt"); if(t) t.textContent=rhText(r);
+  const p=$("#rhPct"); if(p) p.textContent=pctLabel(r);
+  $$("[data-pc]").forEach(el=>el.textContent=pctLabel(roomStats(el.dataset.pc)));
+  $$("[data-sc]").forEach(el=>{ const stg=S.stages.find(x=>x.id===el.dataset.sc); if(stg) el.textContent=stageBadge(stageCount(room,stg)); });
+  updateProgress();
+}
+$("#trackBody").addEventListener("click",e=>{
+  if(e.target.closest("#chooseSvc")||e.target.closest("#chooseSvc2")){ chooseServices(); return; }
+  if(e.target.closest("#editStages")){ manageStages(); return; }
+  const chip=e.target.closest(".chip[data-room]");
+  if(chip){ S.current=chip.dataset.room; save(); renderTrack(); window.scrollTo({top:0}); return; }
+  const f=e.target.closest(".chip[data-f]");
+  if(f){ S.filter=f.dataset.f; save(); renderTrack(); return; }
+  const st=e.target.closest(".stage"); if(!st) return;
+  const sid=st.dataset.id, seg=e.target.closest(".seg button");
+  if(seg){
+    const v=seg.dataset.v, x=roomData(S.current)[sid]; if(!x) return;
+    x.s=v;
+    if(v==="concluida" && !x.d){ x.d=new Date().toISOString().slice(0,10); st.querySelector(".date").value=x.d; st.querySelector(".more").hidden=false; st.querySelector("[data-det]").textContent="▾ Data e observação"; }
+    st.dataset.s=v;
+    st.querySelectorAll(".seg button").forEach(b=>b.classList.toggle("on",b===seg));
+    save(); refreshRoomProgress();
+    if(S.filter!=="todas" && S.filter!==v) setTimeout(renderTrack,350);
+    return;
+  }
+  const det=e.target.closest("[data-det]");
+  if(det){ const m=st.querySelector(".more"); m.hidden=!m.hidden; det.textContent=(m.hidden?"＋":"▾")+" Data e observação"; }
+});
+$("#trackBody").addEventListener("input",e=>{
+  const st=e.target.closest(".stage"); if(!st) return;
+  const x=roomData(S.current)[st.dataset.id]; if(!x) return;
+  if(e.target.classList.contains("date")) x.d=e.target.value;
+  if(e.target.classList.contains("obs")) x.o=e.target.value;
+  save();
+});
+
+/* ===== ORÇAMENTO ===== */
+function parseBRL(v){
+  if(v==null) return null;
+  let t=String(v).replace(/[^\d,.]/g,"");
+  if(!t) return null;
+  if(t.indexOf(",")>-1) t=t.replace(/\./g,"").replace(",",".");
+  else{ const p=t.split("."); if(p.length>2 || (p.length===2 && p[1].length===3)) t=p.join(""); }
+  const n=parseFloat(t);
+  return isFinite(n)&&n>=0?n:null;
+}
+function fmtNum(n){ return n.toLocaleString("pt-BR",{minimumFractionDigits:2,maximumFractionDigits:2}); }
+function groupedServices(){
+  const order=["Obra toda"].concat(S.selected);
+  S.services.forEach(s=>{ if(!order.includes(s.room)) order.push(s.room); });
+  return order.map(r=>({room:r,items:S.services.filter(s=>s.room===r)})).filter(g=>g.items.length);
+}
+function qtyLabel(s){
+  if(s.qty) return s.qty+" "+s.unit;
+  return s.unit==="vb" ? "Verba" : "Qtd. a definir ("+s.unit+")";
+}
+function renderQuote(){
+  const box=$("#quoteBody"), groups=groupedServices(), n=S.services.length;
+  let h='<div class="card"><div class="qhead"><div class="ic">'+ICO_DOC+'</div><div><h2>Lista de serviços geral</h2><p class="sub">Serviços para orçamento: liste o que precisa ser feito em cada cômodo e envie ao profissional para orçar.</p></div></div>'+
+    '<div class="qstats"><div><b>'+n+'</b><span>SERVIÇOS</span></div><div><b>'+groups.length+'</b><span>ÁREAS COM SERVIÇOS</span></div></div>'+
+    '<div class="btn-row"><button class="btn btn-y" id="qAdd"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Adicionar serviço</button><button class="btn btn-o" id="qBase">Gerar lista base</button></div>'+
+    '<div style="margin-top:6px"><button class="linkbtn" id="qTypes">✎ Editar tipos de serviço</button></div></div>';
+
+  h+='<div class="card"><h2>Dados da solicitação</h2><p class="sub">Proprietário e profissional ficam na aba Início. Aqui vão o prazo e as observações do pedido.</p>'+
+    '<label class="l" for="q_prazo">Prazo desejado</label><input id="q_prazo" placeholder="Ex.: iniciar em novembro, concluir em 60 dias" value="'+esc(S.quote.prazo)+'">'+
+    '<label class="l" for="q_obs">Observações gerais</label><textarea id="q_obs" placeholder="Ex.: imóvel desocupado, acesso por elevador de serviço, horário de silêncio...">'+esc(S.quote.obs)+'</textarea></div>';
+
+  if(!n){
+    h+='<div class="card"><div class="empty"><div class="ei">'+ICO_DOC+'</div>Nenhum serviço listado ainda.<br>Adicione manualmente ou gere uma lista base a partir dos serviços marcados em cada cômodo.</div></div>';
+  }else{
+    groups.forEach(g=>{
+      h+='<div class="qroom"><div><b>'+esc(g.room)+'</b><span>'+g.items.length+' item(ns)</span></div><button data-add="'+esc(g.room)+'">+ Serviço</button></div>';
+      g.items.forEach((s,i)=>{
+        h+='<button class="svc" data-svc="'+s.id+'"><div class="num">'+(i+1)+'</div><div class="b"><b>'+esc(s.desc)+'</b><div class="m"><span class="tag q">'+esc(qtyLabel(s))+'</span><span class="tag">'+esc(s.supply)+'</span>'+(s.type?'<span class="tag">'+esc(s.type)+'</span>':'')+acTags(s)+'</div>'+(s.note?'<div class="note">'+esc(s.note)+'</div>':'')+'</div>'+CHEV+'</button>';
+      });
+    });
+    h+='<div class="card totalcard" style="margin-top:18px"><h2>Total geral</h2><p class="sub">Valor total do orçamento, preenchido pelo profissional depois de orçar.</p>'+
+      '<label class="l" for="q_total">Total geral (R$)</label><div class="money"><span>R$</span><input id="q_total" inputmode="decimal" placeholder="0,00" autocomplete="off" value="'+esc(S.quote.total)+'"></div></div>';
+    h+='<div class="send"><h2>Enviar para orçamento</h2><p class="sub">Compartilhe a lista com o profissional. Ele pode informar valor, prazo e condições.</p><div class="btn-row">'+
+      '<button class="btn btn-g" id="qWa"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 0 1-13.2 8L3 21l1.1-4.6A9 9 0 1 1 21 12z"/></svg>Enviar por WhatsApp</button>'+
+      '<button class="btn btn-o" id="qCopy"><svg viewBox="0 0 24 24"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/></svg>Copiar texto</button>'+
+      '<button class="btn btn-o" id="qPdf"><svg viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/></svg>Gerar PDF para orçar</button></div></div>';
+  }
+  box.innerHTML=h;
+  $("#qAdd").onclick=()=>openService(null);
+  $("#qBase").onclick=genBase;
+  $("#qTypes").onclick=()=>manageList("types");
+  $$("[data-add]").forEach(b=>b.onclick=()=>openService(null,b.dataset.add));
+  $$("[data-svc]").forEach(b=>b.onclick=()=>openService(b.dataset.svc));
+  if($("#qWa")){
+    $("#qWa").onclick=()=>window.open("https://wa.me/?text="+encodeURIComponent(quoteText()),"_blank","noopener");
+    $("#qCopy").onclick=copyQuote;
+    $("#qPdf").onclick=()=>printReport("quote");
+  }
+  updateProgress();
+}
+$("#quoteBody").addEventListener("input",e=>{
+  const m={q_prazo:"prazo",q_obs:"obs",q_total:"total"}[e.target.id];
+  if(m){ S.quote[m]=e.target.value; save(); }
+});
+$("#quoteBody").addEventListener("change",e=>{
+  if(e.target.id!=="q_total") return;
+  const v=parseBRL(e.target.value);
+  e.target.value = v==null ? "" : fmtNum(v);
+  S.quote.total=e.target.value; save();
+});
+
+function isAC(type,desc){ return type==="Ar-condicionado" || /condicionado|\bbtus?\b|\bsplit\b/i.test(desc||""); }
+function fmtBtu(b){ const d=String(b||"").replace(/\D/g,""); return d ? Number(d).toLocaleString("pt-BR")+" BTUs" : String(b||""); }
+function acTags(s){ return (s.modelo?'<span class="tag">'+esc(s.modelo)+'</span>':'')+(s.btus?'<span class="tag">'+esc(fmtBtu(s.btus))+'</span>':''); }
+function acPdf(s){ const t=[s.modelo&&"Modelo: "+esc(s.modelo),s.btus&&esc(fmtBtu(s.btus))].filter(Boolean).join(" • "); return t?'<br><small>'+t+'</small>':''; }
+const BTU_LIST=["7.000","9.000","12.000","18.000","24.000","30.000","36.000","48.000","60.000"];
+
+function openService(id,presetRoom){
+  const ex=id?S.services.find(s=>s.id===id):null;
+  const rooms=["Obra toda"].concat(S.selected);
+  const cur=ex||{room:presetRoom||S.current||rooms[1]||rooms[0],type:"",desc:"",qty:"",unit:"vb",supply:SUPPLY[0],note:"",modelo:"",btus:""};
+  if(!rooms.includes(cur.room)) rooms.push(cur.room);
+  const types=S.types.map(t=>t.name); if(cur.type && !types.includes(cur.type)) types.push(cur.type);
+  const opt=(arr,sel,lab)=>arr.map(v=>'<option value="'+esc(v)+'"'+(v===sel?' selected':'')+'>'+esc(lab?lab[v]||v:v)+'</option>').join("");
+  sheet('<h3>'+(ex?'Editar serviço':'Novo serviço')+'</h3><p>'+(ex?'Ajuste os dados do serviço.':'Escolha o tipo e marque um ou mais serviços, ou descreva o seu.')+'</p>'+
+    '<label class="l" for="sv_room">Cômodo / área</label><select id="sv_room">'+opt(rooms,cur.room)+'</select>'+
+    '<label class="l" for="sv_type">Tipo de serviço</label><select id="sv_type"><option value="">Sem tipo</option>'+opt(types,cur.type)+'</select>'+
+    '<div class="sugt" id="sv_sugt" hidden>'+(ex?'Sugestões — toque para preencher':'Toque para selecionar um ou mais serviços')+'</div><div class="suggest" id="sv_sug"></div>'+
+    '<label class="l" for="sv_desc">'+(ex?'Descrição do serviço':'Outro serviço (opcional)')+'</label><input id="sv_desc" maxlength="120" placeholder="Ex.: Assentamento de porcelanato 90x90" value="'+esc(cur.desc)+'" autocomplete="off">'+
+    '<div id="sv_ac" class="acbox" hidden><div class="acttl">❄ Ar-condicionado</div><div class="grid2"><div><label class="l" for="sv_modelo">Modelo</label><input id="sv_modelo" maxlength="60" placeholder="Ex.: Inverter Hi Wall" value="'+esc(cur.modelo)+'" autocomplete="off"></div>'+
+    '<div><label class="l" for="sv_btus">BTUs</label><input id="sv_btus" list="btu_list" inputmode="numeric" maxlength="8" placeholder="Ex.: 12.000" value="'+esc(cur.btus)+'" autocomplete="off"><datalist id="btu_list">'+BTU_LIST.map(b=>'<option value="'+b+'">').join("")+'</datalist></div></div></div>'+
+    '<div class="grid2"><div><label class="l" for="sv_qty">Quantidade</label><input id="sv_qty" inputmode="decimal" placeholder="Opcional" value="'+esc(cur.qty)+'"></div>'+
+    '<div><label class="l" for="sv_unit">Unidade</label><select id="sv_unit">'+opt(UNITS,cur.unit,UNIT_LABEL)+'</select></div></div>'+
+    '<label class="l" for="sv_sup">Fornecimento</label><select id="sv_sup">'+opt(SUPPLY,cur.supply)+'</select>'+
+    '<label class="l" for="sv_note">Observações</label><textarea id="sv_note" placeholder="Padrão de acabamento, marca, medidas, restrições de acesso...">'+esc(cur.note)+'</textarea>'+
+    '<div class="btns">'+(ex?'<button class="btn btn-o" data-x="del" style="color:var(--danger)">Excluir</button>':'<button class="btn btn-o" data-x="no">Cancelar</button>')+'<button class="btn btn-y" data-x="ok">'+(ex?'Salvar':'Adicionar')+'</button></div>',sh=>{
+    const sug=sh.querySelector("#sv_sug"), sugt=sh.querySelector("#sv_sugt"), desc=sh.querySelector("#sv_desc"), typeSel=sh.querySelector("#sv_type");
+    const acBox=sh.querySelector("#sv_ac"), unitSel=sh.querySelector("#sv_unit"), okBtn=sh.querySelector("[data-x=ok]");
+    const picked=new Set(); let unitTouched=!!ex;
+    unitSel.addEventListener("change",()=>{unitTouched=true;});
+    const syncAC=()=>{
+      const show=isAC(typeSel.value,desc.value+" "+[...picked].join(" "));
+      acBox.hidden=!show;
+      if(show && !unitTouched && unitSel.value==="vb") unitSel.value="un";
+    };
+    const updOk=()=>{
+      if(ex) return;
+      const n=picked.size+(desc.value.trim()?1:0);
+      okBtn.textContent="Adicionar"+(n>1?" ("+n+")":"");
+    };
+    const showSug=()=>{
+      const t=S.types.find(x=>x.name===typeSel.value), list=(t&&t.sug)||[];
+      sugt.hidden=!list.length;
+      sug.innerHTML=list.map(x=>'<button type="button" class="'+(picked.has(x)?'on':'')+'">'+esc(x)+'</button>').join("");
+      sug.querySelectorAll("button").forEach(b=>b.onclick=()=>{
+        if(ex){ desc.value=b.textContent; syncAC(); return; }
+        const k=b.textContent;
+        if(picked.has(k)) picked.delete(k); else picked.add(k);
+        b.classList.toggle("on"); updOk(); syncAC();
+      });
+    };
+    typeSel.addEventListener("change",()=>{ picked.clear(); showSug(); updOk(); syncAC(); });
+    desc.addEventListener("input",()=>{ updOk(); syncAC(); });
+    showSug(); updOk(); syncAC();
+    if(!ex) setTimeout(()=>{ if(!typeSel.value) typeSel.focus(); },200);
+    const no=sh.querySelector("[data-x=no]"); if(no) no.onclick=closeSheet;
+    const del=sh.querySelector("[data-x=del]");
+    if(del) del.onclick=()=>{ S.services=S.services.filter(s=>s.id!==id); save(); closeSheet(); renderQuote(); toast("Serviço excluído"); };
+    okBtn.onclick=()=>{
+      const common={room:sh.querySelector("#sv_room").value,type:typeSel.value,qty:sh.querySelector("#sv_qty").value.trim().replace(/\s+/g," "),unit:unitSel.value,supply:sh.querySelector("#sv_sup").value,note:sh.querySelector("#sv_note").value.trim()};
+      const modelo=sh.querySelector("#sv_modelo").value.trim(), btus=sh.querySelector("#sv_btus").value.trim();
+      const withAC=nm=>(!acBox.hidden && isAC(typeSel.value,nm)) ? {modelo,btus} : {modelo:"",btus:""};
+      if(ex){
+        const d=desc.value.trim();
+        if(!d){ desc.focus(); toast("Descreva o serviço"); return; }
+        S.services[S.services.findIndex(s=>s.id===id)]=Object.assign({id:ex.id},common,{desc:d},withAC(d));
+        save(); closeSheet(); renderQuote(); toast("Serviço atualizado"); return;
+      }
+      const names=[...picked], dv=desc.value.trim();
+      if(dv && !names.some(n=>n.toLowerCase()===dv.toLowerCase())) names.push(dv);
+      if(!names.length){ toast("Selecione ou descreva um serviço"); return; }
+      names.forEach(nm=>S.services.push(Object.assign({id:uid()},common,{desc:nm},withAC(nm))));
+      save(); closeSheet(); renderQuote(); toast(names.length>1?names.length+" serviços adicionados":"Serviço adicionado");
+    };
+  });
+}
+function genBase(){
+  if(!S.selected.length){ toast("Selecione cômodos primeiro"); return; }
+  const add=[]; let marked=0;
+  S.selected.forEach(room=>{
+    roomItems(room).forEach(({st,it,x})=>{
+      marked++;
+      if(x.s==="na"||x.s==="concluida") return;
+      if(S.services.some(s=>s.room===room&&s.desc===it.name)) return;
+      const t=S.types.find(tt=>tt.name===STAGE_TYPE[st.name]);
+      let tp=t?t.name:"";
+      if(isAC("",it.name)&&S.types.some(x=>x.name==="Ar-condicionado")) tp="Ar-condicionado";
+      add.push({id:uid(),room,type:tp,desc:it.name,qty:"",unit:"vb",supply:SUPPLY[0],note:"",modelo:"",btus:""});
+    });
+  });
+  if(!marked){ toast("Marque os serviços de cada cômodo primeiro"); return; }
+  if(!add.length){ toast("Nada novo para adicionar"); return; }
+  confirmSheet("Gerar lista base?","Serão adicionados "+add.length+" serviços, apenas os que você marcou em cada cômodo (exceto concluídos e N/A). Depois você pode editar, detalhar ou excluir cada item.","Adicionar",false,()=>{
+    S.services=S.services.concat(add); save(); renderQuote(); toast(add.length+" serviços adicionados");
+  });
+}
+function quoteText(){
+  const L=["*SOLICITAÇÃO DE ORÇAMENTO — LISTA DE SERVIÇOS GERAL*"];
+  if(S.obra) L.push("Obra: "+S.obra);
+  const im=[S.tipo,S.area&&S.area+" m²"].filter(Boolean).join(" • "); if(im) L.push("Imóvel: "+im);
+  const who=(lab,p)=>{ const t=[p.nome,p.contato].filter(Boolean).join(" — "); if(t) L.push(lab+": "+t); };
+  who("Proprietário",S.dono); who("Profissional",S.pro);
+  if(S.quote.prazo) L.push("Prazo desejado: "+S.quote.prazo);
+  groupedServices().forEach(g=>{
+    L.push("","*"+g.room.toUpperCase()+"*");
+    g.items.forEach((s,i)=>{
+      L.push((i+1)+". "+s.desc+" — "+qtyLabel(s)+" ("+s.supply+")"+(s.type?" ["+s.type+"]":""));
+      if(s.modelo||s.btus) L.push("   "+[s.modelo&&"Modelo: "+s.modelo,s.btus&&"BTUs: "+fmtBtu(s.btus).replace(" BTUs","")].filter(Boolean).join(" • "));
+      if(s.note) L.push("   Obs.: "+s.note);
+    });
+  });
+  if(S.quote.obs) L.push("","Observações gerais: "+S.quote.obs);
+  const tv=parseBRL(S.quote.total);
+  if(tv!=null) L.push("","*TOTAL GERAL: R$ "+fmtNum(tv)+"*");
+  else L.push("","Por favor, informe valor total, prazo de execução e condições de pagamento.");
+  L.push("_Gerado pelo app Orça Aqui_");
+  return L.join("\n");
+}
+function copyQuote(){
+  const txt=quoteText();
+  const fallback=()=>{ const t=document.createElement("textarea"); t.value=txt; t.style.position="fixed"; t.style.opacity="0"; document.body.appendChild(t); t.select(); try{document.execCommand("copy");toast("Texto copiado");}catch(_){toast("Não foi possível copiar");} t.remove(); };
+  if(navigator.clipboard&&navigator.clipboard.writeText) navigator.clipboard.writeText(txt).then(()=>toast("Texto copiado"),fallback); else fallback();
+}
+
+/* ===== ESCOLHER SERVIÇOS DO CÔMODO ===== */
+function chooseServices(pre,stageSel,newId){
+  const room=S.current; if(!room) return;
+  const d=roomData(room);
+  const list=S.stages.filter(st=>st.items.length).map(st=>
+    '<div class="csgrp" data-st="'+esc(st.id)+'"><label class="chk csh"><input type="checkbox" data-stg><span>'+esc(st.name)+'</span></label>'+
+    st.items.map(it=>'<label class="chk sub"><input type="checkbox" data-it value="'+esc(it.id)+'"'+((pre?pre.has(it.id):d[it.id])?' checked':'')+'><span>'+esc(it.name)+'</span></label>').join("")+'</div>').join("");
+  sheet('<h3>Serviços de '+esc(room)+'</h3><p>Marque só os serviços que serão feitos neste cômodo. O que ficar desmarcado não aparece nem entra no progresso. Desmarcar remove o serviço daqui, com data e observação.</p>'+
+    '<div class="tools"><button class="pill" id="cs_all">Marcar todos</button><button class="pill" id="cs_none">Desmarcar todos</button></div>'+
+    '<div id="cs_list">'+(list||'<div class="empty">Nenhuma etapa possui serviços ainda. Inclua o primeiro abaixo.</div>')+'</div>'+
+    '<div class="addsvc"><b>Incluir novo serviço</b><select id="cs_stage" aria-label="Etapa do novo serviço">'+S.stages.map(st=>'<option value="'+esc(st.id)+'"'+(st.id===stageSel?' selected':'')+'>'+esc(st.name)+'</option>').join("")+'</select>'+
+    '<div class="addrow"><input id="cs_new" maxlength="80" autocomplete="off" placeholder="Ex.: Instalação de lareira"><button class="btn btn-o" id="cs_addbtn">+ Incluir</button></div></div>'+
+    (S.selected.length>1?'<label class="chk" style="margin-top:8px"><input type="checkbox" id="cs_rooms"><span>Aplicar a todos os cômodos (não remove o que já tem andamento)</span></label>':'')+
+    '<div class="btns"><button class="btn btn-o" data-x="no">Cancelar</button><button class="btn btn-y" data-x="ok">Aplicar</button></div>',sh=>{
+    const items=()=>[...sh.querySelectorAll("#cs_list input[data-it]")];
+    const syncGrp=g=>{
+      const its=[...g.querySelectorAll("input[data-it]")], on=its.filter(b=>b.checked).length, head=g.querySelector("input[data-stg]");
+      head.checked=on===its.length; head.indeterminate=on>0&&on<its.length;
+    };
+    const syncAll=()=>sh.querySelectorAll(".csgrp").forEach(syncGrp);
+    syncAll();
+    sh.querySelector("#cs_list").addEventListener("change",e=>{
+      const g=e.target.closest(".csgrp"); if(!g) return;
+      if(e.target.matches("input[data-stg]")) g.querySelectorAll("input[data-it]").forEach(b=>b.checked=e.target.checked);
+      syncGrp(g);
+    });
+    sh.querySelector("#cs_all").onclick=()=>{ items().forEach(b=>b.checked=true); syncAll(); };
+    sh.querySelector("#cs_none").onclick=()=>{ items().forEach(b=>b.checked=false); syncAll(); };
+    const doAdd=()=>{
+      const sel=sh.querySelector("#cs_stage"), field=sh.querySelector("#cs_new"), nm=field.value.trim().replace(/\s+/g," ");
+      if(!nm){ field.focus(); return; }
+      const st=S.stages.find(x=>x.id===sel.value); if(!st) return;
+      if(st.items.some(x=>x.name.toLowerCase()===nm.toLowerCase())){ toast("Esse serviço já existe nesta etapa"); return; }
+      const checked=new Set(items().filter(b=>b.checked).map(b=>b.value));
+      const id="i"+uid(); st.items.push({id,name:nm}); checked.add(id);
+      save(); chooseServices(checked,st.id,id); toast("“"+nm+"” incluído em "+st.name);
+    };
+    sh.querySelector("#cs_addbtn").onclick=doAdd;
+    sh.querySelector("#cs_new").addEventListener("keydown",e=>{ if(e.key==="Enter"){ e.preventDefault(); doAdd(); } });
+    if(newId){ const n=[...sh.querySelectorAll("input[data-it]")].find(b=>b.value===newId); if(n) setTimeout(()=>n.scrollIntoView({block:"center"}),50); }
+    sh.querySelector("[data-x=no]").onclick=closeSheet;
+    sh.querySelector("[data-x=ok]").onclick=()=>{
+      const all=sh.querySelector("#cs_rooms"), targets=(all&&all.checked)?S.selected:[room];
+      const on=new Set(items().filter(b=>b.checked).map(b=>b.value));
+      const worked=x=>x&&(x.s!=="pendente"||x.d||x.o);
+      targets.forEach(r=>{
+        const dd=roomData(r);
+        S.stages.forEach(st=>st.items.forEach(it=>{
+          if(on.has(it.id)){ if(!dd[it.id]) dd[it.id]={s:"pendente",d:"",o:""}; }
+          else if(r===room || !worked(dd[it.id])) delete dd[it.id];
+        }));
+      });
+      save(); closeSheet(); renderTrack(); updateProgress(); toast("Serviços atualizados");
+    };
+  });
+}
+
+/* ===== EDITAR ETAPAS / TIPOS ===== */
+function refreshLists(){
+  if(tab==="track") renderTrack();
+  if(tab==="quote") renderQuote();
+  updateProgress();
+}
+function armBtn(btn,txtOn,txtOff,fn){
+  if(btn.classList.contains("arm")){ clearTimeout(btn._t); fn(); return; }
+  btn.classList.add("arm"); btn.textContent=txtOn;
+  btn._t=setTimeout(()=>{ btn.classList.remove("arm"); btn.textContent=txtOff; },3000);
+}
+function manageStages(){
+  sheet('<h3>Etapas e serviços</h3><p>Cada etapa tem os seus serviços. Toque em um nome para renomear. Excluir um serviço o remove de todos os cômodos.</p>'+
+    '<div id="ms"></div>'+
+    '<div class="addrow"><input id="ms_new" maxlength="60" autocomplete="off" placeholder="Nova etapa, ex.: Paisagismo"><button class="btn btn-y" id="ms_add">Adicionar etapa</button></div>'+
+    '<div class="btns"><button class="btn btn-o" id="ms_reset">Restaurar padrão</button><button class="btn btn-n" id="ms_done">Concluir</button></div>',sh=>{
+    const box=sh.querySelector("#ms"), inp=sh.querySelector("#ms_new");
+    const draw=()=>{
+      box.innerHTML=S.stages.map(st=>
+        '<div class="mstage" data-st="'+esc(st.id)+'"><div class="mrow"><input value="'+esc(st.name)+'" maxlength="60" aria-label="Nome da etapa"><button class="mdel" data-k="st" aria-label="Excluir etapa" title="Excluir etapa">✕</button></div><div class="msvcs">'+
+        st.items.map(it=>'<div class="mrow" data-it="'+esc(it.id)+'"><input value="'+esc(it.name)+'" maxlength="80" aria-label="Nome do serviço"><button class="mdel" data-k="it" aria-label="Excluir serviço" title="Excluir serviço">✕</button></div>').join("")+
+        '<div class="addrow sm"><input maxlength="80" autocomplete="off" placeholder="Novo serviço nesta etapa" aria-label="Novo serviço"><button class="btn btn-o" data-k="addsvc">+ Serviço</button></div></div></div>').join("");
+    };
+    draw();
+    const stOf=el=>{ const g=el.closest(".mstage"); return g?S.stages.find(x=>x.id===g.dataset.st):null; };
+    box.addEventListener("change",e=>{
+      const row=e.target.closest(".mrow"); if(!row) return;
+      const st=stOf(row); if(!st) return;
+      const nm=e.target.value.trim().replace(/\s+/g," ");
+      if(row.dataset.it){
+        const it=st.items.find(x=>x.id===row.dataset.it); if(!it) return;
+        if(!nm){ e.target.value=it.name; return; }
+        if(st.items.some(x=>x.id!==it.id&&x.name.toLowerCase()===nm.toLowerCase())){ toast("Já existe um serviço com esse nome nesta etapa"); e.target.value=it.name; return; }
+        it.name=nm;
+      }else{
+        if(!nm){ e.target.value=st.name; return; }
+        if(S.stages.some(x=>x.id!==st.id&&x.name.toLowerCase()===nm.toLowerCase())){ toast("Já existe uma etapa com esse nome"); e.target.value=st.name; return; }
+        st.name=nm;
+      }
+      save(); refreshLists();
+    });
+    const addSvc=btn=>{
+      const st=stOf(btn); if(!st) return;
+      const field=btn.parentElement.querySelector("input"), nm=field.value.trim().replace(/\s+/g," ");
+      if(!nm){ field.focus(); return; }
+      if(st.items.some(x=>x.name.toLowerCase()===nm.toLowerCase())){ toast("Esse serviço já existe nesta etapa"); return; }
+      st.items.push({id:"i"+uid(),name:nm});
+      save(); draw(); refreshLists(); toast("“"+nm+"” adicionado");
+      const again=box.querySelector('.mstage[data-st="'+st.id+'"] .addrow input'); if(again) again.focus();
+    };
+    box.addEventListener("click",e=>{
+      const add=e.target.closest("[data-k=addsvc]"); if(add){ addSvc(add); return; }
+      const del=e.target.closest(".mdel"); if(!del) return;
+      const st=stOf(del); if(!st) return;
+      if(del.dataset.k==="it"){
+        const id=del.closest(".mrow").dataset.it;
+        armBtn(del,"Excluir?","✕",()=>{ st.items=st.items.filter(x=>x.id!==id); pruneData(); save(); draw(); refreshLists(); toast("Serviço excluído"); });
+      }else{
+        if(S.stages.length<=1){ toast("Mantenha ao menos uma etapa"); return; }
+        armBtn(del,"Excluir?","✕",()=>{ S.stages=S.stages.filter(x=>x.id!==st.id); pruneData(); save(); draw(); refreshLists(); toast("Etapa excluída"); });
+      }
+    });
+    box.addEventListener("keydown",e=>{
+      if(e.key!=="Enter"||!e.target.closest(".addrow")) return;
+      e.preventDefault(); const b=e.target.parentElement.querySelector("[data-k=addsvc]"); if(b) addSvc(b);
+    });
+    const addStage=()=>{
+      const nm=inp.value.trim().replace(/\s+/g," ");
+      if(!nm){ inp.focus(); return; }
+      if(S.stages.some(x=>x.name.toLowerCase()===nm.toLowerCase())){ toast("Já existe uma etapa com esse nome"); return; }
+      S.stages.push({id:"e"+uid(),name:nm,items:[]});
+      inp.value=""; save(); draw(); refreshLists(); toast("“"+nm+"” adicionada. Inclua os serviços dela.");
+      box.lastElementChild&&box.lastElementChild.scrollIntoView({block:"nearest"});
+    };
+    sh.querySelector("#ms_add").onclick=addStage;
+    inp.addEventListener("keydown",e=>{ if(e.key==="Enter"){ e.preventDefault(); addStage(); } });
+    const rs=sh.querySelector("#ms_reset");
+    rs.onclick=()=>armBtn(rs,"Confirmar?","Restaurar padrão",()=>{
+      S.stages=defStages(); pruneData();
+      rs.classList.remove("arm"); rs.textContent="Restaurar padrão";
+      save(); draw(); refreshLists(); toast("Etapas e serviços padrão restaurados");
+    });
+    sh.querySelector("#ms_done").onclick=closeSheet;
+  });
+}
+function manageList(){
+  sheet('<h3>Tipos de serviço</h3><p>Categorias usadas ao listar serviços para orçamento. Toque no nome para renomear.</p>'+
+    '<div id="ml"></div>'+
+    '<div class="addrow"><input id="ml_new" maxlength="60" autocomplete="off" placeholder="Novo tipo, ex.: Automação"><button class="btn btn-y" id="ml_add">Adicionar</button></div>'+
+    '<div class="btns"><button class="btn btn-o" id="ml_reset">Restaurar padrão</button><button class="btn btn-n" id="ml_done">Concluir</button></div>',sh=>{
+    const box=sh.querySelector("#ml"), inp=sh.querySelector("#ml_new");
+    const draw=()=>{
+      box.innerHTML = S.types.length
+        ? S.types.map(x=>'<div class="mrow" data-id="'+esc(x.id)+'"><input value="'+esc(x.name)+'" maxlength="60" aria-label="Nome"><button class="mdel" aria-label="Excluir" title="Excluir">✕</button></div>').join("")
+        : '<div class="empty" style="padding:14px">Nenhum item. Adicione abaixo.</div>';
+    };
+    draw();
+    const nameTaken=(nm,exceptId)=>S.types.some(x=>x.id!==exceptId && x.name.toLowerCase()===nm.toLowerCase());
+    box.addEventListener("change",e=>{
+      const row=e.target.closest(".mrow"); if(!row) return;
+      const it=S.types.find(x=>x.id===row.dataset.id); if(!it) return;
+      const nm=e.target.value.trim().replace(/\s+/g," ");
+      if(!nm){ e.target.value=it.name; return; }
+      if(nameTaken(nm,it.id)){ toast("Já existe um item com esse nome"); e.target.value=it.name; return; }
+      S.services.forEach(s=>{ if(s.type===it.name) s.type=nm; });
+      it.name=nm; save(); refreshLists();
+    });
+    box.addEventListener("click",e=>{
+      const del=e.target.closest(".mdel"); if(!del) return;
+      const id=del.closest(".mrow").dataset.id;
+      armBtn(del,"Excluir?","✕",()=>{
+        const t=S.types.find(x=>x.id===id);
+        S.types=S.types.filter(x=>x.id!==id);
+        if(t) S.services.forEach(s=>{ if(s.type===t.name) s.type=""; });
+        save(); draw(); refreshLists(); toast("Tipo excluído");
+      });
+    });
+    const add=()=>{
+      const nm=inp.value.trim().replace(/\s+/g," ");
+      if(!nm){ inp.focus(); return; }
+      if(nameTaken(nm,null)){ toast("Já existe um item com esse nome"); return; }
+      S.types.push({id:"t"+uid(),name:nm,sug:[]});
+      inp.value=""; save(); draw(); refreshLists(); toast("“"+nm+"” adicionado");
+      box.lastElementChild&&box.lastElementChild.scrollIntoView({block:"nearest"});
+    };
+    sh.querySelector("#ml_add").onclick=add;
+    inp.addEventListener("keydown",e=>{ if(e.key==="Enter"){ e.preventDefault(); add(); } });
+    const rs=sh.querySelector("#ml_reset");
+    rs.onclick=()=>armBtn(rs,"Confirmar?","Restaurar padrão",()=>{
+      S.types=defTypes();
+      rs.classList.remove("arm"); rs.textContent="Restaurar padrão";
+      save(); draw(); refreshLists(); toast("Lista padrão restaurada");
+    });
+    sh.querySelector("#ml_done").onclick=closeSheet;
+  });
+}
+
+/* ===== RELATÓRIOS ===== */
+const REPORT_HEAD='<div class="rh"><svg viewBox="0 0 64 64"><use href="#logo"/></svg><div><b>Orça Aqui</b><small>Planeje • Acompanhe • Orce</small></div></div>';
+function metaLine(){
+  return [S.tipo&&"Imóvel: "+esc(S.tipo),S.area&&"Área: "+esc(S.area)+" m²","Emitido em "+new Date().toLocaleDateString("pt-BR")].filter(Boolean).join(" &nbsp;•&nbsp; ");
+}
+function partiesHtml(){
+  const cell=(lab,p)=>'<td><b>'+lab+'</b><br>'+(esc(p.nome)||'—')+(p.contato?'<br>'+esc(p.contato):'')+'</td>';
+  return '<table class="parties"><tr>'+cell("Proprietário",S.dono)+cell("Profissional",S.pro)+'</tr></table>';
+}
+function buildReport(){
+  const lab={pendente:"Pendente",andamento:"Em andamento",concluida:"Concluída",na:"Não se aplica"};
+  const fmt=d=>d?d.split("-").reverse().join("/"):"";
+  let h=REPORT_HEAD;
+  if(reportMode==="quote"){
+    h+='<h1>Solicitação de orçamento — Lista de serviços geral</h1><p class="meta"><b>'+esc(S.obra||"Obra sem nome")+'</b><br>'+metaLine()+'</p>'+partiesHtml();
+    if(S.quote.prazo) h+='<p class="meta">Prazo desejado: '+esc(S.quote.prazo)+'</p>';
+    groupedServices().forEach(g=>{
+      h+='<h2>'+esc(g.room)+'</h2><table><tr><th style="width:5%">#</th><th>Serviço</th><th style="width:14%">Qtd.</th><th style="width:18%">Fornecimento</th><th style="width:26%">Observações</th></tr>';
+      g.items.forEach((s,i)=>{ h+='<tr><td>'+(i+1)+'</td><td>'+esc(s.desc)+(s.type?'<br><small>'+esc(s.type)+'</small>':'')+acPdf(s)+'</td><td>'+esc(qtyLabel(s))+'</td><td>'+esc(s.supply)+'</td><td>'+esc(s.note)+'</td></tr>'; });
+      h+='</table>';
+    });
+    if(S.quote.obs) h+='<p class="meta" style="margin-top:12px"><b>Observações gerais:</b> '+esc(S.quote.obs)+'</p>';
+    const tv=parseBRL(S.quote.total);
+    h+='<div class="total"><span>TOTAL GERAL</span><span>'+(tv!=null?'R$ '+fmtNum(tv):'R$')+'</span></div>';
+    h+='<p class="meta" style="margin-top:12px">Informe prazo de execução e condições de pagamento.</p><div class="sign"><div>Profissional / empresa</div><div>Prazo de execução</div><div>Data</div></div>';
+  }else{
+    const o=overall();
+    h+='<h1>'+esc(S.obra||"Acompanhamento de Obra")+'</h1><p class="meta">'+metaLine()+'</p>'+partiesHtml()+'<p><b>Progresso geral: '+o.pct+'%</b> — '+o.done+' concluídas, '+o.doing+' em andamento, '+o.pend+' pendentes.</p>';
+    S.selected.forEach(n=>{
+      const r=roomStats(n), rows=roomItems(n);
+      h+='<h2>'+esc(n)+' — '+(r.count?r.pct+'%':'sem serviços marcados')+'</h2>';
+      if(!rows.length) return;
+      h+='<table><tr><th style="width:24%">Etapa</th><th style="width:28%">Serviço</th><th style="width:14%">Situação</th><th style="width:11%">Data</th><th>Observação</th></tr>';
+      rows.forEach(({st,it,x})=>{ h+='<tr><td>'+esc(st.name)+'</td><td>'+esc(it.name)+'</td><td>'+lab[x.s]+'</td><td>'+fmt(x.d)+'</td><td>'+esc(x.o)+'</td></tr>'; });
+      h+='</table>';
+    });
+  }
+  $("#report").innerHTML=h;
+}
+function printReport(mode){
+  if(mode==="quote" && !S.services.length){ toast("Adicione serviços antes"); return; }
+  if(mode==="progress" && !S.selected.length){ toast("Selecione cômodos antes de gerar o relatório"); return; }
+  if(mode==="progress" && !S.selected.some(n=>roomStats(n).count)){ toast("Marque serviços nos cômodos antes de gerar o relatório"); return; }
+  reportMode=mode; buildReport(); setTimeout(()=>window.print(),60);
+}
+window.addEventListener("beforeprint",buildReport);
+window.addEventListener("afterprint",()=>{reportMode="progress";});
+
+/* ===== MAIS ===== */
+$("#actStages").onclick=manageStages;
+$("#actTypes").onclick=()=>manageList("types");
+$("#actPdf").onclick=()=>printReport("progress");
+$("#actExport").onclick=()=>{
+  const blob=new Blob([JSON.stringify(S,null,2)],{type:"application/json"});
+  const a=document.createElement("a");
+  a.href=URL.createObjectURL(blob);
+  a.download="orca-aqui-"+(S.obra.trim().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"")||"backup")+".json";
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+  toast("Backup exportado");
+};
+$("#actImport").onclick=()=>$("#fileIn").click();
+$("#fileIn").addEventListener("change",e=>{
+  const f=e.target.files[0]; if(!f) return;
+  const rd=new FileReader();
+  rd.onload=()=>{
+    try{
+      const o=JSON.parse(rd.result);
+      if(typeof o!=="object"||!o||!Array.isArray(o.selected)) throw 0;
+      S=normalize(o); save(); go("home"); toast("Backup importado");
+    }catch(_){ toast("Arquivo de backup inválido"); }
+  };
+  rd.readAsText(f); e.target.value="";
+});
+$("#actClear").onclick=()=>confirmSheet("Limpar tudo?","Todos os dados desta obra serão apagados deste dispositivo. Esta ação não pode ser desfeita.","Apagar tudo",true,()=>{
+  const r=S.role; S=fresh(); S.role=r;
+  try{[KEY,OLD9,OLD8,OLD7,OLD6].forEach(k=>localStorage.removeItem(k));}catch(_){}
+  save(); go("home"); toast("Acompanhamento limpo");
+});
+
+/* ===== init ===== */
+renderHome(); renderSaved(); showWelcome(); setHdr();
+})();
+</script>
+</body>
+</html>
