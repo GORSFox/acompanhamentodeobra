@@ -9,6 +9,8 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Orça Aqui">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23FCA311'/%3E%3Cpath d='M14 31 32 16l18 15' fill='none' stroke='%2314213D' stroke-width='5' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M20 29v18h24V29' fill='none' stroke='%2314213D' stroke-width='5' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='m26 38 5 5 8-10' fill='none' stroke='%2314213D' stroke-width='5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
 <title>Orça Aqui — Planeje, acompanhe e peça orçamentos</title>
 <style>
@@ -123,6 +125,10 @@ label.l:first-child{margin-top:0}
 .ring{--p:0;width:44px;height:44px;border-radius:50%;background:conic-gradient(var(--yellow) calc(var(--p)*1%),rgba(255,255,255,.18) 0);display:grid;place-items:center;flex:none}
 .ring span{width:35px;height:35px;border-radius:50%;background:var(--navy);display:grid;place-items:center;font-size:11px;font-weight:800}
 .hdr-obra{display:flex;align-items:center;gap:8px;margin-top:10px;padding-top:9px;border-top:1px solid rgba(255,255,255,.1);min-width:0}
+.savebtn{margin-left:auto;flex:none;display:flex;align-items:center;gap:6px;min-height:34px;padding:0 12px;border:0;border-radius:999px;background:var(--yellow);color:var(--navy);font-weight:800;font-size:13px;cursor:pointer;transition:background .2s,transform .1s}
+.savebtn:active{transform:scale(.96)}
+.savebtn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.savebtn.ok{background:#2fb86b;color:#fff}
 .hdr-obra svg{width:16px;height:16px;stroke:var(--yellow);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
 .hdr-obra b{font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .hdr-obra span{font-size:12px;color:rgba(255,255,255,.65);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -345,6 +351,14 @@ body.sheet-open #toast.on{transform:translateX(-50%)}
 .svx.arm{background:var(--danger);color:#fff;font-size:11.5px;padding:0 10px}
 .svcrow .svn .svdet{margin-left:auto}
 .w-hero h1{font-size:25px}
+.sharerow{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 12px}
+.sharerow .chip{padding:7px 12px;font-size:12.5px}
+.sharerow .chip.on{background:var(--yellow);border-color:var(--yellow);color:#111}
+.addpanel .addrow{margin-top:10px}
+.rsel{display:flex;gap:8px;align-items:stretch;margin:0 0 14px}
+.rsel .stsel{flex:1;min-width:0}
+.rsel .btn{flex:none;padding:0 18px}
+.stsel{width:100%;min-height:48px;font-size:15px;font-weight:600;border:1.5px solid #cdd3df;border-radius:12px;background:#fff;color:var(--navy);padding:0 12px}
 
 /* ===== print ===== */
 #report{display:none}
@@ -454,6 +468,7 @@ body.sheet-open #toast.on{transform:translateX(-50%)}
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 21h18M5 21V9l7-5 7 5v12M10 21v-6h4v6"/></svg>
       <b id="tbTitle">Nova obra</b>
       <span id="tbMeta"></span>
+      <button class="savebtn" id="btnSave" type="button" aria-label="Salvar obra"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h11l3 3v15H5zM8 3v6h7V3M8 21v-7h8v7"/></svg><span id="btnSaveTxt">Salvar</span></button>
     </div>
   </header>
 
@@ -525,10 +540,10 @@ body.sheet-open #toast.on{transform:translateX(-50%)}
       <h2>Cômodos e áreas</h2>
       <p class="sub" id="roomsHint">Toque nos cômodos que fazem parte da obra.</p>
       <div class="tools">
-        <button class="pill" id="selAll">Selecionar todos</button>
         <button class="pill" id="selNone">Limpar seleção</button>
         <button class="pill y" id="addRoom">+ Novo cômodo</button>
       </div>
+      <div id="roomSelBox"></div>
       <div class="rgrid" id="roomGrid"></div>
     </div>
   </section>
@@ -573,35 +588,96 @@ body.sheet-open #toast.on{transform:translateX(-50%)}
 (function(){
 "use strict";
 
+const LISTA_RESIDENCIAL = ["Sala de estar","Sala de jantar","Cozinha","Lavanderia / Área de serviço","Suíte","Quarto 1","Quarto 2","Quarto 3","Banheiro","Varanda","Garagem","Área externa","Área gourmet","Depósito"];
 const DATA = {
-  "Casa":["Sala de estar","Sala de jantar","Cozinha","Lavanderia / Área de serviço","Suíte","Quarto 1","Quarto 2","Quarto 3","Banheiro social","Lavabo","Escritório","Área de TV","Varanda","Garagem","Corredor","Hall / Entrada","Área externa","Área gourmet","Depósito"],
-  "Apartamento":["Sala de estar","Sala de jantar","Cozinha","Lavanderia / Área de serviço","Suíte","Quarto 1","Quarto 2","Quarto 3","Banheiro social","Lavabo","Escritório","Varanda","Área de TV","Corredor","Hall / Entrada","Depósito"],
-  "Casa em condomínio":["Sala de estar","Sala de jantar","Cozinha","Lavanderia / Área de serviço","Suíte","Quarto 1","Quarto 2","Quarto 3","Banheiro social","Lavabo","Escritório","Área de TV","Varanda","Garagem","Corredor","Hall / Entrada","Área externa","Área gourmet","Depósito"],
+  "Casa":LISTA_RESIDENCIAL,
+  "Apartamento":LISTA_RESIDENCIAL,
+  "Casa em condomínio":LISTA_RESIDENCIAL,
   "Sala comercial":["Recepção","Sala de atendimento","Sala de reunião","Sala de trabalho","Diretoria","Copa","Banheiro","Depósito","Circulação"],
   "Loja":["Área de vendas","Vitrine","Caixa","Estoque","Escritório","Copa","Banheiro","Depósito","Área de serviço"],
   "Escritório":["Recepção","Sala de trabalho","Sala de reunião","Diretoria","Copa","Banheiro","Arquivo / Depósito","Circulação"],
-  "Imóvel rural":["Sala de estar","Sala de jantar","Cozinha","Lavanderia / Área de serviço","Suíte","Quarto 1","Quarto 2","Quarto 3","Banheiro","Varanda","Garagem","Área externa","Área gourmet","Depósito"],
+  "Imóvel rural":LISTA_RESIDENCIAL,
   "Outro":["Sala","Quarto","Cozinha","Banheiro","Lavanderia / Área de serviço","Escritório","Varanda","Área externa","Garagem","Depósito","Outra área"]
 };
 const DEF_STAGE_DEFS = [
-  ["e1","Planejamento e preparação",["Levantamento de medidas e projeto","Proteção de pisos e móveis","Acompanhamento técnico da obra"]],
-  ["e2","Demolição e retiradas",["Demolição de piso e revestimento","Remoção de portas e esquadrias","Retirada de entulho (caçamba)"]],
-  ["e3","Alvenaria e regularização",["Levantamento de parede em alvenaria","Reboco e regularização de paredes","Contrapiso e nivelamento"]],
-  ["e4","Instalações elétricas",["Pontos de tomada","Pontos de iluminação","Troca do quadro de distribuição","Passagem de fiação"]],
-  ["e5","Instalações hidráulicas",["Pontos de água fria e quente","Pontos de esgoto","Troca de registros e tubulações"]],
-  ["e6","Impermeabilização",["Impermeabilização de piso / box","Impermeabilização de laje"]],
-  ["e7","Revestimentos e pisos",["Assentamento de piso / porcelanato","Assentamento de revestimento de parede","Rejuntamento"]],
-  ["e8","Forros e tetos",["Forro de gesso","Sanca e iluminação embutida","Forro de PVC"]],
-  ["e9","Esquadrias e portas",["Instalação de portas","Instalação de janelas","Instalação de box de vidro"]],
-  ["e10","Bancadas, louças e metais",["Instalação de bancada","Instalação de louças e metais","Instalação de cuba e torneira"]],
-  ["e11","Pintura e acabamentos",["Pintura de paredes","Pintura de teto","Massa corrida e lixamento"]],
-  ["e14","Marcenaria e serralheria",["Armários planejados","Painel de TV","Guarda-roupa sob medida","Guarda-corpo","Portão ou grade","Espelhos e vidros sob medida"]],
+  ["e1","Planejamento e preparação",["Levantamento de medidas e projeto","Proteção de pisos e móveis","Acompanhamento técnico da obra","Projeto de layout e arquitetura","Projeto elétrico e hidráulico","Compra e conferência de materiais","Isolamento e proteção de áreas","Autorização do condomínio / ART","Ligação provisória de água e luz"]],
+  ["e2","Demolição e retiradas",["Demolição de piso e revestimento","Remoção de portas e esquadrias","Retirada de entulho (caçamba)","Demolição de parede","Retirada de forro","Retirada de louças e metais","Retirada de armários e bancadas","Remoção de instalações antigas"]],
+  ["e3","Alvenaria e regularização",["Levantamento de parede em alvenaria","Reboco e regularização de paredes","Contrapiso e nivelamento","Fechamento de vão","Abertura de vão com verga","Reparo de trincas e fissuras","Chapisco e emboço","Parede em drywall"]],
+  ["e4","Instalações elétricas",["Pontos de tomada","Pontos de iluminação","Troca do quadro de distribuição","Passagem de fiação","Pontos de TV e internet","Tomadas 220 V (chuveiro, forno, cooktop)","Infraestrutura de automação","Aterramento","Instalação de luminárias","Instalação de interruptores e tomadas"]],
+  ["e5","Instalações hidráulicas",["Pontos de água fria e quente","Pontos de esgoto","Troca de registros e tubulações","Pontos de água e esgoto do banheiro","Pontos de água e esgoto da cozinha","Pontos da área de serviço (tanque e máquina)","Pontos de gás","Aquecedor (gás, elétrico ou solar)","Ralos e caixas sifonadas","Teste de pressão das tubulações"]],
+  ["e6","Impermeabilização",["Impermeabilização do banheiro (piso e box)","Impermeabilização da cozinha (piso e bancada molhada)","Impermeabilização da área de serviço (piso e tanque)","Impermeabilização de laje","Impermeabilização de varanda / terraço","Impermeabilização de jardineira / floreira","Teste de estanqueidade (lâmina d'água)"]],
+  ["e7","Revestimentos e pisos",["Piso do banheiro","Revestimento de parede do banheiro (box e bancada)","Piso da cozinha","Revestimento de parede da cozinha (pia e bancada)","Piso da área de serviço","Revestimento de parede da área de serviço (tanque)","Piso de salas e quartos (porcelanato, laminado ou vinílico)","Piso de varanda e área externa","Revestimento de parede dos demais ambientes","Rodapés","Soleiras e peitoris","Rejuntamento","Polimento ou restauração de piso (taco, tábua corrida)"]],
+  ["e8","Forros e tetos",["Forro de gesso","Sanca e iluminação embutida","Forro de PVC","Forro mineral / modular","Reparo de forro","Cortineiro"]],
+  ["e9","Esquadrias e portas",["Instalação de portas","Instalação de janelas","Instalação de box de vidro","Porta de correr","Fechaduras e maçanetas","Instalação de telas e mosquiteiros","Ajuste e regulagem de esquadrias"]],
+  ["e10","Bancadas, louças e metais",["Instalação de bancada","Instalação de louças e metais","Instalação de cuba e torneira","Bancada e cuba do banheiro","Bancada e pia da cozinha","Tanque e bancada da área de serviço","Vaso sanitário e acessórios","Chuveiro, ducha e misturador","Instalação de espelhos e acessórios"]],
+  ["e11","Pintura e acabamentos",["Pintura de paredes","Pintura de teto","Massa corrida e lixamento","Textura ou grafiato","Pintura de portas e esquadrias","Pintura de fachada / muro","Retoques finais","Aplicação de papel de parede"]],
+  ["e14","Marcenaria e serralheria",["Armários planejados","Painel de TV","Guarda-roupa sob medida","Guarda-corpo","Portão ou grade","Espelhos e vidros sob medida","Armários da cozinha","Armário do banheiro","Closet","Prateleiras e nichos","Escada e corrimão"]],
   ["e15","Ar-condicionado",["Instalação de ar-condicionado split","Infraestrutura para ar-condicionado (tubulação e dreno)","Instalação de ar-condicionado cassete","Manutenção / limpeza de ar-condicionado"]],
-  ["e12","Limpeza e finalização",["Limpeza pós-obra"]],
-  ["e13","Vistoria e entrega",["Vistoria final e ajustes"]]
+  ["e16","Área externa e paisagismo",["Piso externo e calçada","Deck ou pergolado","Churrasqueira","Paisagismo e jardim","Muro e fechamento","Iluminação externa","Drenagem e calhas"]],
+  ["e17","Automação e segurança",["Fechadura digital","Interfone e videoporteiro","Câmeras de segurança","Alarme e sensores","Automação de iluminação","Wi-Fi e rede cabeada"]],
+  ["e18","Instalação de equipamentos e decoração",["Instalação de eletrodomésticos","Cortinas e persianas","Instalação de fogão, cooktop e coifa","Montagem de móveis","Quadros e objetos de decoração"]],
+  ["e12","Limpeza e finalização",["Limpeza pós-obra","Retirada de proteções","Limpeza técnica de vidros e pisos","Descarte final de entulho"]],
+  ["e13","Vistoria e entrega",["Vistoria final e ajustes","Lista de pendências (punch list)","Entrega de chaves e termo de recebimento","Garantias e manuais"]]
 ];
 const defStages = () => DEF_STAGE_DEFS.map(d=>({id:d[0],name:d[1],svcs:d[2].map((n,i)=>({id:d[0]+"s"+(i+1),name:n}))}));
+/* ===== o que faz sentido em cada cômodo =====
+   Tipos de cômodo: B banheiro, C cozinha, S área de serviço, X área externa, D demais ambientes (sala, quartos...).
+   Serviços sem regra aparecem em todos os cômodos. "Obra toda" não filtra nada. */
+let showAllSvcs = false;
+function roomKinds(name){
+  const n=String(name||"");
+  if(n==="Obra toda") return null;
+  const k=new Set();
+  if(/banheiro|lavabo|\bwc\b|sanit/i.test(n)) k.add("B");
+  if(/su[ií]te/i.test(n)){ k.add("D"); k.add("B"); }
+  if(/cozinha|copa|gourmet/i.test(n)) k.add("C");
+  if(/lavanderia|servi[çc]o/i.test(n)) k.add("S");
+  if(/varanda|externa|garagem|gourmet|quintal|jardim|terra[çc]o|churrasq|piscina|fachada|ed[ií]cula/i.test(n)) k.add("X");
+  if(!k.size) k.add("D");
+  return k;
+}
+const REL = {
+  e2:{"Retirada de louças e metais":"BCS","Retirada de armários e bancadas":"BCS"},
+  e4:{"Tomadas 220 V (chuveiro, forno, cooktop)":"BCS","Pontos de TV e internet":"DX","Infraestrutura de automação":"D"},
+  e5:{"*":"BCS","Pontos de água e esgoto do banheiro":"B","Pontos de água e esgoto da cozinha":"C","Pontos da área de serviço (tanque e máquina)":"S","Pontos de gás":"CS","Ralos e caixas sifonadas":"BCSX"},
+  e6:{"*":"BCSX","Impermeabilização de piso / box":"BCS","Impermeabilização do banheiro (piso e box)":"B","Impermeabilização da cozinha (piso e bancada molhada)":"C","Impermeabilização da área de serviço (piso e tanque)":"S","Impermeabilização de laje":"X","Impermeabilização de varanda / terraço":"X","Impermeabilização de jardineira / floreira":"X"},
+  e7:{"Piso do banheiro":"B","Revestimento de parede do banheiro (box e bancada)":"B","Piso da cozinha":"C","Revestimento de parede da cozinha (pia e bancada)":"C","Piso da área de serviço":"S","Revestimento de parede da área de serviço (tanque)":"S","Piso de salas e quartos (porcelanato, laminado ou vinílico)":"D","Piso de varanda e área externa":"X","Revestimento de parede dos demais ambientes":"D","Rodapés":"DCS","Polimento ou restauração de piso (taco, tábua corrida)":"D"},
+  e9:{"Instalação de box de vidro":"B"},
+  e10:{"*":"BCS","Bancada e cuba do banheiro":"B","Bancada e pia da cozinha":"C","Tanque e bancada da área de serviço":"S","Vaso sanitário e acessórios":"B","Chuveiro, ducha e misturador":"B","Instalação de espelhos e acessórios":"B"},
+  e11:{"Pintura de fachada / muro":"X","Textura ou grafiato":"DX","Aplicação de papel de parede":"D"},
+  e14:{"Painel de TV":"D","Guarda-roupa sob medida":"D","Guarda-corpo":"X","Portão ou grade":"X","Armários da cozinha":"C","Armário do banheiro":"B","Closet":"D"},
+  e15:{"*":"D"},
+  e16:{"*":"X"},
+  e17:{"*":"DX"},
+  e18:{"*":"D","Instalação de eletrodomésticos":"CS","Instalação de fogão, cooktop e coifa":"C"}
+};
+const shownFor = (room,id) => !!(S && S.show && S.show[room] && S.show[room].includes(id));
+function svcRel(st,c){
+  const r=REL[st.id]; if(!r) return "*";
+  if(r[c.name]) return r[c.name];
+  const known=DEF_STAGE_DEFS.some(d=>d[0]===st.id && d[2].includes(c.name));
+  return known ? (r["*"]||"*") : "*";   // serviço criado por você aparece em todos os cômodos
+}
+function svcVisible(room,st,c,all,noShow){
+  if(all===undefined) all=showAllSvcs;
+  if(all) return true;
+  if(!noShow && shownFor(room,st.id)) return true;   // etapa incluída manualmente neste cômodo
+  const rk=roomKinds(room); if(!rk) return true;
+  const rel=svcRel(st,c); if(rel==="*") return true;
+  return [...rel].some(ch=>rk.has(ch));
+}
+function stageVisible(room,st,items,all,noShow){
+  if(all===undefined) all=showAllSvcs;
+  return all || (!noShow && shownFor(room,st.id)) || !st.svcs.length || (items&&items.length>0) || st.svcs.some(c=>svcVisible(room,st,c,all,noShow));
+}
 const OLDTYPE_STAGE = {"Planejamento e projeto":"e1","Demolição e retiradas":"e2","Alvenaria e regularização":"e3","Elétrica":"e4","Hidráulica":"e5","Impermeabilização":"e6","Revestimentos e pisos":"e7","Gesso e forros":"e8","Esquadrias e portas":"e9","Marmoraria e louças":"e10","Pintura":"e11","Marcenaria":"e14","Serralheria e vidraçaria":"e14","Ar-condicionado":"e15","Limpeza e entrega":"e12"};
+const BASIC_ROOMS = [
+  ["Ambientes sociais",["Sala de estar","Sala de jantar","Sala de TV","Hall / Entrada","Corredor","Varanda","Lavabo"]],
+  ["Quartos e banheiros",["Suíte","Quarto 1","Quarto 2","Quarto 3","Quarto de hóspedes","Closet","Banheiro social","Banheiro da suíte","Escritório"]],
+  ["Cozinha e serviço",["Cozinha","Copa","Despensa","Lavanderia / Área de serviço","Depósito","Dependência de empregada"]],
+  ["Áreas externas",["Garagem","Área externa","Área gourmet","Quintal / Jardim","Piscina","Edícula","Terraço"]],
+  ["Comercial",["Recepção","Sala de atendimento","Sala de reunião","Sala de trabalho","Diretoria","Área de vendas","Estoque","Caixa","Vitrine","Circulação"]]
+];
 const UNITS = ["vb","m²","m","un","pt","diária","h"];
 const UNIT_LABEL = {"vb":"vb (verba)","m²":"m²","m":"m (linear)","un":"un","pt":"pt (ponto)","diária":"diária","h":"hora"};
 const SUPPLY = ["Mão de obra","Mão de obra + materiais"];
@@ -623,7 +699,7 @@ const ICO_CHECK = '<svg viewBox="0 0 24 24"><path d="M9 11l3 3 8-8"/><path d="M2
 const ICO_HOME = '<svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>';
 
 function fresh(){
-  return {ver:10,role:null,obra:"",tipo:"",area:"",dono:{nome:"",contato:""},pro:{nome:"",contato:""},stages:defStages(),custom:[],selected:[],services:[],quote:{prazo:"",total:"",obs:""},current:null,filter:"todas",savedAt:null};
+  return {ver:11,show:{},role:null,obra:"",tipo:"",area:"",dono:{nome:"",contato:""},pro:{nome:"",contato:""},stages:defStages(),custom:[],selected:[],services:[],quote:{prazo:"",total:"",obs:""},current:null,filter:"todas",savedAt:null};
 }
 let memoryOnly = false, tab = "home", pickedRole = null, reportMode = "progress";
 let S = load();
@@ -697,6 +773,18 @@ function normalize(o){
       });
     });
   }
+  if(!(o.ver>=11)){
+    // catálogo ampliado: acrescenta serviços novos às etapas padrão e cria as etapas novas
+    const defs=defStages();
+    defs.forEach(d=>{
+      const st=s.stages.find(z=>z.id===d.id) || s.stages.find(z=>z.name===d.name);
+      if(st){ d.svcs.forEach(c=>{ if(!st.svcs.some(x=>x.name.toLowerCase()===c.name.toLowerCase())) st.svcs.push(c); }); return; }
+      if(["e16","e17","e18"].includes(d.id)){
+        const k=s.stages.findIndex(z=>z.id==="e12"||z.name==="Limpeza e finalização");
+        if(k>-1) s.stages.splice(k,0,d); else s.stages.push(d);
+      }
+    });
+  }
   delete s.data;
   s.services.forEach(v=>{
     if(!v.id) v.id=uid();
@@ -705,7 +793,9 @@ function normalize(o){
     if(!ST.some(x=>x[0]===v.s)) v.s="pendente";
     delete v.type;
   });
-  s.ver=10;
+  if(!s.show || typeof s.show!=="object" || Array.isArray(s.show)) s.show={};
+  Object.keys(s.show).forEach(k=>{ if(!Array.isArray(s.show[k])) delete s.show[k]; else s.show[k]=s.show[k].filter(x=>typeof x==="string"); });
+  s.ver=11;
   return s;
 }
 function migrate(o){
@@ -869,8 +959,26 @@ $("#tipo").addEventListener("change",e=>{
 });
 
 /* ===== ROOMS ===== */
+function roomSelHtml(){
+  const have=new Set(available().map(x=>x.toLowerCase()));
+  const groups=BASIC_ROOMS.map(g=>[g[0],g[1].filter(n=>!have.has(n.toLowerCase()))]).filter(g=>g[1].length);
+  if(!groups.length) return '';
+  return '<div class="sugt" style="margin:0 0 6px">Lista básica: role o menu, escolha um cômodo ou área e toque em Adicionar.</div><div class="rsel"><select id="roomSel" class="stsel" aria-label="Lista básica de cômodos e áreas"><option value="">Lista básica de cômodos e áreas…</option>'+
+    groups.map(g=>'<optgroup label="'+esc(g[0])+'">'+g[1].map(n=>'<option value="'+esc(n)+'">'+esc(n)+'</option>').join("")+'</optgroup>').join("")+
+    '</select><button class="btn btn-y" id="roomSelAdd">Adicionar</button></div>';
+}
 function renderRooms(){
   const list=available(), grid=$("#roomGrid");
+  const box=$("#roomSelBox");
+  box.innerHTML = S.tipo ? roomSelHtml() : "";
+  const addBtn=$("#roomSelAdd");
+  if(addBtn) addBtn.onclick=()=>{
+    const name=$("#roomSel").value;
+    if(!name){ toast("Escolha um cômodo na lista"); return; }
+    if(available().some(x=>x.toLowerCase()===name.toLowerCase())){ toast("Esse cômodo já existe"); return; }
+    S.custom.push(name); S.selected.push(name);
+    save(); updateProgress(); renderRooms(); toast("“"+name+"” adicionado");
+  };
   $("#roomsHint").textContent = S.tipo ? "Toque nos cômodos que fazem parte da obra. ("+S.selected.length+" selecionado(s))" : "Escolha o tipo de imóvel na aba Início para ver os cômodos sugeridos, ou crie os seus.";
   if(!list.length){
     grid.innerHTML='<div class="empty" style="grid-column:1/-1"><div class="ei">'+ICO_ROOMS+'</div>Escolha o tipo de imóvel primeiro.<br><button class="btn btn-y" id="goHome">Ir para Início</button></div>';
@@ -886,7 +994,6 @@ function renderRooms(){
     save(); updateProgress();
   });
 }
-$("#selAll").onclick=()=>{ S.selected=available().slice(); save(); updateProgress(); renderRooms(); };
 $("#selNone").onclick=()=>{ S.selected=[]; S.current=null; save(); updateProgress(); renderRooms(); };
 $("#addRoom").onclick=()=>{
   sheet('<h3>Novo cômodo ou área</h3><p>Digite o nome do ambiente que deseja acompanhar.</p><input id="newRoom" placeholder="Ex.: Closet, Piscina, Quarto de hóspedes" maxlength="40" autocomplete="off"><div class="btns"><button class="btn btn-o" data-x="no">Cancelar</button><button class="btn btn-y" data-x="ok">Adicionar</button></div>',sh=>{
@@ -905,17 +1012,32 @@ $("#addRoom").onclick=()=>{
 };
 
 /* ===== TRACK ===== */
-let openPanel=null;
+let openPanel=null, stagePanel=false;
+const shareRooms=new Set();
 function keepScroll(fn){ const y=window.scrollY; fn(); window.scrollTo(0,y); }
 function addSvcTo(room,stId,name){
   const st=S.stages.find(z=>z.id===stId); if(!st) return;
   S.services.push(mkSvc(room,stId,name,st.name)); save();
 }
+/* adiciona no cômodo atual e nos cômodos marcados em "Compartilhar com" (sem duplicar nos outros) */
+function addShared(stId,name){
+  addSvcTo(S.current,stId,name);
+  let extra=0;
+  [...shareRooms].forEach(r=>{
+    if(!S.selected.includes(r)||r===S.current) return;
+    const stg=S.stages.find(z=>z.id===stId);
+    if(stg && !svcVisible(r,stg,{name:name})) return;
+    if(roomServices(r).some(v=>v.stageId===stId&&v.desc===name)) return;
+    addSvcTo(r,stId,name); extra++;
+  });
+  return extra;
+}
+function shareMsg(name,extra){ return "＋ "+name+(extra?" (e em mais "+extra+(extra>1?" cômodos)":" cômodo)"):""); }
 function addFromChip(stId,catId){
   const st=S.stages.find(z=>z.id===stId), c=st&&st.svcs.find(x=>x.id===catId); if(!c) return;
-  addSvcTo(S.current,stId,c.name);
+  const extra=addShared(stId,c.name);
   keepScroll(()=>{ renderTrack(); updateProgress(); });
-  toast("＋ "+c.name);
+  toast(shareMsg(c.name,extra));
 }
 function addCustomInStage(stEl){
   const inp=stEl.querySelector(".newsvc"), nm=inp.value.trim().replace(/\s+/g," ");
@@ -923,15 +1045,66 @@ function addCustomInStage(stEl){
   const stId=stEl.dataset.st, st=S.stages.find(z=>z.id===stId); if(!st) return;
   if(!st.svcs.some(c=>c.name.toLowerCase()===nm.toLowerCase())) st.svcs.push({id:st.id+"s"+uid(),name:nm});
   const exact=st.svcs.find(c=>c.name.toLowerCase()===nm.toLowerCase()).name;
-  addSvcTo(S.current,stId,exact);
+  const extra=addShared(stId,exact);
   keepScroll(()=>{ renderTrack(); updateProgress(); });
-  toast("＋ "+exact);
+  toast(shareMsg(exact,extra));
+}
+/* ===== sugestões para o campo "Nome da nova etapa" (lista extensa; só sugere o que ainda não existe) ===== */
+const STAGE_SUGGESTIONS = [
+  "Fundação e estrutura","Terraplenagem e locação da obra","Canteiro de obras e instalações provisórias","Estrutura de concreto armado","Estrutura metálica","Estrutura de madeira","Alvenaria estrutural","Lajes e vigas","Telhado e cobertura","Telhas e estrutura do telhado","Calhas, rufos e condutores","Impermeabilização de cobertura","Isolamento térmico e acústico","Fachada e revestimento externo","Reforma de fachada","Pintura externa","Muros, gradil e portões","Calçada e acessos","Piso externo e paginação","Paisagismo e irrigação","Jardim vertical","Piscina e casa de máquinas","Deck, pergolado e cobertura leve","Churrasqueira e área gourmet","Energia solar (fotovoltaica)","Aquecimento solar","Reservatórios e cisterna","Fossa, sumidouro e caixa de gordura","Rede de esgoto e águas pluviais","Drenagem e rebaixamento de lençol","Instalação de gás e GLP","Prevenção e combate a incêndio","SPDA (para-raios)","Subestação e entrada de energia","Cabeamento estruturado e rede","Sonorização e áudio ambiente","Home theater e sala de cinema","Automação residencial","CFTV e controle de acesso","Cerca elétrica e segurança perimetral","Elevador e plataforma elevatória","Escadas e corrimãos","Guarda-corpos e vidros","Vidraçaria e espelhos","Serralheria","Marcenaria sob medida","Móveis planejados","Cozinha planejada","Closet e dormitórios planejados","Bancadas de mármore e granito","Pedras e revestimentos especiais","Gesso e drywall","Forro e sancas","Iluminação decorativa e projeto luminotécnico","Revestimentos 3D, madeira e painéis","Papel de parede e revestimentos decorativos","Rodapés, soleiras e peitoris","Pisos laminados, vinílicos e madeira","Tacos e raspagem de piso","Polimento e cristalização de pisos","Pintura decorativa e texturas","Tratamento de umidade e mofo","Tratamento de infiltrações","Reforço estrutural","Recuperação de trincas e fissuras","Dedetização e controle de pragas","Marmoraria","Persianas, cortinas e toldos","Mobiliário e decoração","Paisagismo interno","Instalação de eletrodomésticos","Churrasqueira e coifa (dutos e exaustão)","Ventilação e exaustão","Climatização e VRF","Aquecimento de piscina","Lareira e fogão a lenha","Sauna e spa","Adega e câmara fria","Demolição controlada","Remoção de entulho e resíduos","Limpeza grossa","Limpeza fina e pós-obra","Fiscalização e medições","Projetos complementares","Aprovações e licenças na prefeitura","Regularização e documentação (habite-se)","Compra de materiais","Mão de obra e empreitadas","Contenção e muro de arrimo","Pavimentação e estacionamento","Playground e quadra esportiva","Acessibilidade e adaptações","Manutenção e reparos gerais","Serviços diversos"
+];
+function stageSuggestionsHtml(){
+  const used=new Set(S.stages.map(z=>z.name.toLowerCase()));
+  const skip=new Set(["vistoria e entrega","entrega inicial"]);
+  return STAGE_SUGGESTIONS.filter(n=>!used.has(n.toLowerCase()) && !skip.has(n.toLowerCase()))
+    .sort((a,b)=>a.localeCompare(b,"pt-BR"))
+    .map(n=>'<option value="'+esc(n)+'">').join("");
+}
+function stagePanelHtml(room,groups){
+  const hidden=groups.filter(g=>g.st.id && !stageVisible(room,g.st,g.items));
+  let o='<option value="">Selecione uma etapa…</option>';
+  if(hidden.length) o+='<optgroup label="Etapas que não se aplicam a este cômodo">'+hidden.map(g=>'<option value="show:'+esc(g.st.id)+'">'+esc(g.st.name)+'</option>').join("")+'</optgroup>';
+  o+='<option value="new">＋ Nova etapa personalizada…</option>';
+  return '<div class="addpanel"><div class="sugt"><b>Passo 1:</b> abra a lista e escolha a etapa para <b>'+esc(room)+'</b> (ou crie uma nova). <b>Passo 2:</b> dentro dela, adicione os serviços.</div>'+
+    '<select id="stSel" class="stsel" aria-label="Etapa a incluir">'+o+'</select>'+
+    '<div class="addrow" id="stNew" style="display:none;margin-top:10px"><input class="newstg" list="stg_sug" maxlength="80" autocomplete="off" placeholder="Digite ou escolha uma etapa"><datalist id="stg_sug">'+stageSuggestionsHtml()+'</datalist></div>'+
+    '<button class="btn btn-y" data-addstage style="margin-top:10px;width:100%">Incluir etapa</button></div>';
+}
+function includeStage(){
+  const sel=$("#trackBody #stSel"); if(!sel) return;
+  const v=sel.value;
+  if(!v){ toast("Selecione uma etapa na lista"); return; }
+  if(v==="new"){ addStageInline(); return; }
+  const room=S.current; let id=null;
+  if(v.indexOf("show:")===0) id=v.slice(5);
+  const st=S.stages.find(z=>z.id===id); if(!st) return;
+  if(!S.show[room]) S.show[room]=[];
+  if(!S.show[room].includes(id)) S.show[room].push(id);
+  stagePanel=false; openPanel=id; save();
+  renderTrack(); updateProgress();
+  const el=document.querySelector('#trackBody .stage[data-st="'+id+'"]'); if(el) el.scrollIntoView({block:"center"});
+  toast("Etapa “"+st.name+"” incluída em "+room);
+}
+function addStageInline(){
+  const inp=$("#trackBody .newstg"); if(!inp) return;
+  const nm=inp.value.trim().replace(/\s+/g," ");
+  if(!nm){ inp.focus(); return; }
+  if(S.stages.some(z=>z.name.toLowerCase()===nm.toLowerCase())){ toast("Já existe uma etapa com esse nome"); return; }
+  const id="e"+uid();
+  S.stages.push({id,name:nm,svcs:[]});
+  stagePanel=false; openPanel=id; save();
+  renderTrack(); updateProgress();
+  const el=document.querySelector('#trackBody .stage[data-st="'+id+'"]'); if(el) el.scrollIntoView({block:"center"});
+  toast("Etapa “"+nm+"” criada. Adicione os serviços dela.");
 }
 function addPanelHtml(st,all){
-  return '<div class="addpanel"><div class="sugt">Toque num serviço para adicionar. Cada toque inclui um serviço neste cômodo.</div><div class="svchips">'+
-    (st.svcs.length?st.svcs.map(c=>{ const n=all.filter(v=>v.stageId===st.id&&v.desc===c.name).length;
+  const vs=st.svcs.filter(c=>svcVisible(S.current,st,c));
+  const others=S.selected.filter(n=>n!==S.current);
+  const share=others.length ? '<div class="sugt">Compartilhar com outros cômodos (opcional):</div><div class="sharerow">'+others.map(n=>'<button class="chip'+(shareRooms.has(n)?' on':'')+'" data-share="'+esc(n)+'">'+esc(n)+'</button>').join("")+'</div>' : '';
+  return '<div class="addpanel"><div class="sugt">Toque num serviço para adicionar. Cada toque inclui um serviço '+(shareRooms.size?'neste cômodo e nos marcados abaixo.':'neste cômodo.')+'</div>'+share+'<div class="svchips">'+
+    (vs.length?vs.map(c=>{ const n=all.filter(v=>v.stageId===st.id&&v.desc===c.name).length;
       return '<button class="svchip" data-addsvc="'+esc(c.id)+'">＋ '+esc(c.name)+(n?'<em>'+n+'</em>':'')+'</button>'; }).join(""):'<span class="nosvc">Nenhum serviço na lista desta etapa.</span>')+
-    '</div><div class="addrow"><input class="newsvc" maxlength="120" autocomplete="off" placeholder="Outro serviço desta etapa"><button class="btn btn-y" data-addcustom>Adicionar</button></div>'+
+    '</div>'+(st.svcs.length>vs.length?'<div class="sugt" style="margin-top:8px">'+(st.svcs.length-vs.length)+' serviço(s) desta etapa não se aplicam a este cômodo. Para ver tudo, use “Ver todas as etapas”.</div>':'')+'<div class="addrow"><input class="newsvc" maxlength="120" autocomplete="off" placeholder="Outro serviço desta etapa"><button class="btn btn-y" data-addcustom>Adicionar</button></div>'+
     '<button class="linkbtn" data-editlist="'+esc(st.id)+'" style="padding:8px 0 0">✎ Editar lista desta etapa</button></div>';
 }
 function todayStr(){ return new Date(Date.now()-new Date().getTimezoneOffset()*60000).toISOString().slice(0,10); }
@@ -967,13 +1140,17 @@ function renderTrack(){
   const room=S.current, r=roomStats(room), all=roomServices(room);
   let h='<div class="picker">'+S.selected.map(n=>'<button class="chip'+(n===room?' on':'')+'" data-room="'+esc(n)+'">'+esc(n)+' <small data-pc="'+esc(n)+'">'+roomStats(n).pct+'%</small></button>').join("")+'</div>';
   h+='<div class="roomhead"><small>Cômodo</small><h2>'+esc(room)+'</h2><div class="row"><span id="rhTxt">'+r.done+' de '+r.total+' serviços concluídos</span><b id="rhPct">'+r.pct+'%</b></div><div class="mini"><i id="rhBar" class="'+(r.pct===100&&r.total?'full':'')+'" style="width:'+r.pct+'%"></i></div></div>';
-  h+='<div class="filters">'+[["todas","Todos"],["pendente","Pendentes"],["andamento","Em andamento"],["concluida","Concluídos"]].map(f=>'<button class="chip'+(S.filter===f[0]?' on':'')+'" data-f="'+f[0]+'">'+f[1]+'</button>').join("")+'<button class="chip" id="editStages" style="margin-left:auto">✎ Editar etapas</button></div>';
-  if(!all.length) h+='<div class="hint">Em cada etapa, toque em <b>＋ Adicionar serviço</b> e toque nos serviços que serão feitos neste cômodo. Cada toque inclui um serviço, que ganha os botões de andamento.</div>';
+  h+='<div class="filters">'+[["todas","Todos"],["pendente","Pendentes"],["andamento","Em andamento"],["concluida","Concluídos"]].map(f=>'<button class="chip'+(S.filter===f[0]?' on':'')+'" data-f="'+f[0]+'">'+f[1]+'</button>').join("")+'<button class="chip'+(showAllSvcs?' on':'')+'" id="toggleAll" style="margin-left:auto">'+(showAllSvcs?'Só o que se aplica':'Ver todas as etapas')+'</button><button class="chip" id="editStages">✎ Editar etapas</button></div>';
+  h+='<!--STG_TOP-->';
+  if(!all.length) h+='<div class="hint"><b>Primeiro a etapa, depois o serviço.</b> Se a etapa não estiver na lista, use <b>＋ Incluir etapa</b>. Dentro de cada etapa, toque em <b>＋ Adicionar serviço</b> e escolha o que será feito neste cômodo. Cada toque inclui um serviço, que ganha os botões de andamento.</div>';
   const groups=S.stages.map(st=>({st:st,items:all.filter(v=>v.stageId===st.id)}));
   const orphans=all.filter(v=>!S.stages.some(z=>z.id===v.stageId));
   if(orphans.length) groups.push({st:{id:"",name:"Outros"},items:orphans});
+  const vis=groups.filter(g=>!g.st.id || stageVisible(room,g.st,g.items));
+  const hiddenN=groups.length-vis.length;
+  if(hiddenN>0) h+='<div class="sugt" style="margin:0 2px 10px">Mostrando as etapas que se aplicam a <b>'+esc(room)+'</b> ('+hiddenN+' oculta'+(hiddenN>1?'s':'')+'). Para ver todas, toque em “Ver todas as etapas”.</div>';
   let shown=0;
-  groups.forEach((g,i)=>{
+  vis.forEach((g,i)=>{
     const items=g.items.filter(v=>S.filter==="todas"||v.s===S.filter);
     if(S.filter!=="todas" && !items.length) return;
     shown++;
@@ -985,10 +1162,13 @@ function renderTrack(){
       const open=openPanel===g.st.id;
       h+='<button class="addsv'+(open?' open':'')+'" data-pick="'+esc(g.st.id)+'">'+(open?'▾ Fechar':'＋ Adicionar serviço')+'</button>';
       if(open) h+=addPanelHtml(g.st,all);
+      if(!g.items.length && shownFor(room,g.st.id) && !stageVisible(room,g.st,[],false,true)) h+='<button class="linkbtn" data-hidestage="'+esc(g.st.id)+'" style="padding:8px 0 0">Ocultar esta etapa neste cômodo</button>';
     }
     h+='</div>';
   });
   if(!shown) h+='<div class="card"><div class="empty">Nenhum serviço neste filtro.</div></div>';
+  const topHtml='<div style="margin:2px 0 14px"><button class="addsv'+(stagePanel?' open':'')+'" data-newstage style="margin-top:0">'+(stagePanel?'▾ Fechar':'＋ Incluir etapa')+'</button>'+(stagePanel?stagePanelHtml(room,groups):'')+'</div>';
+  h=h.replace('<!--STG_TOP-->',topHtml);
   body.innerHTML=h;
   setHdr();
 }
@@ -1041,8 +1221,15 @@ function onSvcClick(e){
 }
 $("#trackBody").addEventListener("click",e=>{
   if(e.target.closest("#editStages")){ manageList("stages"); return; }
+  if(e.target.closest("#toggleAll")){ showAllSvcs=!showAllSvcs; openPanel=null; keepScroll(renderTrack); return; }
   const chip=e.target.closest(".chip[data-room]");
-  if(chip){ S.current=chip.dataset.room; openPanel=null; save(); renderTrack(); window.scrollTo({top:0}); return; }
+  if(chip){ S.current=chip.dataset.room; openPanel=null; shareRooms.clear(); showAllSvcs=false; save(); renderTrack(); window.scrollTo({top:0}); return; }
+  const shr=e.target.closest("[data-share]");
+  if(shr){ const n=shr.dataset.share; if(shareRooms.has(n)) shareRooms.delete(n); else shareRooms.add(n); keepScroll(renderTrack); return; }
+  if(e.target.closest("[data-newstage]")){ stagePanel=!stagePanel; keepScroll(renderTrack); const f=$("#trackBody .newstg"); if(f) f.focus(); return; }
+  if(e.target.closest("[data-addstage]")){ includeStage(); return; }
+  const hs=e.target.closest("[data-hidestage]");
+  if(hs){ const id=hs.dataset.hidestage, a=S.show[S.current]||[]; S.show[S.current]=a.filter(x=>x!==id); if(openPanel===id) openPanel=null; save(); keepScroll(renderTrack); toast("Etapa ocultada neste cômodo"); return; }
   const f=e.target.closest(".chip[data-f]");
   if(f){ S.filter=f.dataset.f; save(); renderTrack(); return; }
   const pk=e.target.closest("[data-pick]");
@@ -1055,8 +1242,16 @@ $("#trackBody").addEventListener("click",e=>{
   if(el){ manageList("svcs",el.dataset.editlist); return; }
   onSvcClick(e);
 });
+$("#trackBody").addEventListener("change",e=>{
+  if(e.target.id!=="stSel") return;
+  const row=$("#trackBody #stNew"); if(!row) return;
+  const isNew=e.target.value==="new";
+  row.style.display=isNew?"flex":"none";
+  if(isNew){ const f=row.querySelector("input"); if(f) f.focus(); }
+});
 $("#trackBody").addEventListener("keydown",e=>{
   if(e.key==="Enter" && e.target.classList.contains("newsvc")){ e.preventDefault(); addCustomInStage(e.target.closest(".stage")); }
+  if(e.key==="Enter" && e.target.classList.contains("newstg")){ e.preventDefault(); addStageInline(); }
 });
 $("#trackBody").addEventListener("input",e=>{
   const row=e.target.closest(".svcrow"); if(!row) return;
@@ -1151,29 +1346,42 @@ function pickServices(room0,stage0){
   const rooms=activeRooms();
   let room = (room0 && rooms.includes(room0)) ? room0 : ((S.current && S.selected.includes(S.current)) ? S.current : rooms[S.selected.length?1:0]);
   let stId = (stage0 && S.stages.some(z=>z.id===stage0)) ? stage0 : S.stages[0].id;
-  let allRooms=false;
+  let allRooms=false, showAll=false;
+  const stagesFor=r=>S.stages.filter(z=>stageVisible(r,z,S.services.filter(v=>v.room===r&&v.stageId===z.id),showAll));
+  const optsFor=r=>stagesFor(r).map(z=>'<option value="'+esc(z.id)+'"'+(z.id===stId?' selected':'')+'>'+esc(z.name)+'</option>').join("");
+  { const ok=stagesFor(room); if(ok.length && !ok.some(z=>z.id===stId)) stId=ok[0].id; }
   const optR=rooms.map(r=>'<option value="'+esc(r)+'"'+(r===room?' selected':'')+'>'+esc(r)+'</option>').join("");
-  const optS=S.stages.map(z=>'<option value="'+esc(z.id)+'"'+(z.id===stId?' selected':'')+'>'+esc(z.name)+'</option>').join("");
+  const optS=optsFor(room);
   sheet('<h3>Adicionar serviços</h3><p>Escolha o cômodo e a etapa. Cada toque num serviço inclui um item na lista, que ganha os botões de andamento.</p>'+
     '<label class="l" for="pk_room">Cômodo / área</label><select id="pk_room">'+optR+'</select>'+
     '<label class="l" for="pk_stage">Etapa</label><select id="pk_stage">'+optS+'</select>'+
-    '<div class="sugt">Toque para adicionar</div><div id="pk_list" class="svchips"></div>'+
+    '<div class="sugt">Toque para adicionar</div><div id="pk_list" class="svchips"></div><div id="pk_hid" class="sugt" style="margin-top:8px"></div>'+
     '<div class="addrow"><input id="pk_new" maxlength="120" autocomplete="off" placeholder="Outro serviço desta etapa"><button class="btn btn-y" id="pk_add">Adicionar</button></div>'+
-    (S.selected.length>1?'<div style="margin-top:12px"><button class="pill" id="pk_all" aria-pressed="false">Aplicar a todos os cômodos: desligado</button></div>':'')+
+    '<div style="margin-top:12px"><button class="pill" id="pk_showall" aria-pressed="false">Mostrar todas as etapas: desligado</button></div>'+
+    (S.selected.length>1?'<div style="margin-top:8px"><button class="pill" id="pk_all" aria-pressed="false">Aplicar a todos os cômodos: desligado</button></div>':'')+
     '<div class="btns"><button class="btn btn-o" id="pk_edit">✎ Editar lista</button><button class="btn btn-n" id="pk_done">Concluir</button></div>',sh=>{
     const list=sh.querySelector("#pk_list"), inp=sh.querySelector("#pk_new");
     const targets=()=>(allRooms && S.selected.includes(room)) ? S.selected : [room];
     const stg=()=>S.stages.find(z=>z.id===stId);
     const draw=()=>{
       const st=stg();
-      list.innerHTML = st.svcs.length
-        ? st.svcs.map(c=>{ const n=S.services.filter(v=>v.room===room && v.stageId===stId && v.desc===c.name).length;
+      const vs=st.svcs.filter(c=>svcVisible(room,st,c,showAll));
+      sh.querySelector("#pk_hid").textContent = st.svcs.length>vs.length ? (st.svcs.length-vs.length)+" serviço(s) desta etapa não se aplicam a este cômodo. Use “Mostrar todas as etapas” para ver tudo." : "";
+      list.innerHTML = vs.length
+        ? vs.map(c=>{ const n=S.services.filter(v=>v.room===room && v.stageId===stId && v.desc===c.name).length;
             return '<button class="svchip" data-n="'+esc(c.name)+'">＋ '+esc(c.name)+(n?'<em>'+n+'</em>':'')+'</button>'; }).join("")
         : '<span class="nosvc">Nenhum serviço nesta etapa. Adicione abaixo.</span>';
     };
-    const addSvc=(name)=>{ targets().forEach(r=>S.services.push(mkSvc(r,stId,name,stg().name))); save(); draw(); refreshLists(); toast("＋ "+name); };
+    const addSvc=(name)=>{
+      const st=stg(), tg=targets().filter(r=>r===room||svcVisible(r,st,{name:name},showAll));
+      tg.forEach(r=>S.services.push(mkSvc(r,stId,name,st.name)));
+      save(); draw(); refreshLists(); toast("＋ "+name+(tg.length>1?" ("+tg.length+" cômodos)":""));
+    };
+    const redrawStages=()=>{ sh.querySelector("#pk_stage").innerHTML=optsFor(room); const ok=stagesFor(room); if(ok.length && !ok.some(z=>z.id===stId)) stId=ok[0].id; sh.querySelector("#pk_stage").value=stId; };
     draw();
-    sh.querySelector("#pk_room").addEventListener("change",e=>{ room=e.target.value; draw(); });
+    sh.querySelector("#pk_room").addEventListener("change",e=>{ room=e.target.value; showAll=false; const sa=sh.querySelector("#pk_showall"); sa.classList.remove("y"); sa.setAttribute("aria-pressed","false"); sa.textContent="Mostrar todas as etapas: desligado"; redrawStages(); draw(); });
+    const sa=sh.querySelector("#pk_showall");
+    sa.addEventListener("click",()=>{ showAll=!showAll; sa.classList.toggle("y",showAll); sa.setAttribute("aria-pressed",showAll); sa.textContent="Mostrar todas as etapas: "+(showAll?"ligado":"desligado"); redrawStages(); draw(); });
     sh.querySelector("#pk_stage").addEventListener("change",e=>{ stId=e.target.value; draw(); });
     const all=sh.querySelector("#pk_all");
     if(all) all.addEventListener("click",()=>{ allRooms=!allRooms; all.classList.toggle("y",allRooms); all.setAttribute("aria-pressed",allRooms); all.textContent="Aplicar a todos os cômodos: "+(allRooms?"ligado":"desligado"); });
@@ -1374,6 +1582,22 @@ function printReport(mode){
 window.addEventListener("beforeprint",buildReport);
 window.addEventListener("afterprint",()=>{reportMode="progress";});
 
+
+/* ===== botão Salvar ===== */
+let saveBtnT;
+$("#btnSave").onclick=()=>{
+  clearTimeout(saveTimer); writeNow();
+  const b=$("#btnSave"), tx=$("#btnSaveTxt");
+  if(memoryOnly){
+    toast("Não foi possível salvar neste navegador. Baixando um backup…");
+    $("#actExport").click();
+    return;
+  }
+  b.classList.add("ok"); tx.textContent="Salvo ✓";
+  clearTimeout(saveBtnT);
+  saveBtnT=setTimeout(()=>{ b.classList.remove("ok"); tx.textContent="Salvar"; },1800);
+  toast("Obra salva às "+new Date().toLocaleTimeString("pt-BR",{hour:"2-digit",minute:"2-digit"}));
+};
 /* ===== MAIS ===== */
 $("#actStages").onclick=()=>manageList("stages");
 $("#actPdf").onclick=()=>printReport("progress");
@@ -1408,6 +1632,9 @@ $("#actClear").onclick=()=>confirmSheet("Limpar tudo?","Todos os dados desta obr
 /* ===== init ===== */
 renderHome(); renderSaved(); showWelcome(); setHdr();
 })();
+</script>
+<script>
+if("serviceWorker" in navigator && /^https?:$/.test(location.protocol)) window.addEventListener("load",function(){ navigator.serviceWorker.register("sw.js").catch(function(){}); });
 </script>
 </body>
 </html>
