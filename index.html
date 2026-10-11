@@ -57,42 +57,55 @@ label.l:first-child{margin-top:0}
 /* ===== WELCOME / ENTRADA ===== */
 #welcome{position:fixed;inset:0;z-index:100;overflow-y:auto;color:#fff;
   background:
-   radial-gradient(900px 500px at 85% -10%,rgba(252,163,17,.22),transparent 60%),
-   radial-gradient(700px 500px at -10% 110%,rgba(80,120,220,.25),transparent 60%),
-   linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px) 0 0/32px 32px,
-   linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px) 0 0/32px 32px,
+   radial-gradient(900px 520px at 90% -10%,rgba(252,163,17,.22),transparent 60%),
+   radial-gradient(700px 520px at -10% 108%,rgba(80,120,220,.26),transparent 60%),
+   linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px) 0 0/32px 32px,
+   linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px) 0 0/32px 32px,
    linear-gradient(165deg,var(--navy-3),var(--navy) 55%,var(--navy-2));
   transition:opacity .35s ease,visibility .35s,transform .35s ease}
 #welcome.out{opacity:0;visibility:hidden;pointer-events:none;transform:scale(1.02)}
-.w-inner{max-width:480px;margin:0 auto;padding:calc(36px + var(--safe-t)) 22px calc(28px + var(--safe-b));min-height:100%;display:flex;flex-direction:column}
-.w-brand{text-align:center;margin-bottom:26px;animation:rise .6s ease both}
-.w-logo{width:76px;height:76px;margin:0 auto 14px;display:block;filter:drop-shadow(0 12px 24px rgba(0,0,0,.35))}
-.w-brand h1{margin:0;font-size:38px;line-height:1.05;font-weight:800;letter-spacing:-.03em}
-.w-brand h1 span{color:var(--yellow)}
-.w-brand p{margin:12px auto 0;max-width:340px;color:rgba(255,255,255,.78);font-size:16px}
-.w-feats{display:grid;gap:10px;margin-bottom:22px;animation:rise .6s .1s ease both}
-.w-feat{display:flex;gap:14px;align-items:center;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);backdrop-filter:blur(6px);border-radius:14px;padding:13px 14px}
-.w-feat .ic{width:40px;height:40px;border-radius:11px;background:rgba(252,163,17,.16);display:grid;place-items:center;flex:none}
-.w-feat .ic svg{width:22px;height:22px;stroke:var(--yellow);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.w-feat b{display:block;font-size:15px}
-.w-feat span{font-size:13px;color:rgba(255,255,255,.7)}
-.w-q{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.6);margin:6px 0 10px;text-align:center;animation:rise .6s .2s ease both}
-.w-roles{display:grid;gap:10px;margin-bottom:18px;animation:rise .6s .2s ease both}
-.role-card{display:flex;gap:14px;align-items:center;text-align:left;width:100%;background:#fff;color:var(--ink);border:2.5px solid transparent;border-radius:16px;padding:15px;transition:.15s;box-shadow:0 10px 24px -10px rgba(0,0,0,.45)}
-.role-card .ic{width:46px;height:46px;border-radius:13px;background:#eef1f8;display:grid;place-items:center;flex:none;transition:.15s}
-.role-card .ic svg{width:25px;height:25px;stroke:var(--navy);fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
-.role-card b{display:block;font-size:16px;color:var(--navy)}
-.role-card span{font-size:13px;color:var(--muted);line-height:1.35;display:block;margin-top:2px}
-.role-card .rd{width:24px;height:24px;border-radius:50%;border:2px solid #c5cad6;margin-left:auto;flex:none;display:grid;place-items:center;transition:.15s}
-.role-card.on{border-color:var(--yellow);box-shadow:0 0 0 4px rgba(252,163,17,.25),0 10px 24px -10px rgba(0,0,0,.45)}
+.w-inner{max-width:1000px;margin:0 auto;padding:calc(26px + var(--safe-t)) 18px calc(24px + var(--safe-b));min-height:100%;display:flex;flex-direction:column}
+.w-brand{display:flex;align-items:center;justify-content:center;gap:12px;animation:rise .5s ease both}
+.w-brand svg{width:46px;height:46px;flex:none;filter:drop-shadow(0 8px 16px rgba(0,0,0,.35))}
+.w-brand b{font-size:28px;font-weight:800;letter-spacing:-.03em;line-height:1}
+.w-brand b span{color:var(--yellow)}
+.w-hero{text-align:center;margin:22px auto 20px;max-width:560px;animation:rise .5s .05s ease both}
+.w-hero h1{margin:0;font-size:25px;line-height:1.15;letter-spacing:-.025em;font-weight:800}
+.w-hero p{margin:8px 0 0;color:rgba(255,255,255,.72);font-size:15px}
+.w-roles{display:grid;gap:14px;grid-template-columns:1fr;animation:rise .5s .12s ease both}
+.role-card{position:relative;text-align:left;width:100%;background:#fff;color:var(--ink);border-radius:22px;padding:18px;border:3px solid transparent;box-shadow:0 18px 36px -16px rgba(0,0,0,.55);transition:transform .15s,border-color .15s,box-shadow .15s;display:flex;flex-direction:column}
+.role-card:active{transform:scale(.99)}
+.role-card .top{display:flex;align-items:center;gap:14px}
+.role-card .ic{width:54px;height:54px;border-radius:16px;background:#eef1f8;display:grid;place-items:center;flex:none;transition:.15s}
+.role-card .ic svg{width:29px;height:29px;stroke:var(--navy);fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.role-card h2{margin:0;font-size:20px;letter-spacing:-.02em;color:var(--navy)}
+.role-card .tg{margin:2px 0 0;font-size:13.5px;color:var(--muted);font-weight:600}
+.role-card .rd{margin-left:auto;width:26px;height:26px;border-radius:50%;border:2px solid #c5cad6;flex:none;display:grid;place-items:center;transition:.15s}
+.role-card ul{list-style:none;margin:16px 0 0;padding:0;display:grid;gap:11px}
+.role-card li{display:flex;gap:11px;align-items:flex-start;font-size:14.5px;color:#344054;font-weight:500}
+.role-card li i{flex:none;width:22px;height:22px;border-radius:50%;background:#fff4dc;display:grid;place-items:center}
+.role-card li i svg{width:13px;height:13px;stroke:#b36b00;fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.role-card li b{color:var(--navy);font-weight:700}
+.role-card.on{border-color:var(--yellow);box-shadow:0 0 0 5px rgba(252,163,17,.25),0 18px 36px -16px rgba(0,0,0,.55)}
 .role-card.on .ic{background:var(--yellow)}
 .role-card.on .rd{background:var(--yellow);border-color:var(--yellow)}
-.role-card.on .rd::after{content:"";width:10px;height:6px;border-left:3px solid #111;border-bottom:3px solid #111;transform:rotate(-45deg) translate(1px,-1px)}
-.w-cta{margin-top:auto;animation:rise .6s .3s ease both}
-.w-cta .btn{min-height:54px;font-size:16px}
+.role-card.on .rd::after{content:"";width:11px;height:6px;border-left:3px solid #111;border-bottom:3px solid #111;transform:rotate(-45deg) translate(1px,-1px)}
+.w-cta{margin-top:auto;padding-top:20px;animation:rise .5s .2s ease both}
+.w-btn{display:flex;align-items:center;justify-content:center;gap:9px;width:100%;min-height:56px;border-radius:14px;font-weight:800;font-size:16px;background:var(--yellow);color:#111;box-shadow:0 1px 2px rgba(0,0,0,.12),0 10px 22px -6px rgba(252,163,17,.6);transition:.15s}
+.w-btn svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.w-btn[disabled]{background:rgba(255,255,255,.14);color:rgba(255,255,255,.55);box-shadow:none;pointer-events:none}
 .w-new{display:block;margin:10px auto 0;color:rgba(255,255,255,.75);font-weight:600;font-size:14px;text-decoration:underline;text-underline-offset:3px;padding:10px}
-.w-foot{text-align:center;font-size:12px;color:rgba(255,255,255,.5);margin-top:10px}
-@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.w-foot{text-align:center;font-size:12px;color:rgba(255,255,255,.5);margin-top:4px}
+@keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@media(min-width:760px){
+  .w-inner{padding-top:44px}
+  .w-brand b{font-size:34px}.w-brand svg{width:56px;height:56px}
+  .w-hero h1{font-size:32px}.w-hero p{font-size:16.5px}
+  .w-roles{grid-template-columns:1fr 1fr;gap:20px;margin-top:6px}
+  .role-card{padding:24px}
+  .role-card:hover{transform:translateY(-3px)}
+  .w-cta{max-width:420px;width:100%;margin:26px auto 0}
+}
 
 /* ===== HEADER ===== */
 #app{max-width:760px;margin:0 auto;min-height:100vh;padding-bottom:calc(88px + var(--safe-b))}
@@ -295,6 +308,44 @@ body.sheet-open #toast.on{transform:translateX(-50%)}
 .acbox .acttl{font-weight:800;color:var(--navy);font-size:14px}
 .acbox .l:first-child{margin-top:8px}
 
+/* ===== serviços dentro das etapas ===== */
+.stage[data-s=vazio]{border-left-color:#cfd5e0}
+.stage[data-s=pendente]{border-left-color:#cfd5e0}
+.stage .cnt{font-size:12px;font-weight:800;color:var(--navy);background:#eef1f8;border-radius:10px;padding:3px 9px}
+.stage .cnt:empty{display:none}
+.nosvc{font-size:13px;color:var(--muted);padding:0 0 8px 2px}
+.addsv{width:100%;margin-top:8px;padding:12px;border-radius:12px;border:1.5px dashed #bfc6d3;color:var(--navy);font-weight:700;font-size:13.5px;background:#fafbfd}
+.addsv:active{background:#eef1f8}
+.svcrow{padding:12px 0;border-top:1px solid var(--line)}
+.stage .h + .svcrow,.stage .h + .nosvc + .svcrow{border-top:0}
+.svcrow .svn{display:flex;align-items:flex-start;gap:8px;margin-bottom:10px}
+.svcrow .svn .tx{flex:1;min-width:0}
+.svcrow .svn b{display:block;font-size:14.5px;letter-spacing:-.01em}
+.svcrow .m{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.svcrow .note{font-size:12.5px;color:var(--muted);margin-top:6px}
+.svdet{flex:none;font-size:12px;font-weight:700;color:var(--navy);padding:6px 10px;border-radius:9px;background:#eef1f8}
+.svcrow.qc{background:#fff;border:1px solid rgba(16,24,40,.05);border-radius:14px;padding:13px;margin-bottom:8px;box-shadow:var(--sh1)}
+.svcrow[data-s=na] .svn b{opacity:.55;text-decoration:line-through}
+.stg{font-size:11.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#98a2b3;margin:14px 4px 6px}
+.hint{background:#fff7e6;border-left:4px solid var(--yellow);border-radius:10px;padding:12px 14px;font-size:13.5px;color:#5c4300;margin-bottom:12px}
+.stb{margin-left:auto;font-style:normal;font-size:11px;font-weight:800;padding:3px 9px;border-radius:12px;background:#eef1f8;color:var(--navy)}
+.stb[data-s=andamento]{background:var(--warn-bg);color:#8a5a00}
+.stb[data-s=concluida]{background:var(--ok-bg);color:#136a36}
+#pk_list{max-height:34vh;overflow-y:auto;margin:0 -4px;padding:2px 4px}
+
+/* ===== adicionar serviços por toque ===== */
+.addsv.open{border-style:solid;background:#eef1f8}
+.addpanel{margin-top:10px;padding:12px;border-radius:14px;background:#f7f8fb;border:1px solid var(--line)}
+.addpanel .sugt{margin:0 0 8px}
+.svchips{display:flex;flex-wrap:wrap;gap:8px}
+.svchip{display:inline-flex;align-items:center;gap:8px;text-align:left;padding:10px 13px;border-radius:22px;background:#fff;border:1.5px solid #cdd3df;color:var(--navy);font-weight:700;font-size:13.5px;line-height:1.2;transition:.12s}
+.svchip:active{transform:scale(.97);background:var(--warn-bg);border-color:var(--yellow)}
+.svchip em{font-style:normal;font-size:11px;font-weight:800;background:var(--navy);color:#fff;border-radius:10px;padding:1px 7px}
+.svx{flex:none;min-width:34px;height:30px;border-radius:9px;background:#fde8e6;color:var(--danger);font-weight:800;font-size:13px;padding:0 8px}
+.svx.arm{background:var(--danger);color:#fff;font-size:11.5px;padding:0 10px}
+.svcrow .svn .svdet{margin-left:auto}
+.w-hero h1{font-size:25px}
+
 /* ===== print ===== */
 #report{display:none}
 @media print{
@@ -320,37 +371,18 @@ body.sheet-open #toast.on{transform:translateX(-50%)}
   #report .total{margin-top:14px;border:2px solid var(--navy);padding:10px 14px;display:flex;justify-content:space-between;align-items:flex-end;font-size:14px;font-weight:800;color:var(--navy)}
   #report .total span:last-child{min-width:200px;border-bottom:1px solid #000;text-align:right;color:#000}
   #report small{color:#555}
+  #report .grp td{background:#f1f1f1;font-weight:700;font-size:11px}
   *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
 }
 @media(min-width:760px){.view{padding:22px}.picker{margin:-22px -22px 12px;padding:14px 22px 10px}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
-
-/* ===== serviços por etapa ===== */
-.stghead{display:flex;align-items:center;gap:10px;margin:20px 2px 9px}
-.stghead .num{width:26px;height:26px;border-radius:8px;background:var(--navy);color:#fff;font-weight:800;font-size:12px;display:grid;place-items:center;flex:none}
-.stghead b{flex:1;font-size:14px;color:var(--navy);letter-spacing:-.01em;line-height:1.25}
-.stghead small{font-weight:800;font-size:12px;color:var(--muted);background:#fff;border:1px solid var(--line);padding:3px 10px;border-radius:20px;flex:none}
-.csgrp{margin-bottom:10px}
-.chk.csh{background:#f2f4f9;border-color:#d6dbe5;font-weight:800;color:var(--navy);margin-bottom:6px}
-.chk.sub{margin-left:16px;padding:10px 12px;font-size:14px;font-weight:600}
-.mstage{border:1.5px solid #e4e7ec;border-radius:14px;padding:10px 10px 6px;margin-bottom:12px;background:#fafbfd}
-.mstage>.mrow input{font-weight:800;color:var(--navy)}
-.msvcs{margin:2px 0 4px 10px;padding-left:10px;border-left:3px solid var(--yellow)}
-.msvcs .mrow input{min-height:42px;font-size:14px}
-.msvcs .mdel{height:42px;min-width:42px}
-.addrow.sm{margin:4px 0 6px}
-.addrow.sm input{min-height:42px;font-size:14px}
-.addrow.sm .btn{min-height:42px;font-size:13px;padding:0 14px}
-.addsvc{margin-top:14px;padding:12px;border:1.5px dashed #cdd3df;border-radius:14px;background:#fafbfd}
-.addsvc>b{display:block;font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:#475467;margin-bottom:8px}
-.addsvc select{margin-bottom:8px}
-.addsvc .addrow{margin-top:0}
 </style>
 </head>
 <body class="lock">
 
 <!-- sprite -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="ck" viewBox="0 0 24 24"><path d="m5 12 5 5 9-10"/></symbol>
   <symbol id="logo" viewBox="0 0 64 64">
     <rect width="64" height="64" rx="16" fill="#FCA311"/>
     <path d="M14 31 32 16l18 15" fill="none" stroke="#14213D" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -363,33 +395,44 @@ body.sheet-open #toast.on{transform:translateX(-50%)}
 <div id="welcome">
   <div class="w-inner">
     <div class="w-brand">
-      <svg class="w-logo" viewBox="0 0 64 64" aria-hidden="true"><use href="#logo"/></svg>
-      <h1>Orça <span>Aqui</span></h1>
-      <p>Organize a obra, acompanhe cada etapa e peça orçamentos com clareza.</p>
+      <svg viewBox="0 0 64 64" aria-hidden="true"><use href="#logo"/></svg>
+      <b>Orça <span>Aqui</span></b>
     </div>
 
-    <div class="w-feats">
-      <div class="w-feat"><div class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="8" height="8" rx="2"/><rect x="13" y="3" width="8" height="8" rx="2"/><rect x="3" y="13" width="8" height="8" rx="2"/><rect x="13" y="13" width="8" height="8" rx="2"/></svg></div><div><b>Planeje por cômodo</b><span>Etapas de obra por ambiente, do seu jeito</span></div></div>
-      <div class="w-feat"><div class="ic"><svg viewBox="0 0 24 24"><path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9"/></svg></div><div><b>Acompanhe o andamento</b><span>Progresso, datas e observações em tempo real</span></div></div>
-      <div class="w-feat"><div class="ic"><svg viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h4"/></svg></div><div><b>Peça orçamentos</b><span>Monte a lista de serviços e envie por WhatsApp ou PDF</span></div></div>
+    <div class="w-hero">
+      <h1>Perfil</h1>
+      <p>Escolha o seu perfil. Você pode trocar quando quiser.</p>
     </div>
 
-    <div class="w-q">Como você vai usar?</div>
-    <div class="w-roles">
-      <button class="role-card" data-role="pro">
-        <div class="ic"><svg viewBox="0 0 24 24"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.4 2.4-2.6-.6-.6-2.6z"/></svg></div>
-        <div><b>Sou profissional</b><span>Arquiteto, engenheiro, mestre de obras ou gestor: planeje o escopo e organize as etapas.</span></div>
-        <div class="rd"></div>
+    <div class="w-roles" role="radiogroup" aria-label="Perfil de uso">
+      <button class="role-card" data-role="dono" role="radio" aria-checked="false">
+        <div class="top">
+          <div class="ic"><svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></svg></div>
+          <div><h2>Sou proprietário(a)</h2><p class="tg">Planeje e acompanhe a sua obra</p></div>
+          <div class="rd"></div>
+        </div>
+        <ul>
+          <li><i><svg><use href="#ck"/></svg></i><span><b>Planeje</b> os cômodos, as etapas e os serviços</span></li>
+          <li><i><svg><use href="#ck"/></svg></i><span><b>Acompanhe</b> o andamento e o progresso da obra</span></li>
+          <li><i><svg><use href="#ck"/></svg></i><span>Monte a <b>lista de serviços</b> e envie para o seu profissional</span></li>
+        </ul>
       </button>
-      <button class="role-card" data-role="dono">
-        <div class="ic"><svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></svg></div>
-        <div><b>Sou proprietário</b><span>Acompanhe a evolução da obra e solicite orçamentos com um escopo claro.</span></div>
-        <div class="rd"></div>
+
+      <button class="role-card" data-role="pro" role="radio" aria-checked="false">
+        <div class="top">
+          <div class="ic"><svg viewBox="0 0 24 24"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.4 2.4-2.6-.6-.6-2.6z"/></svg></div>
+          <div><h2>Sou profissional</h2><p class="tg">Controle a obra e orce mais rápido</p></div>
+          <div class="rd"></div>
+        </div>
+        <ul>
+          <li><i><svg><use href="#ck"/></svg></i><span><b>Acompanhe</b> o andamento e o progresso da obra</span></li>
+          <li><i><svg><use href="#ck"/></svg></i><span>Envie <b>orçamentos com rapidez</b></span></li>
+        </ul>
       </button>
     </div>
 
     <div class="w-cta">
-      <button class="btn btn-y btn-block" id="wEnter" disabled>Escolha uma opção</button>
+      <button class="w-btn" id="wEnter" disabled>Escolha uma opção</button>
       <button class="w-new" id="wNew" hidden>Começar uma nova obra</button>
       <div class="w-foot">Seus dados ficam salvos neste dispositivo.</div>
     </div>
@@ -498,9 +541,8 @@ body.sheet-open #toast.on{transform:translateX(-50%)}
 
   <!-- MAIS -->
   <section class="view" id="v-more">
-    <button class="item" id="actStages"><div class="ic"><svg viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg></div><div><b>Etapas e serviços</b><span>Editar as etapas e os serviços de cada uma</span></div></button>
-    <button class="item" id="actTypes"><div class="ic"><svg viewBox="0 0 24 24"><path d="M20.6 13.4 13.4 20.6a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8z"/><path d="M7.5 7.5h.01"/></svg></div><div><b>Tipos de serviço</b><span>Categorias usadas na lista de orçamento</span></div></button>
-    <button class="item" id="actPdf"><div class="ic"><svg viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/></svg></div><div><b>Relatório de andamento (PDF)</b><span>Situação dos serviços marcados, por cômodo</span></div></button>
+    <button class="item" id="actStages"><div class="ic"><svg viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg></div><div><b>Etapas da obra</b><span>Incluir, renomear ou excluir etapas</span></div></button>
+    <button class="item" id="actPdf"><div class="ic"><svg viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/></svg></div><div><b>Relatório de andamento (PDF)</b><span>Situação de todas as etapas, por cômodo</span></div></button>
     <button class="item" id="actExport"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg></div><div><b>Exportar backup</b><span>Baixa um arquivo com todos os dados da obra</span></div></button>
     <button class="item" id="actImport"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 21V9M7 14l5-5 5 5M5 3h14"/></svg></div><div><b>Importar backup</b><span>Restaura os dados de um arquivo salvo</span></div></button>
     <input type="file" id="fileIn" accept="application/json,.json" hidden>
@@ -541,44 +583,25 @@ const DATA = {
   "Imóvel rural":["Sala de estar","Sala de jantar","Cozinha","Lavanderia / Área de serviço","Suíte","Quarto 1","Quarto 2","Quarto 3","Banheiro","Varanda","Garagem","Área externa","Área gourmet","Depósito"],
   "Outro":["Sala","Quarto","Cozinha","Banheiro","Lavanderia / Área de serviço","Escritório","Varanda","Área externa","Garagem","Depósito","Outra área"]
 };
-const DEF_STAGES = ["Planejamento e preparação","Demolição e retiradas","Alvenaria e regularização","Instalações elétricas","Instalações hidráulicas","Impermeabilização","Revestimentos e pisos","Forros e tetos","Esquadrias e portas","Bancadas, louças e metais","Pintura e acabamentos","Limpeza e finalização","Vistoria e entrega"];
-const DEF_SERVICES = [
-  ["Levantamento de medidas e projeto","Proteção de pisos e móveis","Acompanhamento técnico da obra"],
-  ["Demolição de piso e revestimento","Retirada de forro","Remoção de portas e esquadrias","Retirada de louças e metais","Retirada de entulho (caçamba)"],
-  ["Levantamento de parede em alvenaria","Reboco e regularização de paredes","Contrapiso e nivelamento"],
-  ["Pontos de tomada","Pontos de iluminação","Passagem de fiação","Troca do quadro de distribuição"],
-  ["Pontos de água fria e quente","Pontos de esgoto","Troca de registros e tubulações"],
-  ["Impermeabilização de piso / box","Impermeabilização de laje"],
-  ["Assentamento de piso / porcelanato","Assentamento de revestimento de parede","Rodapés","Rejuntamento"],
-  ["Forro de gesso","Sanca e iluminação embutida","Forro de PVC"],
-  ["Instalação de portas","Instalação de janelas","Instalação de box de vidro"],
-  ["Instalação de bancada","Instalação de cuba","Instalação de louças","Instalação de metais e torneiras"],
-  ["Massa corrida e lixamento","Pintura de paredes","Pintura de teto","Retoques finais"],
-  ["Limpeza pós-obra","Retirada de proteções"],
-  ["Vistoria final","Ajustes e correções","Entrega e termo de recebimento"]
+const DEF_STAGE_DEFS = [
+  ["e1","Planejamento e preparação",["Levantamento de medidas e projeto","Proteção de pisos e móveis","Acompanhamento técnico da obra"]],
+  ["e2","Demolição e retiradas",["Demolição de piso e revestimento","Remoção de portas e esquadrias","Retirada de entulho (caçamba)"]],
+  ["e3","Alvenaria e regularização",["Levantamento de parede em alvenaria","Reboco e regularização de paredes","Contrapiso e nivelamento"]],
+  ["e4","Instalações elétricas",["Pontos de tomada","Pontos de iluminação","Troca do quadro de distribuição","Passagem de fiação"]],
+  ["e5","Instalações hidráulicas",["Pontos de água fria e quente","Pontos de esgoto","Troca de registros e tubulações"]],
+  ["e6","Impermeabilização",["Impermeabilização de piso / box","Impermeabilização de laje"]],
+  ["e7","Revestimentos e pisos",["Assentamento de piso / porcelanato","Assentamento de revestimento de parede","Rejuntamento"]],
+  ["e8","Forros e tetos",["Forro de gesso","Sanca e iluminação embutida","Forro de PVC"]],
+  ["e9","Esquadrias e portas",["Instalação de portas","Instalação de janelas","Instalação de box de vidro"]],
+  ["e10","Bancadas, louças e metais",["Instalação de bancada","Instalação de louças e metais","Instalação de cuba e torneira"]],
+  ["e11","Pintura e acabamentos",["Pintura de paredes","Pintura de teto","Massa corrida e lixamento"]],
+  ["e14","Marcenaria e serralheria",["Armários planejados","Painel de TV","Guarda-roupa sob medida","Guarda-corpo","Portão ou grade","Espelhos e vidros sob medida"]],
+  ["e15","Ar-condicionado",["Instalação de ar-condicionado split","Infraestrutura para ar-condicionado (tubulação e dreno)","Instalação de ar-condicionado cassete","Manutenção / limpeza de ar-condicionado"]],
+  ["e12","Limpeza e finalização",["Limpeza pós-obra"]],
+  ["e13","Vistoria e entrega",["Vistoria final e ajustes"]]
 ];
-const AC_SVCS = ["Infraestrutura (tubulação e dreno)","Instalação de ar-condicionado split","Instalação de ar-condicionado cassete","Manutenção / limpeza de ar-condicionado"];
-const acStage = () => ({id:"eac",name:"Ar-condicionado",items:AC_SVCS.map((m,j)=>({id:"eacs"+(j+1),name:m}))});
-const defStages = () => { const a=DEF_STAGES.map((n,i)=>({id:"e"+(i+1),name:n,items:DEF_SERVICES[i].map((m,j)=>({id:"e"+(i+1)+"s"+(j+1),name:m}))})); a.splice(5,0,acStage()); return a; };
-const DEF_TYPES = [
-  ["Planejamento e projeto",["Levantamento de medidas e projeto","Proteção de pisos e móveis","Acompanhamento técnico da obra"]],
-  ["Demolição e retiradas",["Demolição de piso e revestimento","Remoção de portas e esquadrias","Retirada de entulho (caçamba)"]],
-  ["Alvenaria e regularização",["Levantamento de parede em alvenaria","Reboco e regularização de paredes","Contrapiso e nivelamento"]],
-  ["Elétrica",["Pontos de tomada","Pontos de iluminação","Troca do quadro de distribuição","Passagem de fiação"]],
-  ["Hidráulica",["Pontos de água fria e quente","Pontos de esgoto","Troca de registros e tubulações"]],
-  ["Ar-condicionado",["Instalação de ar-condicionado split","Infraestrutura para ar-condicionado (tubulação e dreno)","Instalação de ar-condicionado cassete","Manutenção / limpeza de ar-condicionado"],"tac"],
-  ["Impermeabilização",["Impermeabilização de piso / box","Impermeabilização de laje"]],
-  ["Revestimentos e pisos",["Assentamento de piso / porcelanato","Assentamento de revestimento de parede","Rejuntamento"]],
-  ["Gesso e forros",["Forro de gesso","Sanca e iluminação embutida","Forro de PVC"]],
-  ["Esquadrias e portas",["Instalação de portas","Instalação de janelas","Instalação de box de vidro"]],
-  ["Marmoraria e louças",["Instalação de bancada","Instalação de louças e metais","Instalação de cuba e torneira"]],
-  ["Pintura",["Pintura de paredes","Pintura de teto","Massa corrida e lixamento"]],
-  ["Marcenaria",["Armários planejados","Painel de TV","Guarda-roupa sob medida"]],
-  ["Serralheria e vidraçaria",["Guarda-corpo","Portão ou grade","Espelhos e vidros sob medida"]],
-  ["Limpeza e entrega",["Limpeza pós-obra","Vistoria final e ajustes"]]
-];
-const defTypes = () => DEF_TYPES.map((t,i)=>({id:t[2]||"t"+(i+1),name:t[0],sug:t[1].slice()}));
-const STAGE_TYPE = {"Planejamento e preparação":"Planejamento e projeto","Demolição e retiradas":"Demolição e retiradas","Alvenaria e regularização":"Alvenaria e regularização","Instalações elétricas":"Elétrica","Instalações hidráulicas":"Hidráulica","Ar-condicionado":"Ar-condicionado","Impermeabilização":"Impermeabilização","Revestimentos e pisos":"Revestimentos e pisos","Forros e tetos":"Gesso e forros","Esquadrias e portas":"Esquadrias e portas","Bancadas, louças e metais":"Marmoraria e louças","Pintura e acabamentos":"Pintura","Limpeza e finalização":"Limpeza e entrega","Vistoria e entrega":"Limpeza e entrega"};
+const defStages = () => DEF_STAGE_DEFS.map(d=>({id:d[0],name:d[1],svcs:d[2].map((n,i)=>({id:d[0]+"s"+(i+1),name:n}))}));
+const OLDTYPE_STAGE = {"Planejamento e projeto":"e1","Demolição e retiradas":"e2","Alvenaria e regularização":"e3","Elétrica":"e4","Hidráulica":"e5","Impermeabilização":"e6","Revestimentos e pisos":"e7","Gesso e forros":"e8","Esquadrias e portas":"e9","Marmoraria e louças":"e10","Pintura":"e11","Marcenaria":"e14","Serralheria e vidraçaria":"e14","Ar-condicionado":"e15","Limpeza e entrega":"e12"};
 const UNITS = ["vb","m²","m","un","pt","diária","h"];
 const UNIT_LABEL = {"vb":"vb (verba)","m²":"m²","m":"m (linear)","un":"un","pt":"pt (ponto)","diária":"diária","h":"hora"};
 const SUPPLY = ["Mão de obra","Mão de obra + materiais"];
@@ -600,7 +623,7 @@ const ICO_CHECK = '<svg viewBox="0 0 24 24"><path d="M9 11l3 3 8-8"/><path d="M2
 const ICO_HOME = '<svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>';
 
 function fresh(){
-  return {v:10,acStage:true,role:null,acAdded:true,obra:"",tipo:"",area:"",dono:{nome:"",contato:""},pro:{nome:"",contato:""},stages:defStages(),types:defTypes(),custom:[],selected:[],data:{},services:[],quote:{prazo:"",total:"",obs:""},current:null,filter:"todas",savedAt:null};
+  return {ver:10,role:null,obra:"",tipo:"",area:"",dono:{nome:"",contato:""},pro:{nome:"",contato:""},stages:defStages(),custom:[],selected:[],services:[],quote:{prazo:"",total:"",obs:""},current:null,filter:"todas",savedAt:null};
 }
 let memoryOnly = false, tab = "home", pickedRole = null, reportMode = "progress";
 let S = load();
@@ -614,96 +637,92 @@ function load(){
   }catch(e){ memoryOnly = true; }
   return fresh();
 }
+function mkSvc(room,stageId,desc,stageNm){
+  return {id:uid(),room:room,stageId:stageId,desc:desc,qty:"",unit:isAC(stageNm,desc)?"un":"vb",supply:SUPPLY[0],note:"",modelo:"",btus:"",s:"pendente",d:"",o:""};
+}
+function guessStage(s,v){
+  const byName=s.stages.find(z=>z.name===v.desc); if(byName) return byName.id;
+  if(v.type && OLDTYPE_STAGE[v.type] && s.stages.some(z=>z.id===OLDTYPE_STAGE[v.type])) return OLDTYPE_STAGE[v.type];
+  for(const z of s.stages){ if(z.svcs.some(c=>c.name===v.desc)) return z.id; }
+  if(isAC("",v.desc)){ const a=s.stages.find(z=>z.name==="Ar-condicionado"); if(a) return a.id; }
+  return "";
+}
 function normalize(o){
   o = (o && typeof o==="object") ? o : {};
   const s = Object.assign(fresh(),o);
   s.dono = Object.assign({nome:"",contato:""},o.dono||{});
   s.pro = Object.assign({nome:"",contato:""},o.pro||{});
   s.quote = Object.assign({prazo:"",total:"",obs:""},o.quote||{});
-  // versões antigas: "responsável" e "contato" viram dados do proprietário/profissional
   const target = o.role==="dono" ? s.dono : s.pro;
   if(o.responsavel && !s.dono.nome && !s.pro.nome) target.nome = String(o.responsavel);
   if(s.quote.contato && !target.contato) target.contato = String(s.quote.contato);
-  delete s.responsavel; delete s.quote.contato;
-  const legacy = o.v!==10;
+  delete s.responsavel; delete s.quote.contato; delete s.types; delete s.acAdded;
+
   if(!Array.isArray(s.stages)) s.stages=[];
-  s.stages = s.stages.filter(x=>x && x.id && typeof x.name==="string" && x.name.trim());
-  const oldStages = s.stages.length ? s.stages.map(x=>({id:String(x.id),name:x.name})) : DEF_STAGES.map((n,i)=>({id:"e"+(i+1),name:n}));
-  if(!s.stages.length) s.stages = defStages();
-  if(!Array.isArray(s.types)) s.types = defTypes();
-  s.types = s.types.filter(x=>x && x.id && typeof x.name==="string" && x.name.trim()).map(x=>({id:x.id,name:x.name,sug:Array.isArray(x.sug)?x.sug:[]}));
-  if(!o.acAdded && !s.types.some(t=>t.id==="tac"||t.name==="Ar-condicionado")){
-    const ac=DEF_TYPES.find(t=>t[2]==="tac"), rec={id:"tac",name:ac[0],sug:ac[1].slice()};
-    const k=s.types.findIndex(t=>t.name==="Hidráulica");
-    if(k>-1) s.types.splice(k+1,0,rec); else s.types.push(rec);
-  }
-  s.acAdded=true;
-  if(!Array.isArray(s.services)) s.services=[];
-  s.services.forEach(v=>{ if(typeof v.type!=="string") v.type=""; if(typeof v.modelo!=="string") v.modelo=""; if(typeof v.btus!=="string") v.btus=""; });
+  s.stages = s.stages.filter(x=>x && x.id && typeof x.name==="string" && x.name.trim()).map(x=>{
+    let sv=x.svcs;
+    if(!Array.isArray(sv)){ const d=defStages().find(z=>z.id===x.id); sv=d?d.svcs:[]; }
+    sv=sv.map((y,i)=>typeof y==="string"?{id:x.id+"s"+(i+1),name:y}:y).filter(y=>y && y.id && typeof y.name==="string" && y.name.trim());
+    return {id:x.id,name:x.name,svcs:sv};
+  });
+  if(!s.stages.length) s.stages=defStages();
   if(!Array.isArray(s.selected)) s.selected=[];
   if(!Array.isArray(s.custom)) s.custom=[];
-  if(!s.data||typeof s.data!=="object"||Array.isArray(s.data)) s.data={};
-  // formato antigo: lista por posição -> objeto por id da etapa padrão
-  Object.keys(s.data).forEach(room=>{
-    const v=s.data[room];
-    if(Array.isArray(v)){
-      const m={}; defStages().forEach((st,i)=>{ m[st.id]=v[i]||{s:"pendente",d:"",o:""}; });
-      s.data[room]=m;
-    }else if(!v||typeof v!=="object") delete s.data[room];
-  });
-  if(legacy) convertLegacy(s,oldStages);
-  s.stages = s.stages.map(st=>({id:String(st.id),name:st.name,items:(Array.isArray(st.items)?st.items:[]).filter(i=>i&&i.id&&typeof i.name==="string"&&i.name.trim()).map(i=>({id:String(i.id),name:i.name}))}));
-  const okS = new Set(ST.map(x=>x[0]));
-  Object.keys(s.data).forEach(room=>{
-    const v=s.data[room];
-    if(!v||typeof v!=="object"||Array.isArray(v)){ delete s.data[room]; return; }
-    Object.keys(v).forEach(k=>{
-      const x=v[k];
-      if(!x||typeof x!=="object"){ delete v[k]; return; }
-      if(!okS.has(x.s)) x.s="pendente";
-      x.d=typeof x.d==="string"?x.d:""; x.o=typeof x.o==="string"?x.o:"";
+  if(!Array.isArray(s.services)) s.services=[];
+  s.services = s.services.filter(v=>v && v.room && typeof v.desc==="string");
+
+  if(!(o.ver>=10)){
+    // etapas novas (marcenaria, ar-condicionado)
+    const defs=defStages();
+    ["e14","e15"].forEach(id=>{
+      const d=defs.find(z=>z.id===id);
+      if(s.stages.some(z=>z.id===id||z.name===d.name)) return;
+      const k=s.stages.findIndex(z=>z.name==="Limpeza e finalização");
+      if(k>-1) s.stages.splice(k,0,d); else s.stages.push(d);
     });
-  });
-  if(!o.acStage && !s.stages.some(x=>x.id==="eac")){
-    const k=s.stages.findIndex(x=>x.id==="e5");
-    s.stages.splice(k>-1?k+1:s.stages.length,0,acStage());
+    s.services.forEach(v=>{ if(v.stageId===undefined) v.stageId=guessStage(s,v); });
+    // andamento por etapa (versões antigas) -> vira serviço com status
+    const dataOld=(o.data && typeof o.data==="object" && !Array.isArray(o.data)) ? o.data : {};
+    Object.keys(dataOld).forEach(room=>{
+      let d=dataOld[room];
+      if(Array.isArray(d)){ const m={}; d.forEach((x,i)=>{ if(i<13) m["e"+(i+1)]=x; }); d=m; }
+      if(!d || typeof d!=="object") return;
+      s.stages.forEach(st=>{
+        const x=d[st.id]; if(!x) return;
+        let sv=s.services.find(v=>v.room===room && v.stageId===st.id && v.desc===st.name);
+        if(x.s==="andamento" || x.s==="concluida"){
+          if(!sv){ sv=mkSvc(room,st.id,st.name,st.name); s.services.push(sv); }
+          sv.s=x.s; sv.d=x.d||""; sv.o=x.o||"";
+        }else if(x.s==="na" && sv) sv.s="na";
+      });
+    });
   }
-  s.acStage=true;
-  s.v=10;
+  delete s.data;
+  s.services.forEach(v=>{
+    if(!v.id) v.id=uid();
+    v.stageId = typeof v.stageId==="string" ? v.stageId : "";
+    ["qty","unit","supply","note","modelo","btus","d","o"].forEach(k=>{ if(typeof v[k]!=="string") v[k]=(k==="unit"?"vb":(k==="supply"?SUPPLY[0]:"")); });
+    if(!ST.some(x=>x[0]===v.s)) v.s="pendente";
+    delete v.type;
+  });
+  s.ver=10;
   return s;
 }
-/* versões anteriores: o status era por etapa; agora é por serviço. Etapas que não estavam N/A viram serviços marcados. */
-function convertLegacy(s,oldStages){
-  s.stages = oldStages.map(st=>{
-    const m=/^e(\d{1,2})$/.exec(st.id), k=m?+m[1]-1:-1;
-    const names=(k>=0&&k<DEF_SERVICES.length)?DEF_SERVICES[k]:[st.name];
-    return {id:st.id,name:st.name,items:names.map((n,j)=>({id:st.id+"s"+(j+1),name:n}))};
-  });
-  const data={};
-  Object.keys(s.data).forEach(room=>{
-    const v=s.data[room], out={};
-    if(!v||typeof v!=="object") return;
-    s.stages.forEach(st=>{
-      const x=v[st.id];
-      if(!x||typeof x!=="object"||x.s==="na") return;
-      st.items.forEach((it,j)=>{ out[it.id]={s:x.s||"pendente",d:j?"":(x.d||""),o:j?"":(x.o||"")}; });
-    });
-    data[room]=out;
-  });
-  s.data=data;
-}
 function migrate(o){
-  const s = fresh(); s.v=0;
+  const s = fresh();
   s.obra=o.obra||""; s.responsavel=o.responsavel||""; s.tipo=o.tipo||""; s.area=o.area||"";
   s.selected = Array.isArray(o.selected)?o.selected:[];
   const base = DATA[s.tipo]||[];
   s.custom = s.selected.filter(n=>!base.includes(n));
   const map={"Pendente":"pendente","Em andamento":"andamento","Concluída":"concluida","Não se aplica":"na"};
+  s.data={};
   (o.rooms||[]).forEach(r=>{
     const name = s.selected.find(n=>String(r.name).startsWith(n));
     if(!name) return;
-    s.data[name] = DEF_STAGES.map((_,i)=>{const x=(r.stages||[])[i]||{};return {s:map[x.status]||"pendente",d:x.date||"",o:x.obs||""};});
+    s.data[name] = [];
+    for(let i=0;i<13;i++){ const x=(r.stages||[])[i]||{}; s.data[name].push({s:map[x.status]||"pendente",d:x.date||"",o:x.obs||""}); }
   });
+  s.ver=0;
   return s;
 }
 let saveTimer = null;
@@ -727,29 +746,15 @@ function renderSaved(){
 }
 
 function available(){ const b=DATA[S.tipo]||[]; return b.concat(S.custom.filter(c=>!b.includes(c))); }
-function roomData(name){
-  if(!S.data[name]||typeof S.data[name]!=="object") S.data[name]={};
-  return S.data[name];
+function activeRooms(){ return ["Obra toda"].concat(S.selected); }
+function activeServices(){ const r=activeRooms(); return S.services.filter(v=>r.includes(v.room)); }
+function roomServices(name){ return S.services.filter(v=>v.room===name); }
+function statsOf(list){
+  const app=list.filter(x=>x.s!=="na"), done=app.filter(x=>x.s==="concluida").length;
+  return {total:app.length,done,doing:list.filter(x=>x.s==="andamento").length,pend:list.filter(x=>x.s==="pendente").length,pct:app.length?Math.round(done/app.length*100):0};
 }
-/* serviços marcados no cômodo, na ordem das etapas */
-function roomItems(name){
-  const d=roomData(name), out=[];
-  S.stages.forEach(st=>st.items.forEach(it=>{ if(d[it.id]) out.push({st,it,x:d[it.id]}); }));
-  return out;
-}
-function roomStats(name){
-  const arr=roomItems(name).map(r=>r.x), app=arr.filter(x=>x.s!=="na"), done=app.filter(x=>x.s==="concluida").length;
-  return {count:arr.length,total:app.length,done,doing:arr.filter(x=>x.s==="andamento").length,pend:arr.filter(x=>x.s==="pendente").length,pct:app.length?Math.round(done/app.length*100):(arr.length?100:0)};
-}
-function overall(){
-  let total=0,done=0,doing=0,pend=0;
-  S.selected.forEach(n=>{const r=roomStats(n);total+=r.total;done+=r.done;doing+=r.doing;pend+=r.pend;});
-  return {total,done,doing,pend,pct:total?Math.round(done/total*100):0};
-}
-function pruneData(){
-  const ids=new Set(); S.stages.forEach(st=>st.items.forEach(i=>ids.add(i.id)));
-  Object.keys(S.data).forEach(r=>Object.keys(S.data[r]).forEach(k=>{ if(!ids.has(k)) delete S.data[r][k]; }));
-}
+function roomStats(name){ return statsOf(roomServices(name)); }
+function overall(){ return statsOf(activeServices()); }
 
 /* ===== UI helpers ===== */
 let toastT;
@@ -780,7 +785,7 @@ $$("[data-go]").forEach(b=>b.addEventListener("click",()=>go(b.dataset.go)));
 function showWelcome(){
   pickedRole=S.role||null;
   const has=!!(S.obra||S.selected.length||S.services.length);
-  $$(".role-card").forEach(c=>c.classList.toggle("on",c.dataset.role===pickedRole));
+  $$(".role-card").forEach(c=>{ const on=c.dataset.role===pickedRole; c.classList.toggle("on",on); c.setAttribute("aria-checked",on); });
   $("#wNew").hidden=!has;
   syncEnter(has);
   $("#welcome").classList.remove("out"); document.body.classList.add("lock");
@@ -790,11 +795,12 @@ function syncEnter(has){
   if(has===undefined) has=!!(S.obra||S.selected.length||S.services.length);
   const b=$("#wEnter");
   b.disabled=!pickedRole;
-  b.textContent = !pickedRole ? "Escolha uma opção" : (has ? "Continuar"+(S.obra?": "+S.obra:" minha obra") : "Começar");
+  if(!pickedRole){ b.textContent="Escolha uma opção"; return; }
+  b.innerHTML=(has?"Continuar":"Entrar")+" como "+(pickedRole==="dono"?"proprietário(a)":"profissional")+'<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
 }
 $$(".role-card").forEach(c=>c.addEventListener("click",()=>{
   pickedRole=c.dataset.role;
-  $$(".role-card").forEach(x=>x.classList.toggle("on",x===c));
+  $$(".role-card").forEach(x=>{ x.classList.toggle("on",x===c); x.setAttribute("aria-checked",x===c); });
   syncEnter();
 }));
 $("#wEnter").addEventListener("click",()=>{
@@ -823,7 +829,7 @@ function updateProgress(){
   $("#heroRole").textContent=R.kicker; $("#heroTitle").textContent=R.title; $("#heroText").textContent=R.text;
   $("#homeSub").textContent = S.selected.length ? "concluído • "+S.selected.length+" cômodo(s)" : "concluído • escolha os cômodos para começar";
   const b=$("#bdgRooms"); b.hidden=!S.selected.length; b.textContent=S.selected.length;
-  const sv=$("#bdgSvc"); sv.hidden=!S.services.length; sv.textContent=S.services.length;
+  const sv=$("#bdgSvc"), nsv=activeServices().length; sv.hidden=!nsv; sv.textContent=nsv;
   setHdr();
 }
 
@@ -838,7 +844,7 @@ function renderHome(){
   }else{
     box.innerHTML=S.selected.map(n=>{
       const r=roomStats(n);
-      return '<button class="roomrow" data-room="'+esc(n)+'"><div class="n"><b>'+esc(n)+'</b><div class="mini"><i class="'+(r.pct===100?'full':'')+'" style="width:'+r.pct+'%"></i></div></div><div class="p">'+(r.count?r.pct+'%':'—')+'</div>'+CHEV+'</button>';
+      return '<button class="roomrow" data-room="'+esc(n)+'"><div class="n"><b>'+esc(n)+'</b><div class="mini"><i class="'+(r.pct===100?'full':'')+'" style="width:'+r.pct+'%"></i></div></div><div class="p">'+r.pct+'%</div>'+CHEV+'</button>';
     }).join("");
     $$("#homeRooms .roomrow").forEach(b=>b.onclick=()=>{S.current=b.dataset.room;save();go("track");});
   }
@@ -899,41 +905,88 @@ $("#addRoom").onclick=()=>{
 };
 
 /* ===== TRACK ===== */
-function stageCount(room,stg){
-  const d=roomData(room), a=stg.items.filter(i=>d[i.id]).map(i=>d[i.id]), app=a.filter(x=>x.s!=="na");
-  return {n:a.length,total:app.length,done:app.filter(x=>x.s==="concluida").length};
+let openPanel=null;
+function keepScroll(fn){ const y=window.scrollY; fn(); window.scrollTo(0,y); }
+function addSvcTo(room,stId,name){
+  const st=S.stages.find(z=>z.id===stId); if(!st) return;
+  S.services.push(mkSvc(room,stId,name,st.name)); save();
 }
-const stageBadge = c => c.total ? c.done+"/"+c.total : "N/A";
-const pctLabel = r => r.count ? r.pct+"%" : "—";
-function rhText(r){ return r.total ? r.done+" de "+r.total+" serviços concluídos" : (r.count ? "Todos os serviços marcados como N/A" : "Nenhum serviço marcado"); }
+function addFromChip(stId,catId){
+  const st=S.stages.find(z=>z.id===stId), c=st&&st.svcs.find(x=>x.id===catId); if(!c) return;
+  addSvcTo(S.current,stId,c.name);
+  keepScroll(()=>{ renderTrack(); updateProgress(); });
+  toast("＋ "+c.name);
+}
+function addCustomInStage(stEl){
+  const inp=stEl.querySelector(".newsvc"), nm=inp.value.trim().replace(/\s+/g," ");
+  if(!nm){ inp.focus(); return; }
+  const stId=stEl.dataset.st, st=S.stages.find(z=>z.id===stId); if(!st) return;
+  if(!st.svcs.some(c=>c.name.toLowerCase()===nm.toLowerCase())) st.svcs.push({id:st.id+"s"+uid(),name:nm});
+  const exact=st.svcs.find(c=>c.name.toLowerCase()===nm.toLowerCase()).name;
+  addSvcTo(S.current,stId,exact);
+  keepScroll(()=>{ renderTrack(); updateProgress(); });
+  toast("＋ "+exact);
+}
+function addPanelHtml(st,all){
+  return '<div class="addpanel"><div class="sugt">Toque num serviço para adicionar. Cada toque inclui um serviço neste cômodo.</div><div class="svchips">'+
+    (st.svcs.length?st.svcs.map(c=>{ const n=all.filter(v=>v.stageId===st.id&&v.desc===c.name).length;
+      return '<button class="svchip" data-addsvc="'+esc(c.id)+'">＋ '+esc(c.name)+(n?'<em>'+n+'</em>':'')+'</button>'; }).join(""):'<span class="nosvc">Nenhum serviço na lista desta etapa.</span>')+
+    '</div><div class="addrow"><input class="newsvc" maxlength="120" autocomplete="off" placeholder="Outro serviço desta etapa"><button class="btn btn-y" data-addcustom>Adicionar</button></div>'+
+    '<button class="linkbtn" data-editlist="'+esc(st.id)+'" style="padding:8px 0 0">✎ Editar lista desta etapa</button></div>';
+}
+function todayStr(){ return new Date(Date.now()-new Date().getTimezoneOffset()*60000).toISOString().slice(0,10); }
+function stLabel(k){ const x=ST.find(z=>z[0]===k); return x?x[1]:k; }
+function stageName(id){ const z=S.stages.find(x=>x.id===id); return z?z.name:"Outros"; }
+function stageOrder(id){ const i=S.stages.findIndex(x=>x.id===id); return i<0?9999:i; }
+function sortByStage(list){ return list.map((v,i)=>[v,i]).sort((a,b)=>stageOrder(a[0].stageId)-stageOrder(b[0].stageId)||a[1]-b[1]).map(x=>x[0]); }
+function stageState(items){
+  const app=items.filter(v=>v.s!=="na");
+  if(!app.length) return "vazio";
+  if(app.every(v=>v.s==="concluida")) return "concluida";
+  if(app.some(v=>v.s==="andamento"||v.s==="concluida")) return "andamento";
+  return "pendente";
+}
+function svcRow(v,mode){
+  const q=mode==="quote";
+  const tags=(q?(qtyLabel(v)?'<span class="tag q">'+esc(qtyLabel(v))+'</span>':'')+'<span class="tag">'+esc(v.supply)+'</span>':'')+acTags(v);
+  let h='<div class="svcrow'+(q?' qc':'')+'" data-sid="'+esc(v.id)+'" data-s="'+v.s+'"><div class="svn"><div class="tx"><b>'+esc(v.desc)+'</b>'+(tags?'<div class="m">'+tags+'</div>':'')+(q&&v.note?'<div class="note">'+esc(v.note)+'</div>':'')+'</div><button class="svdet" data-edit>Detalhes</button><button class="svx" data-del aria-label="Remover serviço" title="Remover">✕</button></div>'+
+    '<div class="seg">'+ST.map(s=>'<button data-v="'+s[0]+'" class="'+(v.s===s[0]?'on':'')+'">'+s[1]+'</button>').join("")+'</div>';
+  if(!q){
+    const has=!!(v.d||v.o);
+    h+='<button class="det" data-det>'+(has?'▾':'＋')+' Data e observação</button><div class="more" '+(has?'':'hidden')+'><input type="date" class="date" value="'+esc(v.d)+'" aria-label="Data"><textarea class="obs" placeholder="Observação deste serviço...">'+esc(v.o)+'</textarea></div>';
+  }
+  return h+'</div>';
+}
 function renderTrack(){
   const body=$("#trackBody");
   if(!S.selected.length){
-    body.innerHTML='<div class="card"><div class="empty"><div class="ei">'+ICO_CHECK+'</div>Selecione os cômodos para iniciar o acompanhamento.<br><button class="btn btn-y" id="goRooms2">Escolher cômodos</button></div></div>';
+    body.innerHTML='<div class="card"><div class="empty"><div class="ei">'+ICO_CHECK+'</div>Selecione os cômodos para iniciar o acompanhamento das etapas.<br><button class="btn btn-y" id="goRooms2">Escolher cômodos</button></div></div>';
     $("#goRooms2").onclick=()=>go("rooms"); return;
   }
   if(!S.current || !S.selected.includes(S.current)) S.current=S.selected[0];
-  const room=S.current, d=roomData(room), r=roomStats(room);
-  let h='<div class="picker">'+S.selected.map(n=>'<button class="chip'+(n===room?' on':'')+'" data-room="'+esc(n)+'">'+esc(n)+' <small data-pc="'+esc(n)+'">'+pctLabel(roomStats(n))+'</small></button>').join("")+'</div>';
-  h+='<div class="roomhead"><small>Cômodo</small><h2>'+esc(room)+'</h2><div class="row"><span id="rhTxt">'+rhText(r)+'</span><b id="rhPct">'+pctLabel(r)+'</b></div><div class="mini"><i id="rhBar" class="'+(r.count&&r.pct===100?'full':'')+'" style="width:'+r.pct+'%"></i></div></div>';
-  h+='<div class="filters">'+[["todas","Todos"],["pendente","Pendentes"],["andamento","Em andamento"],["concluida","Concluídos"]].map(f=>'<button class="chip'+(S.filter===f[0]?' on':'')+'" data-f="'+f[0]+'">'+f[1]+'</button>').join("")+'<button class="chip" id="chooseSvc" style="margin-left:auto">☑ Escolher serviços</button><button class="chip" id="editStages">✎ Editar etapas</button></div>';
-  if(!r.count){
-    h+='<div class="card"><div class="empty"><div class="ei">'+ICO_CHECK+'</div>Nenhum serviço marcado em '+esc(room)+'.<br>Escolha só o que será feito neste cômodo: o que não for marcado não aparece nem entra no progresso.<br><button class="btn btn-y" id="chooseSvc2">Escolher serviços</button></div></div>';
-    body.innerHTML=h; setHdr(); return;
-  }
+  const room=S.current, r=roomStats(room), all=roomServices(room);
+  let h='<div class="picker">'+S.selected.map(n=>'<button class="chip'+(n===room?' on':'')+'" data-room="'+esc(n)+'">'+esc(n)+' <small data-pc="'+esc(n)+'">'+roomStats(n).pct+'%</small></button>').join("")+'</div>';
+  h+='<div class="roomhead"><small>Cômodo</small><h2>'+esc(room)+'</h2><div class="row"><span id="rhTxt">'+r.done+' de '+r.total+' serviços concluídos</span><b id="rhPct">'+r.pct+'%</b></div><div class="mini"><i id="rhBar" class="'+(r.pct===100&&r.total?'full':'')+'" style="width:'+r.pct+'%"></i></div></div>';
+  h+='<div class="filters">'+[["todas","Todos"],["pendente","Pendentes"],["andamento","Em andamento"],["concluida","Concluídos"]].map(f=>'<button class="chip'+(S.filter===f[0]?' on':'')+'" data-f="'+f[0]+'">'+f[1]+'</button>').join("")+'<button class="chip" id="editStages" style="margin-left:auto">✎ Editar etapas</button></div>';
+  if(!all.length) h+='<div class="hint">Em cada etapa, toque em <b>＋ Adicionar serviço</b> e toque nos serviços que serão feitos neste cômodo. Cada toque inclui um serviço, que ganha os botões de andamento.</div>';
+  const groups=S.stages.map(st=>({st:st,items:all.filter(v=>v.stageId===st.id)}));
+  const orphans=all.filter(v=>!S.stages.some(z=>z.id===v.stageId));
+  if(orphans.length) groups.push({st:{id:"",name:"Outros"},items:orphans});
   let shown=0;
-  S.stages.forEach((stg,i)=>{
-    const rows=stg.items.filter(it=>d[it.id] && (S.filter==="todas" || d[it.id].s===S.filter));
-    if(!rows.length) return;
-    h+='<div class="stghead"><div class="num">'+(i+1)+'</div><b>'+esc(stg.name)+'</b><small data-sc="'+esc(stg.id)+'">'+stageBadge(stageCount(room,stg))+'</small></div>';
-    rows.forEach(it=>{
-      shown++;
-      const x=d[it.id];
-      h+='<div class="stage" data-id="'+esc(it.id)+'" data-s="'+x.s+'"><div class="h"><div class="nm">'+esc(it.name)+'</div></div>'+
-        '<div class="seg">'+ST.map(s=>'<button data-v="'+s[0]+'" class="'+(x.s===s[0]?'on':'')+'">'+s[1]+'</button>').join("")+'</div>'+
-        '<button class="det" data-det>'+((x.d||x.o)?'▾ Data e observação':'＋ Data e observação')+'</button>'+
-        '<div class="more" '+((x.d||x.o)?'':'hidden')+'><input type="date" class="date" value="'+esc(x.d)+'" aria-label="Data"><textarea class="obs" placeholder="Observação deste serviço...">'+esc(x.o)+'</textarea></div></div>';
-    });
+  groups.forEach((g,i)=>{
+    const items=g.items.filter(v=>S.filter==="todas"||v.s===S.filter);
+    if(S.filter!=="todas" && !items.length) return;
+    shown++;
+    const app=g.items.filter(v=>v.s!=="na"), done=app.filter(v=>v.s==="concluida").length;
+    h+='<div class="stage" data-st="'+esc(g.st.id)+'" data-s="'+stageState(g.items)+'"><div class="h"><div class="num">'+(i+1)+'</div><div class="nm">'+esc(g.st.name)+'</div><div class="cnt">'+(app.length?done+'/'+app.length:'')+'</div></div>';
+    if(!items.length) h+='<div class="nosvc">Nenhum serviço selecionado</div>';
+    items.forEach(v=>{ h+=svcRow(v,"track"); });
+    if(g.st.id){
+      const open=openPanel===g.st.id;
+      h+='<button class="addsv'+(open?' open':'')+'" data-pick="'+esc(g.st.id)+'">'+(open?'▾ Fechar':'＋ Adicionar serviço')+'</button>';
+      if(open) h+=addPanelHtml(g.st,all);
+    }
+    h+='</div>';
   });
   if(!shown) h+='<div class="card"><div class="empty">Nenhum serviço neste filtro.</div></div>';
   body.innerHTML=h;
@@ -942,40 +995,74 @@ function renderTrack(){
 function refreshRoomProgress(){
   const room=S.current; if(!room) return;
   const r=roomStats(room);
-  const bar=$("#rhBar"); if(bar){ bar.style.width=r.pct+"%"; bar.classList.toggle("full",r.count>0&&r.pct===100); }
-  const t=$("#rhTxt"); if(t) t.textContent=rhText(r);
-  const p=$("#rhPct"); if(p) p.textContent=pctLabel(r);
-  $$("[data-pc]").forEach(el=>el.textContent=pctLabel(roomStats(el.dataset.pc)));
-  $$("[data-sc]").forEach(el=>{ const stg=S.stages.find(x=>x.id===el.dataset.sc); if(stg) el.textContent=stageBadge(stageCount(room,stg)); });
+  const bar=$("#rhBar"); if(bar){ bar.style.width=r.pct+"%"; bar.classList.toggle("full",r.pct===100&&r.total>0); }
+  const t=$("#rhTxt"); if(t) t.textContent=r.done+" de "+r.total+" serviços concluídos";
+  const p=$("#rhPct"); if(p) p.textContent=r.pct+"%";
+  $$("[data-pc]").forEach(el=>el.textContent=roomStats(el.dataset.pc).pct+"%");
   updateProgress();
 }
+function updateStageCard(el){
+  if(tab!=="track" || !el) return;
+  const id=el.dataset.st, items=roomServices(S.current).filter(v=>id===""?!S.stages.some(z=>z.id===v.stageId):v.stageId===id);
+  el.dataset.s=stageState(items);
+  const app=items.filter(v=>v.s!=="na"), done=app.filter(v=>v.s==="concluida").length;
+  const c=el.querySelector(".cnt"); if(c) c.textContent=app.length?done+"/"+app.length:"";
+}
+function onSvcClick(e){
+  const row=e.target.closest(".svcrow"); if(!row) return false;
+  const v=S.services.find(x=>x.id===row.dataset.sid); if(!v) return true;
+  const seg=e.target.closest(".seg button");
+  if(seg){
+    const val=seg.dataset.v; v.s=val;
+    if(val==="concluida" && !v.d){
+      v.d=todayStr();
+      const dt=row.querySelector(".date");
+      if(dt){ dt.value=v.d; row.querySelector(".more").hidden=false; row.querySelector("[data-det]").textContent="▾ Data e observação"; }
+    }
+    row.dataset.s=val;
+    row.querySelectorAll(".seg button").forEach(b=>b.classList.toggle("on",b===seg));
+    save();
+    if(tab==="track") refreshRoomProgress(); else updateProgress();
+    updateStageCard(row.closest(".stage"));
+    if(tab==="track" && S.filter!=="todas" && S.filter!==val) setTimeout(renderTrack,350);
+    return true;
+  }
+  const dl=e.target.closest("[data-del]");
+  if(dl){
+    if(dl.classList.contains("arm")){ clearTimeout(dl._t); S.services=S.services.filter(x=>x.id!==v.id); save(); refreshLists(); toast("Serviço removido"); return true; }
+    dl.classList.add("arm"); dl.textContent="Remover?";
+    dl._t=setTimeout(()=>{ dl.classList.remove("arm"); dl.textContent="✕"; },3000);
+    return true;
+  }
+  if(e.target.closest("[data-edit]")){ openService(v.id); return true; }
+  const det=e.target.closest("[data-det]");
+  if(det){ const m=row.querySelector(".more"); m.hidden=!m.hidden; det.textContent=(m.hidden?"＋":"▾")+" Data e observação"; }
+  return true;
+}
 $("#trackBody").addEventListener("click",e=>{
-  if(e.target.closest("#chooseSvc")||e.target.closest("#chooseSvc2")){ chooseServices(); return; }
-  if(e.target.closest("#editStages")){ manageStages(); return; }
+  if(e.target.closest("#editStages")){ manageList("stages"); return; }
   const chip=e.target.closest(".chip[data-room]");
-  if(chip){ S.current=chip.dataset.room; save(); renderTrack(); window.scrollTo({top:0}); return; }
+  if(chip){ S.current=chip.dataset.room; openPanel=null; save(); renderTrack(); window.scrollTo({top:0}); return; }
   const f=e.target.closest(".chip[data-f]");
   if(f){ S.filter=f.dataset.f; save(); renderTrack(); return; }
-  const st=e.target.closest(".stage"); if(!st) return;
-  const sid=st.dataset.id, seg=e.target.closest(".seg button");
-  if(seg){
-    const v=seg.dataset.v, x=roomData(S.current)[sid]; if(!x) return;
-    x.s=v;
-    if(v==="concluida" && !x.d){ x.d=new Date().toISOString().slice(0,10); st.querySelector(".date").value=x.d; st.querySelector(".more").hidden=false; st.querySelector("[data-det]").textContent="▾ Data e observação"; }
-    st.dataset.s=v;
-    st.querySelectorAll(".seg button").forEach(b=>b.classList.toggle("on",b===seg));
-    save(); refreshRoomProgress();
-    if(S.filter!=="todas" && S.filter!==v) setTimeout(renderTrack,350);
-    return;
-  }
-  const det=e.target.closest("[data-det]");
-  if(det){ const m=st.querySelector(".more"); m.hidden=!m.hidden; det.textContent=(m.hidden?"＋":"▾")+" Data e observação"; }
+  const pk=e.target.closest("[data-pick]");
+  if(pk){ const id=pk.dataset.pick; openPanel=(openPanel===id)?null:id; keepScroll(renderTrack); return; }
+  const ad=e.target.closest("[data-addsvc]");
+  if(ad){ addFromChip(ad.closest(".stage").dataset.st,ad.dataset.addsvc); return; }
+  const ac=e.target.closest("[data-addcustom]");
+  if(ac){ addCustomInStage(ac.closest(".stage")); return; }
+  const el=e.target.closest("[data-editlist]");
+  if(el){ manageList("svcs",el.dataset.editlist); return; }
+  onSvcClick(e);
+});
+$("#trackBody").addEventListener("keydown",e=>{
+  if(e.key==="Enter" && e.target.classList.contains("newsvc")){ e.preventDefault(); addCustomInStage(e.target.closest(".stage")); }
 });
 $("#trackBody").addEventListener("input",e=>{
-  const st=e.target.closest(".stage"); if(!st) return;
-  const x=roomData(S.current)[st.dataset.id]; if(!x) return;
-  if(e.target.classList.contains("date")) x.d=e.target.value;
-  if(e.target.classList.contains("obs")) x.o=e.target.value;
+  const row=e.target.closest(".svcrow"); if(!row) return;
+  const v=S.services.find(x=>x.id===row.dataset.sid); if(!v) return;
+  if(e.target.classList.contains("date")) v.d=e.target.value;
+  if(e.target.classList.contains("obs")) v.o=e.target.value;
   save();
 });
 
@@ -990,33 +1077,35 @@ function parseBRL(v){
   return isFinite(n)&&n>=0?n:null;
 }
 function fmtNum(n){ return n.toLocaleString("pt-BR",{minimumFractionDigits:2,maximumFractionDigits:2}); }
+function isAC(stageNm,desc){ return stageNm==="Ar-condicionado" || /condicionado|\bbtus?\b|\bsplit\b/i.test(desc||""); }
+function fmtBtu(b){ const d=String(b||"").replace(/\D/g,""); return d ? Number(d).toLocaleString("pt-BR")+" BTUs" : String(b||""); }
+function acTags(s){ return (s.modelo?'<span class="tag">'+esc(s.modelo)+'</span>':'')+(s.btus?'<span class="tag">'+esc(fmtBtu(s.btus))+'</span>':''); }
+function acPdf(s){ const t=[s.modelo&&"Modelo: "+esc(s.modelo),s.btus&&esc(fmtBtu(s.btus))].filter(Boolean).join(" • "); return t?'<br><small>'+t+'</small>':''; }
+const BTU_LIST=["7.000","9.000","12.000","18.000","24.000","30.000","36.000","48.000","60.000"];
+
 function groupedServices(){
-  const order=["Obra toda"].concat(S.selected);
-  S.services.forEach(s=>{ if(!order.includes(s.room)) order.push(s.room); });
-  return order.map(r=>({room:r,items:S.services.filter(s=>s.room===r)})).filter(g=>g.items.length);
+  return activeRooms().map(r=>({room:r,items:sortByStage(S.services.filter(s=>s.room===r))})).filter(g=>g.items.length);
 }
-function qtyLabel(s){
-  if(s.qty) return s.qty+" "+s.unit;
-  return s.unit==="vb" ? "Verba" : "Qtd. a definir ("+s.unit+")";
-}
+function qtyLabel(s){ return s.qty ? s.qty+" "+s.unit : ""; }
 function renderQuote(){
-  const box=$("#quoteBody"), groups=groupedServices(), n=S.services.length;
-  let h='<div class="card"><div class="qhead"><div class="ic">'+ICO_DOC+'</div><div><h2>Lista de serviços geral</h2><p class="sub">Serviços para orçamento: liste o que precisa ser feito em cada cômodo e envie ao profissional para orçar.</p></div></div>'+
+  const box=$("#quoteBody"), groups=groupedServices(), n=activeServices().length;
+  let h='<div class="card"><div class="qhead"><div class="ic">'+ICO_DOC+'</div><div><h2>Serviços para orçamento</h2><p class="sub">Adicione os serviços de cada cômodo, por etapa. Eles entram aqui e também no acompanhamento.</p></div></div>'+
     '<div class="qstats"><div><b>'+n+'</b><span>SERVIÇOS</span></div><div><b>'+groups.length+'</b><span>ÁREAS COM SERVIÇOS</span></div></div>'+
-    '<div class="btn-row"><button class="btn btn-y" id="qAdd"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Adicionar serviço</button><button class="btn btn-o" id="qBase">Gerar lista base</button></div>'+
-    '<div style="margin-top:6px"><button class="linkbtn" id="qTypes">✎ Editar tipos de serviço</button></div></div>';
+    '<div class="btn-row"><button class="btn btn-y" id="qAdd"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Adicionar serviços</button></div></div>';
 
   h+='<div class="card"><h2>Dados da solicitação</h2><p class="sub">Proprietário e profissional ficam na aba Início. Aqui vão o prazo e as observações do pedido.</p>'+
     '<label class="l" for="q_prazo">Prazo desejado</label><input id="q_prazo" placeholder="Ex.: iniciar em novembro, concluir em 60 dias" value="'+esc(S.quote.prazo)+'">'+
     '<label class="l" for="q_obs">Observações gerais</label><textarea id="q_obs" placeholder="Ex.: imóvel desocupado, acesso por elevador de serviço, horário de silêncio...">'+esc(S.quote.obs)+'</textarea></div>';
 
   if(!n){
-    h+='<div class="card"><div class="empty"><div class="ei">'+ICO_DOC+'</div>Nenhum serviço listado ainda.<br>Adicione manualmente ou gere uma lista base a partir dos serviços marcados em cada cômodo.</div></div>';
+    h+='<div class="card"><div class="empty"><div class="ei">'+ICO_DOC+'</div>Nenhum serviço selecionado ainda.<br>Toque em “Adicionar serviços”, escolha o cômodo e a etapa e toque nos serviços que serão feitos.</div></div>';
   }else{
     groups.forEach(g=>{
       h+='<div class="qroom"><div><b>'+esc(g.room)+'</b><span>'+g.items.length+' item(ns)</span></div><button data-add="'+esc(g.room)+'">+ Serviço</button></div>';
-      g.items.forEach((s,i)=>{
-        h+='<button class="svc" data-svc="'+s.id+'"><div class="num">'+(i+1)+'</div><div class="b"><b>'+esc(s.desc)+'</b><div class="m"><span class="tag q">'+esc(qtyLabel(s))+'</span><span class="tag">'+esc(s.supply)+'</span>'+(s.type?'<span class="tag">'+esc(s.type)+'</span>':'')+acTags(s)+'</div>'+(s.note?'<div class="note">'+esc(s.note)+'</div>':'')+'</div>'+CHEV+'</button>';
+      let last=null;
+      g.items.forEach(v=>{
+        if(v.stageId!==last){ h+='<div class="stg">'+esc(stageName(v.stageId))+'</div>'; last=v.stageId; }
+        h+=svcRow(v,"quote");
       });
     });
     h+='<div class="card totalcard" style="margin-top:18px"><h2>Total geral</h2><p class="sub">Valor total do orçamento, preenchido pelo profissional depois de orçar.</p>'+
@@ -1027,11 +1116,8 @@ function renderQuote(){
       '<button class="btn btn-o" id="qPdf"><svg viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/></svg>Gerar PDF para orçar</button></div></div>';
   }
   box.innerHTML=h;
-  $("#qAdd").onclick=()=>openService(null);
-  $("#qBase").onclick=genBase;
-  $("#qTypes").onclick=()=>manageList("types");
-  $$("[data-add]").forEach(b=>b.onclick=()=>openService(null,b.dataset.add));
-  $$("[data-svc]").forEach(b=>b.onclick=()=>openService(b.dataset.svc));
+  $("#qAdd").onclick=()=>pickServices(null,null);
+  $$("[data-add]").forEach(b=>b.onclick=()=>pickServices(b.dataset.add,null));
   if($("#qWa")){
     $("#qWa").onclick=()=>window.open("https://wa.me/?text="+encodeURIComponent(quoteText()),"_blank","noopener");
     $("#qCopy").onclick=copyQuote;
@@ -1039,6 +1125,7 @@ function renderQuote(){
   }
   updateProgress();
 }
+$("#quoteBody").addEventListener("click",e=>{ onSvcClick(e); });
 $("#quoteBody").addEventListener("input",e=>{
   const m={q_prazo:"prazo",q_obs:"obs",q_total:"total"}[e.target.id];
   if(m){ S.quote[m]=e.target.value; save(); }
@@ -1050,103 +1137,97 @@ $("#quoteBody").addEventListener("change",e=>{
   S.quote.total=e.target.value; save();
 });
 
-function isAC(type,desc){ return type==="Ar-condicionado" || /condicionado|\bbtus?\b|\bsplit\b/i.test(desc||""); }
-function fmtBtu(b){ const d=String(b||"").replace(/\D/g,""); return d ? Number(d).toLocaleString("pt-BR")+" BTUs" : String(b||""); }
-function acTags(s){ return (s.modelo?'<span class="tag">'+esc(s.modelo)+'</span>':'')+(s.btus?'<span class="tag">'+esc(fmtBtu(s.btus))+'</span>':''); }
-function acPdf(s){ const t=[s.modelo&&"Modelo: "+esc(s.modelo),s.btus&&esc(fmtBtu(s.btus))].filter(Boolean).join(" • "); return t?'<br><small>'+t+'</small>':''; }
-const BTU_LIST=["7.000","9.000","12.000","18.000","24.000","30.000","36.000","48.000","60.000"];
+function refreshLists(){
+  const y=window.scrollY;
+  if(tab==="track") renderTrack();
+  if(tab==="quote") renderQuote();
+  if(tab==="home") renderHome();
+  updateProgress();
+  window.scrollTo(0,y);
+}
 
-function openService(id,presetRoom){
-  const ex=id?S.services.find(s=>s.id===id):null;
-  const rooms=["Obra toda"].concat(S.selected);
-  const cur=ex||{room:presetRoom||S.current||rooms[1]||rooms[0],type:"",desc:"",qty:"",unit:"vb",supply:SUPPLY[0],note:"",modelo:"",btus:""};
-  if(!rooms.includes(cur.room)) rooms.push(cur.room);
-  const types=S.types.map(t=>t.name); if(cur.type && !types.includes(cur.type)) types.push(cur.type);
+/* ----- selecionar serviços por cômodo e etapa (marcou = entrou na lista) ----- */
+function pickServices(room0,stage0){
+  const rooms=activeRooms();
+  let room = (room0 && rooms.includes(room0)) ? room0 : ((S.current && S.selected.includes(S.current)) ? S.current : rooms[S.selected.length?1:0]);
+  let stId = (stage0 && S.stages.some(z=>z.id===stage0)) ? stage0 : S.stages[0].id;
+  let allRooms=false;
+  const optR=rooms.map(r=>'<option value="'+esc(r)+'"'+(r===room?' selected':'')+'>'+esc(r)+'</option>').join("");
+  const optS=S.stages.map(z=>'<option value="'+esc(z.id)+'"'+(z.id===stId?' selected':'')+'>'+esc(z.name)+'</option>').join("");
+  sheet('<h3>Adicionar serviços</h3><p>Escolha o cômodo e a etapa. Cada toque num serviço inclui um item na lista, que ganha os botões de andamento.</p>'+
+    '<label class="l" for="pk_room">Cômodo / área</label><select id="pk_room">'+optR+'</select>'+
+    '<label class="l" for="pk_stage">Etapa</label><select id="pk_stage">'+optS+'</select>'+
+    '<div class="sugt">Toque para adicionar</div><div id="pk_list" class="svchips"></div>'+
+    '<div class="addrow"><input id="pk_new" maxlength="120" autocomplete="off" placeholder="Outro serviço desta etapa"><button class="btn btn-y" id="pk_add">Adicionar</button></div>'+
+    (S.selected.length>1?'<div style="margin-top:12px"><button class="pill" id="pk_all" aria-pressed="false">Aplicar a todos os cômodos: desligado</button></div>':'')+
+    '<div class="btns"><button class="btn btn-o" id="pk_edit">✎ Editar lista</button><button class="btn btn-n" id="pk_done">Concluir</button></div>',sh=>{
+    const list=sh.querySelector("#pk_list"), inp=sh.querySelector("#pk_new");
+    const targets=()=>(allRooms && S.selected.includes(room)) ? S.selected : [room];
+    const stg=()=>S.stages.find(z=>z.id===stId);
+    const draw=()=>{
+      const st=stg();
+      list.innerHTML = st.svcs.length
+        ? st.svcs.map(c=>{ const n=S.services.filter(v=>v.room===room && v.stageId===stId && v.desc===c.name).length;
+            return '<button class="svchip" data-n="'+esc(c.name)+'">＋ '+esc(c.name)+(n?'<em>'+n+'</em>':'')+'</button>'; }).join("")
+        : '<span class="nosvc">Nenhum serviço nesta etapa. Adicione abaixo.</span>';
+    };
+    const addSvc=(name)=>{ targets().forEach(r=>S.services.push(mkSvc(r,stId,name,stg().name))); save(); draw(); refreshLists(); toast("＋ "+name); };
+    draw();
+    sh.querySelector("#pk_room").addEventListener("change",e=>{ room=e.target.value; draw(); });
+    sh.querySelector("#pk_stage").addEventListener("change",e=>{ stId=e.target.value; draw(); });
+    const all=sh.querySelector("#pk_all");
+    if(all) all.addEventListener("click",()=>{ allRooms=!allRooms; all.classList.toggle("y",allRooms); all.setAttribute("aria-pressed",allRooms); all.textContent="Aplicar a todos os cômodos: "+(allRooms?"ligado":"desligado"); });
+    list.addEventListener("click",e=>{ const b=e.target.closest(".svchip"); if(b) addSvc(b.dataset.n); });
+    const add=()=>{
+      const nm=inp.value.trim().replace(/\s+/g," ");
+      if(!nm){ inp.focus(); return; }
+      const st=stg();
+      if(!st.svcs.some(c=>c.name.toLowerCase()===nm.toLowerCase())) st.svcs.push({id:st.id+"s"+uid(),name:nm});
+      const exact=st.svcs.find(c=>c.name.toLowerCase()===nm.toLowerCase()).name;
+      inp.value=""; addSvc(exact);
+    };
+    sh.querySelector("#pk_add").onclick=add;
+    inp.addEventListener("keydown",e=>{ if(e.key==="Enter"){ e.preventDefault(); add(); } });
+    sh.querySelector("#pk_edit").onclick=()=>manageList("svcs",stId);
+    sh.querySelector("#pk_done").onclick=()=>{ closeSheet(); refreshLists(); };
+  });
+}
+
+/* ----- editar os dados de um serviço ----- */
+function openService(id){
+  const ex=S.services.find(s=>s.id===id); if(!ex) return;
+  const rooms=activeRooms(); if(!rooms.includes(ex.room)) rooms.push(ex.room);
+  const stOpts=S.stages.map(z=>[z.id,z.name]); if(!S.stages.some(z=>z.id===ex.stageId)) stOpts.push([ex.stageId,"Outros"]);
   const opt=(arr,sel,lab)=>arr.map(v=>'<option value="'+esc(v)+'"'+(v===sel?' selected':'')+'>'+esc(lab?lab[v]||v:v)+'</option>').join("");
-  sheet('<h3>'+(ex?'Editar serviço':'Novo serviço')+'</h3><p>'+(ex?'Ajuste os dados do serviço.':'Escolha o tipo e marque um ou mais serviços, ou descreva o seu.')+'</p>'+
-    '<label class="l" for="sv_room">Cômodo / área</label><select id="sv_room">'+opt(rooms,cur.room)+'</select>'+
-    '<label class="l" for="sv_type">Tipo de serviço</label><select id="sv_type"><option value="">Sem tipo</option>'+opt(types,cur.type)+'</select>'+
-    '<div class="sugt" id="sv_sugt" hidden>'+(ex?'Sugestões — toque para preencher':'Toque para selecionar um ou mais serviços')+'</div><div class="suggest" id="sv_sug"></div>'+
-    '<label class="l" for="sv_desc">'+(ex?'Descrição do serviço':'Outro serviço (opcional)')+'</label><input id="sv_desc" maxlength="120" placeholder="Ex.: Assentamento de porcelanato 90x90" value="'+esc(cur.desc)+'" autocomplete="off">'+
-    '<div id="sv_ac" class="acbox" hidden><div class="acttl">❄ Ar-condicionado</div><div class="grid2"><div><label class="l" for="sv_modelo">Modelo</label><input id="sv_modelo" maxlength="60" placeholder="Ex.: Inverter Hi Wall" value="'+esc(cur.modelo)+'" autocomplete="off"></div>'+
-    '<div><label class="l" for="sv_btus">BTUs</label><input id="sv_btus" list="btu_list" inputmode="numeric" maxlength="8" placeholder="Ex.: 12.000" value="'+esc(cur.btus)+'" autocomplete="off"><datalist id="btu_list">'+BTU_LIST.map(b=>'<option value="'+b+'">').join("")+'</datalist></div></div></div>'+
-    '<div class="grid2"><div><label class="l" for="sv_qty">Quantidade</label><input id="sv_qty" inputmode="decimal" placeholder="Opcional" value="'+esc(cur.qty)+'"></div>'+
-    '<div><label class="l" for="sv_unit">Unidade</label><select id="sv_unit">'+opt(UNITS,cur.unit,UNIT_LABEL)+'</select></div></div>'+
-    '<label class="l" for="sv_sup">Fornecimento</label><select id="sv_sup">'+opt(SUPPLY,cur.supply)+'</select>'+
-    '<label class="l" for="sv_note">Observações</label><textarea id="sv_note" placeholder="Padrão de acabamento, marca, medidas, restrições de acesso...">'+esc(cur.note)+'</textarea>'+
-    '<div class="btns">'+(ex?'<button class="btn btn-o" data-x="del" style="color:var(--danger)">Excluir</button>':'<button class="btn btn-o" data-x="no">Cancelar</button>')+'<button class="btn btn-y" data-x="ok">'+(ex?'Salvar':'Adicionar')+'</button></div>',sh=>{
-    const sug=sh.querySelector("#sv_sug"), sugt=sh.querySelector("#sv_sugt"), desc=sh.querySelector("#sv_desc"), typeSel=sh.querySelector("#sv_type");
-    const acBox=sh.querySelector("#sv_ac"), unitSel=sh.querySelector("#sv_unit"), okBtn=sh.querySelector("[data-x=ok]");
-    const picked=new Set(); let unitTouched=!!ex;
-    unitSel.addEventListener("change",()=>{unitTouched=true;});
-    const syncAC=()=>{
-      const show=isAC(typeSel.value,desc.value+" "+[...picked].join(" "));
-      acBox.hidden=!show;
-      if(show && !unitTouched && unitSel.value==="vb") unitSel.value="un";
-    };
-    const updOk=()=>{
-      if(ex) return;
-      const n=picked.size+(desc.value.trim()?1:0);
-      okBtn.textContent="Adicionar"+(n>1?" ("+n+")":"");
-    };
-    const showSug=()=>{
-      const t=S.types.find(x=>x.name===typeSel.value), list=(t&&t.sug)||[];
-      sugt.hidden=!list.length;
-      sug.innerHTML=list.map(x=>'<button type="button" class="'+(picked.has(x)?'on':'')+'">'+esc(x)+'</button>').join("");
-      sug.querySelectorAll("button").forEach(b=>b.onclick=()=>{
-        if(ex){ desc.value=b.textContent; syncAC(); return; }
-        const k=b.textContent;
-        if(picked.has(k)) picked.delete(k); else picked.add(k);
-        b.classList.toggle("on"); updOk(); syncAC();
-      });
-    };
-    typeSel.addEventListener("change",()=>{ picked.clear(); showSug(); updOk(); syncAC(); });
-    desc.addEventListener("input",()=>{ updOk(); syncAC(); });
-    showSug(); updOk(); syncAC();
-    if(!ex) setTimeout(()=>{ if(!typeSel.value) typeSel.focus(); },200);
-    const no=sh.querySelector("[data-x=no]"); if(no) no.onclick=closeSheet;
-    const del=sh.querySelector("[data-x=del]");
-    if(del) del.onclick=()=>{ S.services=S.services.filter(s=>s.id!==id); save(); closeSheet(); renderQuote(); toast("Serviço excluído"); };
-    okBtn.onclick=()=>{
-      const common={room:sh.querySelector("#sv_room").value,type:typeSel.value,qty:sh.querySelector("#sv_qty").value.trim().replace(/\s+/g," "),unit:unitSel.value,supply:sh.querySelector("#sv_sup").value,note:sh.querySelector("#sv_note").value.trim()};
-      const modelo=sh.querySelector("#sv_modelo").value.trim(), btus=sh.querySelector("#sv_btus").value.trim();
-      const withAC=nm=>(!acBox.hidden && isAC(typeSel.value,nm)) ? {modelo,btus} : {modelo:"",btus:""};
-      if(ex){
-        const d=desc.value.trim();
-        if(!d){ desc.focus(); toast("Descreva o serviço"); return; }
-        S.services[S.services.findIndex(s=>s.id===id)]=Object.assign({id:ex.id},common,{desc:d},withAC(d));
-        save(); closeSheet(); renderQuote(); toast("Serviço atualizado"); return;
-      }
-      const names=[...picked], dv=desc.value.trim();
-      if(dv && !names.some(n=>n.toLowerCase()===dv.toLowerCase())) names.push(dv);
-      if(!names.length){ toast("Selecione ou descreva um serviço"); return; }
-      names.forEach(nm=>S.services.push(Object.assign({id:uid()},common,{desc:nm},withAC(nm))));
-      save(); closeSheet(); renderQuote(); toast(names.length>1?names.length+" serviços adicionados":"Serviço adicionado");
+  sheet('<h3>Editar serviço</h3><p>Dados usados no pedido de orçamento.</p>'+
+    '<label class="l" for="sv_room">Cômodo / área</label><select id="sv_room">'+opt(rooms,ex.room)+'</select>'+
+    '<label class="l" for="sv_stage">Etapa</label><select id="sv_stage">'+stOpts.map(o=>'<option value="'+esc(o[0])+'"'+(o[0]===ex.stageId?' selected':'')+'>'+esc(o[1])+'</option>').join("")+'</select>'+
+    '<label class="l" for="sv_desc">Descrição do serviço</label><input id="sv_desc" maxlength="120" value="'+esc(ex.desc)+'" autocomplete="off">'+
+    '<div id="sv_ac" class="acbox" hidden><div class="acttl">❄ Ar-condicionado</div><div class="grid2"><div><label class="l" for="sv_modelo">Modelo</label><input id="sv_modelo" maxlength="60" placeholder="Ex.: Inverter Hi Wall" value="'+esc(ex.modelo)+'" autocomplete="off"></div>'+
+    '<div><label class="l" for="sv_btus">BTUs</label><input id="sv_btus" list="btu_list" inputmode="numeric" maxlength="8" placeholder="Ex.: 12.000" value="'+esc(ex.btus)+'" autocomplete="off"><datalist id="btu_list">'+BTU_LIST.map(b=>'<option value="'+b+'">').join("")+'</datalist></div></div></div>'+
+    '<div class="grid2"><div><label class="l" for="sv_qty">Quantidade</label><input id="sv_qty" inputmode="decimal" placeholder="Opcional" value="'+esc(ex.qty)+'"></div>'+
+    '<div><label class="l" for="sv_unit">Unidade</label><select id="sv_unit">'+opt(UNITS,ex.unit,UNIT_LABEL)+'</select></div></div>'+
+    '<label class="l" for="sv_sup">Fornecimento</label><select id="sv_sup">'+opt(SUPPLY,ex.supply)+'</select>'+
+    '<label class="l" for="sv_note">Observações do orçamento</label><textarea id="sv_note" placeholder="Padrão de acabamento, marca, medidas, restrições de acesso...">'+esc(ex.note)+'</textarea>'+
+    '<div class="btns"><button class="btn btn-o" data-x="del" style="color:var(--danger)">Excluir</button><button class="btn btn-y" data-x="ok">Salvar</button></div>',sh=>{
+    const desc=sh.querySelector("#sv_desc"), stSel=sh.querySelector("#sv_stage"), acBox=sh.querySelector("#sv_ac");
+    const syncAC=()=>{ acBox.hidden=!isAC(stageName(stSel.value),desc.value); };
+    stSel.addEventListener("change",syncAC); desc.addEventListener("input",syncAC); syncAC();
+    sh.querySelector("[data-x=del]").onclick=()=>{ S.services=S.services.filter(s=>s.id!==id); save(); closeSheet(); refreshLists(); toast("Serviço removido"); };
+    sh.querySelector("[data-x=ok]").onclick=()=>{
+      const d=desc.value.trim();
+      if(!d){ desc.focus(); toast("Descreva o serviço"); return; }
+      ex.room=sh.querySelector("#sv_room").value; ex.stageId=stSel.value; ex.desc=d;
+      ex.qty=sh.querySelector("#sv_qty").value.trim().replace(/\s+/g," "); ex.unit=sh.querySelector("#sv_unit").value;
+      ex.supply=sh.querySelector("#sv_sup").value; ex.note=sh.querySelector("#sv_note").value.trim();
+      ex.modelo=acBox.hidden?"":sh.querySelector("#sv_modelo").value.trim(); ex.btus=acBox.hidden?"":sh.querySelector("#sv_btus").value.trim();
+      save(); closeSheet(); refreshLists(); toast("Serviço atualizado");
     };
   });
 }
-function genBase(){
-  if(!S.selected.length){ toast("Selecione cômodos primeiro"); return; }
-  const add=[]; let marked=0;
-  S.selected.forEach(room=>{
-    roomItems(room).forEach(({st,it,x})=>{
-      marked++;
-      if(x.s==="na"||x.s==="concluida") return;
-      if(S.services.some(s=>s.room===room&&s.desc===it.name)) return;
-      const t=S.types.find(tt=>tt.name===STAGE_TYPE[st.name]);
-      let tp=t?t.name:"";
-      if(isAC("",it.name)&&S.types.some(x=>x.name==="Ar-condicionado")) tp="Ar-condicionado";
-      add.push({id:uid(),room,type:tp,desc:it.name,qty:"",unit:"vb",supply:SUPPLY[0],note:"",modelo:"",btus:""});
-    });
-  });
-  if(!marked){ toast("Marque os serviços de cada cômodo primeiro"); return; }
-  if(!add.length){ toast("Nada novo para adicionar"); return; }
-  confirmSheet("Gerar lista base?","Serão adicionados "+add.length+" serviços, apenas os que você marcou em cada cômodo (exceto concluídos e N/A). Depois você pode editar, detalhar ou excluir cada item.","Adicionar",false,()=>{
-    S.services=S.services.concat(add); save(); renderQuote(); toast(add.length+" serviços adicionados");
-  });
-}
+
 function quoteText(){
-  const L=["*SOLICITAÇÃO DE ORÇAMENTO — LISTA DE SERVIÇOS GERAL*"];
+  const L=["*SOLICITAÇÃO DE ORÇAMENTO*"];
   if(S.obra) L.push("Obra: "+S.obra);
   const im=[S.tipo,S.area&&S.area+" m²"].filter(Boolean).join(" • "); if(im) L.push("Imóvel: "+im);
   const who=(lab,p)=>{ const t=[p.nome,p.contato].filter(Boolean).join(" — "); if(t) L.push(lab+": "+t); };
@@ -1154,10 +1235,13 @@ function quoteText(){
   if(S.quote.prazo) L.push("Prazo desejado: "+S.quote.prazo);
   groupedServices().forEach(g=>{
     L.push("","*"+g.room.toUpperCase()+"*");
-    g.items.forEach((s,i)=>{
-      L.push((i+1)+". "+s.desc+" — "+qtyLabel(s)+" ("+s.supply+")"+(s.type?" ["+s.type+"]":""));
-      if(s.modelo||s.btus) L.push("   "+[s.modelo&&"Modelo: "+s.modelo,s.btus&&"BTUs: "+fmtBtu(s.btus).replace(" BTUs","")].filter(Boolean).join(" • "));
-      if(s.note) L.push("   Obs.: "+s.note);
+    let last=null, i=0;
+    g.items.forEach(v=>{
+      if(v.stageId!==last){ L.push("_"+stageName(v.stageId)+"_"); last=v.stageId; i=0; }
+      i++;
+      L.push(i+". "+v.desc+(qtyLabel(v)?" — "+qtyLabel(v):"")+" ("+v.supply+")");
+      if(v.modelo||v.btus) L.push("   "+[v.modelo&&"Modelo: "+v.modelo,v.btus&&"BTUs: "+fmtBtu(v.btus).replace(" BTUs","")].filter(Boolean).join(" • "));
+      if(v.note) L.push("   Obs.: "+v.note);
     });
   });
   if(S.quote.obs) L.push("","Observações gerais: "+S.quote.obs);
@@ -1173,193 +1257,66 @@ function copyQuote(){
   if(navigator.clipboard&&navigator.clipboard.writeText) navigator.clipboard.writeText(txt).then(()=>toast("Texto copiado"),fallback); else fallback();
 }
 
-/* ===== ESCOLHER SERVIÇOS DO CÔMODO ===== */
-function chooseServices(pre,stageSel,newId){
-  const room=S.current; if(!room) return;
-  const d=roomData(room);
-  const list=S.stages.filter(st=>st.items.length).map(st=>
-    '<div class="csgrp" data-st="'+esc(st.id)+'"><label class="chk csh"><input type="checkbox" data-stg><span>'+esc(st.name)+'</span></label>'+
-    st.items.map(it=>'<label class="chk sub"><input type="checkbox" data-it value="'+esc(it.id)+'"'+((pre?pre.has(it.id):d[it.id])?' checked':'')+'><span>'+esc(it.name)+'</span></label>').join("")+'</div>').join("");
-  sheet('<h3>Serviços de '+esc(room)+'</h3><p>Marque só os serviços que serão feitos neste cômodo. O que ficar desmarcado não aparece nem entra no progresso. Desmarcar remove o serviço daqui, com data e observação.</p>'+
-    '<div class="tools"><button class="pill" id="cs_all">Marcar todos</button><button class="pill" id="cs_none">Desmarcar todos</button></div>'+
-    '<div id="cs_list">'+(list||'<div class="empty">Nenhuma etapa possui serviços ainda. Inclua o primeiro abaixo.</div>')+'</div>'+
-    '<div class="addsvc"><b>Incluir novo serviço</b><select id="cs_stage" aria-label="Etapa do novo serviço">'+S.stages.map(st=>'<option value="'+esc(st.id)+'"'+(st.id===stageSel?' selected':'')+'>'+esc(st.name)+'</option>').join("")+'</select>'+
-    '<div class="addrow"><input id="cs_new" maxlength="80" autocomplete="off" placeholder="Ex.: Instalação de lareira"><button class="btn btn-o" id="cs_addbtn">+ Incluir</button></div></div>'+
-    (S.selected.length>1?'<label class="chk" style="margin-top:8px"><input type="checkbox" id="cs_rooms"><span>Aplicar a todos os cômodos (não remove o que já tem andamento)</span></label>':'')+
-    '<div class="btns"><button class="btn btn-o" data-x="no">Cancelar</button><button class="btn btn-y" data-x="ok">Aplicar</button></div>',sh=>{
-    const items=()=>[...sh.querySelectorAll("#cs_list input[data-it]")];
-    const syncGrp=g=>{
-      const its=[...g.querySelectorAll("input[data-it]")], on=its.filter(b=>b.checked).length, head=g.querySelector("input[data-stg]");
-      head.checked=on===its.length; head.indeterminate=on>0&&on<its.length;
-    };
-    const syncAll=()=>sh.querySelectorAll(".csgrp").forEach(syncGrp);
-    syncAll();
-    sh.querySelector("#cs_list").addEventListener("change",e=>{
-      const g=e.target.closest(".csgrp"); if(!g) return;
-      if(e.target.matches("input[data-stg]")) g.querySelectorAll("input[data-it]").forEach(b=>b.checked=e.target.checked);
-      syncGrp(g);
-    });
-    sh.querySelector("#cs_all").onclick=()=>{ items().forEach(b=>b.checked=true); syncAll(); };
-    sh.querySelector("#cs_none").onclick=()=>{ items().forEach(b=>b.checked=false); syncAll(); };
-    const doAdd=()=>{
-      const sel=sh.querySelector("#cs_stage"), field=sh.querySelector("#cs_new"), nm=field.value.trim().replace(/\s+/g," ");
-      if(!nm){ field.focus(); return; }
-      const st=S.stages.find(x=>x.id===sel.value); if(!st) return;
-      if(st.items.some(x=>x.name.toLowerCase()===nm.toLowerCase())){ toast("Esse serviço já existe nesta etapa"); return; }
-      const checked=new Set(items().filter(b=>b.checked).map(b=>b.value));
-      const id="i"+uid(); st.items.push({id,name:nm}); checked.add(id);
-      save(); chooseServices(checked,st.id,id); toast("“"+nm+"” incluído em "+st.name);
-    };
-    sh.querySelector("#cs_addbtn").onclick=doAdd;
-    sh.querySelector("#cs_new").addEventListener("keydown",e=>{ if(e.key==="Enter"){ e.preventDefault(); doAdd(); } });
-    if(newId){ const n=[...sh.querySelectorAll("input[data-it]")].find(b=>b.value===newId); if(n) setTimeout(()=>n.scrollIntoView({block:"center"}),50); }
-    sh.querySelector("[data-x=no]").onclick=closeSheet;
-    sh.querySelector("[data-x=ok]").onclick=()=>{
-      const all=sh.querySelector("#cs_rooms"), targets=(all&&all.checked)?S.selected:[room];
-      const on=new Set(items().filter(b=>b.checked).map(b=>b.value));
-      const worked=x=>x&&(x.s!=="pendente"||x.d||x.o);
-      targets.forEach(r=>{
-        const dd=roomData(r);
-        S.stages.forEach(st=>st.items.forEach(it=>{
-          if(on.has(it.id)){ if(!dd[it.id]) dd[it.id]={s:"pendente",d:"",o:""}; }
-          else if(r===room || !worked(dd[it.id])) delete dd[it.id];
-        }));
-      });
-      save(); closeSheet(); renderTrack(); updateProgress(); toast("Serviços atualizados");
-    };
-  });
-}
-
-/* ===== EDITAR ETAPAS / TIPOS ===== */
-function refreshLists(){
-  if(tab==="track") renderTrack();
-  if(tab==="quote") renderQuote();
-  updateProgress();
-}
-function armBtn(btn,txtOn,txtOff,fn){
-  if(btn.classList.contains("arm")){ clearTimeout(btn._t); fn(); return; }
-  btn.classList.add("arm"); btn.textContent=txtOn;
-  btn._t=setTimeout(()=>{ btn.classList.remove("arm"); btn.textContent=txtOff; },3000);
-}
-function manageStages(){
-  sheet('<h3>Etapas e serviços</h3><p>Cada etapa tem os seus serviços. Toque em um nome para renomear. Excluir um serviço o remove de todos os cômodos.</p>'+
-    '<div id="ms"></div>'+
-    '<div class="addrow"><input id="ms_new" maxlength="60" autocomplete="off" placeholder="Nova etapa, ex.: Paisagismo"><button class="btn btn-y" id="ms_add">Adicionar etapa</button></div>'+
-    '<div class="btns"><button class="btn btn-o" id="ms_reset">Restaurar padrão</button><button class="btn btn-n" id="ms_done">Concluir</button></div>',sh=>{
-    const box=sh.querySelector("#ms"), inp=sh.querySelector("#ms_new");
-    const draw=()=>{
-      box.innerHTML=S.stages.map(st=>
-        '<div class="mstage" data-st="'+esc(st.id)+'"><div class="mrow"><input value="'+esc(st.name)+'" maxlength="60" aria-label="Nome da etapa"><button class="mdel" data-k="st" aria-label="Excluir etapa" title="Excluir etapa">✕</button></div><div class="msvcs">'+
-        st.items.map(it=>'<div class="mrow" data-it="'+esc(it.id)+'"><input value="'+esc(it.name)+'" maxlength="80" aria-label="Nome do serviço"><button class="mdel" data-k="it" aria-label="Excluir serviço" title="Excluir serviço">✕</button></div>').join("")+
-        '<div class="addrow sm"><input maxlength="80" autocomplete="off" placeholder="Novo serviço nesta etapa" aria-label="Novo serviço"><button class="btn btn-o" data-k="addsvc">+ Serviço</button></div></div></div>').join("");
-    };
-    draw();
-    const stOf=el=>{ const g=el.closest(".mstage"); return g?S.stages.find(x=>x.id===g.dataset.st):null; };
-    box.addEventListener("change",e=>{
-      const row=e.target.closest(".mrow"); if(!row) return;
-      const st=stOf(row); if(!st) return;
-      const nm=e.target.value.trim().replace(/\s+/g," ");
-      if(row.dataset.it){
-        const it=st.items.find(x=>x.id===row.dataset.it); if(!it) return;
-        if(!nm){ e.target.value=it.name; return; }
-        if(st.items.some(x=>x.id!==it.id&&x.name.toLowerCase()===nm.toLowerCase())){ toast("Já existe um serviço com esse nome nesta etapa"); e.target.value=it.name; return; }
-        it.name=nm;
-      }else{
-        if(!nm){ e.target.value=st.name; return; }
-        if(S.stages.some(x=>x.id!==st.id&&x.name.toLowerCase()===nm.toLowerCase())){ toast("Já existe uma etapa com esse nome"); e.target.value=st.name; return; }
-        st.name=nm;
-      }
-      save(); refreshLists();
-    });
-    const addSvc=btn=>{
-      const st=stOf(btn); if(!st) return;
-      const field=btn.parentElement.querySelector("input"), nm=field.value.trim().replace(/\s+/g," ");
-      if(!nm){ field.focus(); return; }
-      if(st.items.some(x=>x.name.toLowerCase()===nm.toLowerCase())){ toast("Esse serviço já existe nesta etapa"); return; }
-      st.items.push({id:"i"+uid(),name:nm});
-      save(); draw(); refreshLists(); toast("“"+nm+"” adicionado");
-      const again=box.querySelector('.mstage[data-st="'+st.id+'"] .addrow input'); if(again) again.focus();
-    };
-    box.addEventListener("click",e=>{
-      const add=e.target.closest("[data-k=addsvc]"); if(add){ addSvc(add); return; }
-      const del=e.target.closest(".mdel"); if(!del) return;
-      const st=stOf(del); if(!st) return;
-      if(del.dataset.k==="it"){
-        const id=del.closest(".mrow").dataset.it;
-        armBtn(del,"Excluir?","✕",()=>{ st.items=st.items.filter(x=>x.id!==id); pruneData(); save(); draw(); refreshLists(); toast("Serviço excluído"); });
-      }else{
-        if(S.stages.length<=1){ toast("Mantenha ao menos uma etapa"); return; }
-        armBtn(del,"Excluir?","✕",()=>{ S.stages=S.stages.filter(x=>x.id!==st.id); pruneData(); save(); draw(); refreshLists(); toast("Etapa excluída"); });
-      }
-    });
-    box.addEventListener("keydown",e=>{
-      if(e.key!=="Enter"||!e.target.closest(".addrow")) return;
-      e.preventDefault(); const b=e.target.parentElement.querySelector("[data-k=addsvc]"); if(b) addSvc(b);
-    });
-    const addStage=()=>{
-      const nm=inp.value.trim().replace(/\s+/g," ");
-      if(!nm){ inp.focus(); return; }
-      if(S.stages.some(x=>x.name.toLowerCase()===nm.toLowerCase())){ toast("Já existe uma etapa com esse nome"); return; }
-      S.stages.push({id:"e"+uid(),name:nm,items:[]});
-      inp.value=""; save(); draw(); refreshLists(); toast("“"+nm+"” adicionada. Inclua os serviços dela.");
-      box.lastElementChild&&box.lastElementChild.scrollIntoView({block:"nearest"});
-    };
-    sh.querySelector("#ms_add").onclick=addStage;
-    inp.addEventListener("keydown",e=>{ if(e.key==="Enter"){ e.preventDefault(); addStage(); } });
-    const rs=sh.querySelector("#ms_reset");
-    rs.onclick=()=>armBtn(rs,"Confirmar?","Restaurar padrão",()=>{
-      S.stages=defStages(); pruneData();
-      rs.classList.remove("arm"); rs.textContent="Restaurar padrão";
-      save(); draw(); refreshLists(); toast("Etapas e serviços padrão restaurados");
-    });
-    sh.querySelector("#ms_done").onclick=closeSheet;
-  });
-}
-function manageList(){
-  sheet('<h3>Tipos de serviço</h3><p>Categorias usadas ao listar serviços para orçamento. Toque no nome para renomear.</p>'+
+/* ----- editar etapas e a lista de serviços de cada etapa ----- */
+function manageList(kind,stId){
+  const isSt = kind==="stages";
+  const stg = isSt ? null : S.stages.find(z=>z.id===stId);
+  if(!isSt && !stg) return;
+  const arr = () => isSt ? S.stages : stg.svcs;
+  sheet('<h3>'+(isSt?'Etapas da obra':esc(stg.name))+'</h3><p>'+(isSt?'Essas etapas valem para todos os cômodos. Toque no nome para renomear.':'Lista de serviços desta etapa. Toque no nome para renomear. Excluir da lista não remove serviços já selecionados.')+'</p>'+
     '<div id="ml"></div>'+
-    '<div class="addrow"><input id="ml_new" maxlength="60" autocomplete="off" placeholder="Novo tipo, ex.: Automação"><button class="btn btn-y" id="ml_add">Adicionar</button></div>'+
+    '<div class="addrow"><input id="ml_new" maxlength="120" autocomplete="off" placeholder="'+(isSt?'Nova etapa, ex.: Paisagismo':'Novo serviço desta etapa')+'"><button class="btn btn-y" id="ml_add">Adicionar</button></div>'+
     '<div class="btns"><button class="btn btn-o" id="ml_reset">Restaurar padrão</button><button class="btn btn-n" id="ml_done">Concluir</button></div>',sh=>{
     const box=sh.querySelector("#ml"), inp=sh.querySelector("#ml_new");
     const draw=()=>{
-      box.innerHTML = S.types.length
-        ? S.types.map(x=>'<div class="mrow" data-id="'+esc(x.id)+'"><input value="'+esc(x.name)+'" maxlength="60" aria-label="Nome"><button class="mdel" aria-label="Excluir" title="Excluir">✕</button></div>').join("")
+      box.innerHTML = arr().length
+        ? arr().map(x=>'<div class="mrow" data-id="'+esc(x.id)+'"><input value="'+esc(x.name)+'" maxlength="120" aria-label="Nome"><button class="mdel" aria-label="Excluir" title="Excluir">✕</button></div>').join("")
         : '<div class="empty" style="padding:14px">Nenhum item. Adicione abaixo.</div>';
     };
     draw();
-    const nameTaken=(nm,exceptId)=>S.types.some(x=>x.id!==exceptId && x.name.toLowerCase()===nm.toLowerCase());
+    const nameTaken=(nm,exceptId)=>arr().some(x=>x.id!==exceptId && x.name.toLowerCase()===nm.toLowerCase());
     box.addEventListener("change",e=>{
       const row=e.target.closest(".mrow"); if(!row) return;
-      const it=S.types.find(x=>x.id===row.dataset.id); if(!it) return;
+      const it=arr().find(x=>x.id===row.dataset.id); if(!it) return;
       const nm=e.target.value.trim().replace(/\s+/g," ");
       if(!nm){ e.target.value=it.name; return; }
       if(nameTaken(nm,it.id)){ toast("Já existe um item com esse nome"); e.target.value=it.name; return; }
-      S.services.forEach(s=>{ if(s.type===it.name) s.type=nm; });
+      if(!isSt) S.services.forEach(v=>{ if(v.stageId===stg.id && v.desc===it.name) v.desc=nm; });
       it.name=nm; save(); refreshLists();
     });
+    const arm=(btn,txtOn,txtOff,fn)=>{
+      if(btn.classList.contains("arm")){ clearTimeout(btn._t); fn(); return; }
+      btn.classList.add("arm"); btn.textContent=txtOn;
+      btn._t=setTimeout(()=>{ btn.classList.remove("arm"); btn.textContent=txtOff; },3000);
+    };
     box.addEventListener("click",e=>{
       const del=e.target.closest(".mdel"); if(!del) return;
       const id=del.closest(".mrow").dataset.id;
-      armBtn(del,"Excluir?","✕",()=>{
-        const t=S.types.find(x=>x.id===id);
-        S.types=S.types.filter(x=>x.id!==id);
-        if(t) S.services.forEach(s=>{ if(s.type===t.name) s.type=""; });
-        save(); draw(); refreshLists(); toast("Tipo excluído");
+      if(isSt && S.stages.length<=1){ toast("Mantenha ao menos uma etapa"); return; }
+      arm(del,"Excluir?","✕",()=>{
+        if(isSt){
+          S.stages=S.stages.filter(x=>x.id!==id);
+          S.services=S.services.filter(v=>v.stageId!==id);
+        }else{
+          stg.svcs=stg.svcs.filter(x=>x.id!==id);
+        }
+        save(); draw(); refreshLists(); toast(isSt?"Etapa e serviços excluídos":"Serviço excluído da lista");
       });
     });
     const add=()=>{
       const nm=inp.value.trim().replace(/\s+/g," ");
       if(!nm){ inp.focus(); return; }
       if(nameTaken(nm,null)){ toast("Já existe um item com esse nome"); return; }
-      S.types.push({id:"t"+uid(),name:nm,sug:[]});
+      arr().push(isSt?{id:"e"+uid(),name:nm,svcs:[]}:{id:stg.id+"s"+uid(),name:nm});
       inp.value=""; save(); draw(); refreshLists(); toast("“"+nm+"” adicionado");
-      box.lastElementChild&&box.lastElementChild.scrollIntoView({block:"nearest"});
+      if(box.lastElementChild) box.lastElementChild.scrollIntoView({block:"nearest"});
     };
     sh.querySelector("#ml_add").onclick=add;
     inp.addEventListener("keydown",e=>{ if(e.key==="Enter"){ e.preventDefault(); add(); } });
     const rs=sh.querySelector("#ml_reset");
-    rs.onclick=()=>armBtn(rs,"Confirmar?","Restaurar padrão",()=>{
-      S.types=defTypes();
+    rs.onclick=()=>arm(rs,"Confirmar?","Restaurar padrão",()=>{
+      if(isSt){ S.stages=defStages(); }
+      else{ const d=defStages().find(z=>z.id===stg.id); stg.svcs=d?d.svcs:[]; }
       rs.classList.remove("arm"); rs.textContent="Restaurar padrão";
       save(); draw(); refreshLists(); toast("Lista padrão restaurada");
     });
@@ -1381,11 +1338,16 @@ function buildReport(){
   const fmt=d=>d?d.split("-").reverse().join("/"):"";
   let h=REPORT_HEAD;
   if(reportMode==="quote"){
-    h+='<h1>Solicitação de orçamento — Lista de serviços geral</h1><p class="meta"><b>'+esc(S.obra||"Obra sem nome")+'</b><br>'+metaLine()+'</p>'+partiesHtml();
+    h+='<h1>Solicitação de orçamento</h1><p class="meta"><b>'+esc(S.obra||"Obra sem nome")+'</b><br>'+metaLine()+'</p>'+partiesHtml();
     if(S.quote.prazo) h+='<p class="meta">Prazo desejado: '+esc(S.quote.prazo)+'</p>';
     groupedServices().forEach(g=>{
       h+='<h2>'+esc(g.room)+'</h2><table><tr><th style="width:5%">#</th><th>Serviço</th><th style="width:14%">Qtd.</th><th style="width:18%">Fornecimento</th><th style="width:26%">Observações</th></tr>';
-      g.items.forEach((s,i)=>{ h+='<tr><td>'+(i+1)+'</td><td>'+esc(s.desc)+(s.type?'<br><small>'+esc(s.type)+'</small>':'')+acPdf(s)+'</td><td>'+esc(qtyLabel(s))+'</td><td>'+esc(s.supply)+'</td><td>'+esc(s.note)+'</td></tr>'; });
+      let last=null, i=0;
+      g.items.forEach(v=>{
+        if(v.stageId!==last){ h+='<tr class="grp"><td colspan="5">'+esc(stageName(v.stageId))+'</td></tr>'; last=v.stageId; }
+        i++;
+        h+='<tr><td>'+i+'</td><td>'+esc(v.desc)+acPdf(v)+'</td><td>'+esc(qtyLabel(v))+'</td><td>'+esc(v.supply)+'</td><td>'+esc(v.note)+'</td></tr>';
+      });
       h+='</table>';
     });
     if(S.quote.obs) h+='<p class="meta" style="margin-top:12px"><b>Observações gerais:</b> '+esc(S.quote.obs)+'</p>';
@@ -1394,30 +1356,26 @@ function buildReport(){
     h+='<p class="meta" style="margin-top:12px">Informe prazo de execução e condições de pagamento.</p><div class="sign"><div>Profissional / empresa</div><div>Prazo de execução</div><div>Data</div></div>';
   }else{
     const o=overall();
-    h+='<h1>'+esc(S.obra||"Acompanhamento de Obra")+'</h1><p class="meta">'+metaLine()+'</p>'+partiesHtml()+'<p><b>Progresso geral: '+o.pct+'%</b> — '+o.done+' concluídas, '+o.doing+' em andamento, '+o.pend+' pendentes.</p>';
-    S.selected.forEach(n=>{
-      const r=roomStats(n), rows=roomItems(n);
-      h+='<h2>'+esc(n)+' — '+(r.count?r.pct+'%':'sem serviços marcados')+'</h2>';
-      if(!rows.length) return;
-      h+='<table><tr><th style="width:24%">Etapa</th><th style="width:28%">Serviço</th><th style="width:14%">Situação</th><th style="width:11%">Data</th><th>Observação</th></tr>';
-      rows.forEach(({st,it,x})=>{ h+='<tr><td>'+esc(st.name)+'</td><td>'+esc(it.name)+'</td><td>'+lab[x.s]+'</td><td>'+fmt(x.d)+'</td><td>'+esc(x.o)+'</td></tr>'; });
+    h+='<h1>'+esc(S.obra||"Acompanhamento de Obra")+'</h1><p class="meta">'+metaLine()+'</p>'+partiesHtml()+'<p><b>Progresso geral: '+o.pct+'%</b> — '+o.done+' concluídos, '+o.doing+' em andamento, '+o.pend+' pendentes.</p>';
+    groupedServices().forEach(g=>{
+      const r=roomStats(g.room);
+      h+='<h2>'+esc(g.room)+' — '+r.pct+'%</h2><table><tr><th style="width:24%">Etapa</th><th>Serviço</th><th style="width:14%">Situação</th><th style="width:11%">Data</th><th style="width:22%">Observação</th></tr>';
+      g.items.forEach(v=>{ h+='<tr><td>'+esc(stageName(v.stageId))+'</td><td>'+esc(v.desc)+acPdf(v)+'</td><td>'+lab[v.s]+'</td><td>'+fmt(v.d)+'</td><td>'+esc(v.o)+'</td></tr>'; });
       h+='</table>';
     });
   }
   $("#report").innerHTML=h;
 }
 function printReport(mode){
-  if(mode==="quote" && !S.services.length){ toast("Adicione serviços antes"); return; }
-  if(mode==="progress" && !S.selected.length){ toast("Selecione cômodos antes de gerar o relatório"); return; }
-  if(mode==="progress" && !S.selected.some(n=>roomStats(n).count)){ toast("Marque serviços nos cômodos antes de gerar o relatório"); return; }
+  if(mode==="quote" && !activeServices().length){ toast("Selecione serviços antes"); return; }
+  if(mode==="progress" && !activeServices().length){ toast("Selecione serviços antes de gerar o relatório"); return; }
   reportMode=mode; buildReport(); setTimeout(()=>window.print(),60);
 }
 window.addEventListener("beforeprint",buildReport);
 window.addEventListener("afterprint",()=>{reportMode="progress";});
 
 /* ===== MAIS ===== */
-$("#actStages").onclick=manageStages;
-$("#actTypes").onclick=()=>manageList("types");
+$("#actStages").onclick=()=>manageList("stages");
 $("#actPdf").onclick=()=>printReport("progress");
 $("#actExport").onclick=()=>{
   const blob=new Blob([JSON.stringify(S,null,2)],{type:"application/json"});
