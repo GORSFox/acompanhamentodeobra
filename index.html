@@ -35,7 +35,8 @@ input,select,textarea{font:inherit;width:100%;min-height:48px;padding:12px 14px;
 input::placeholder,textarea::placeholder{color:#98a2b3}
 input:focus,select:focus,textarea:focus{outline:none;border-color:var(--navy);box-shadow:0 0 0 4px rgba(20,33,61,.10)}
 select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23667085' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:40px}
-textarea{min-height:76px;resize:vertical}
+textarea{min-height:110px;resize:vertical;line-height:1.45}
+.mic-tip{margin:6px 2px 0;font-size:12.5px;color:var(--muted)}
 label.l{display:block;font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:#475467;margin:16px 0 6px}
 label.l:first-child{margin-top:0}
 
@@ -74,6 +75,7 @@ label.l:first-child{margin-top:0}
 .w-hero{text-align:center;margin:22px auto 20px;max-width:560px;animation:rise .5s .05s ease both}
 .w-hero h1{margin:0;font-size:25px;line-height:1.15;letter-spacing:-.025em;font-weight:800}
 .w-hero p{margin:8px 0 0;color:rgba(255,255,255,.72);font-size:15px}
+.w-brand+.w-roles{margin-top:22px}
 .w-roles{display:grid;gap:14px;grid-template-columns:1fr;animation:rise .5s .12s ease both}
 .role-card{position:relative;text-align:left;width:100%;background:#fff;color:var(--ink);border-radius:22px;padding:18px;border:3px solid transparent;box-shadow:0 18px 36px -16px rgba(0,0,0,.55);transition:transform .15s,border-color .15s,box-shadow .15s;display:flex;flex-direction:column}
 .role-card:active{transform:scale(.99)}
@@ -413,22 +415,17 @@ body.sheet-open #toast.on{transform:translateX(-50%)}
       <b>Orça <span>Aqui</span></b>
     </div>
 
-    <div class="w-hero">
-      <h1>Perfil</h1>
-      <p>Escolha o seu perfil. Você pode trocar quando quiser.</p>
-    </div>
-
     <div class="w-roles" role="radiogroup" aria-label="Perfil de uso">
       <button class="role-card" data-role="dono" role="radio" aria-checked="false">
         <div class="top">
           <div class="ic"><svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></svg></div>
-          <div><h2>Sou proprietário(a)</h2><p class="tg">Planeje e acompanhe a sua obra</p></div>
+          <div><h2>Sou proprietário(a)</h2><p class="tg">Organize o que precisa e peça orçamentos</p></div>
           <div class="rd"></div>
         </div>
         <ul>
-          <li><i><svg><use href="#ck"/></svg></i><span><b>Planeje</b> os cômodos, as etapas e os serviços</span></li>
-          <li><i><svg><use href="#ck"/></svg></i><span><b>Acompanhe</b> o andamento e o progresso da obra</span></li>
-          <li><i><svg><use href="#ck"/></svg></i><span>Monte a <b>lista de serviços</b> e envie para o seu profissional</span></li>
+          <li><i><svg><use href="#ck"/></svg></i><span><b>Escolha</b> os cômodos e as etapas da obra</span></li>
+          <li><i><svg><use href="#ck"/></svg></i><span>Monte a <b>lista de serviços</b> de forma organizada</span></li>
+          <li><i><svg><use href="#ck"/></svg></i><span><b>Envie</b> o pedido de orçamento ao seu profissional</span></li>
         </ul>
       </button>
 
@@ -439,8 +436,9 @@ body.sheet-open #toast.on{transform:translateX(-50%)}
           <div class="rd"></div>
         </div>
         <ul>
+          <li><i><svg><use href="#ck"/></svg></i><span><b>Descreva</b> os serviços de cada cômodo com facilidade</span></li>
+          <li><i><svg><use href="#ck"/></svg></i><span>Envie <b>orçamentos organizados</b> e com aparência profissional</span></li>
           <li><i><svg><use href="#ck"/></svg></i><span><b>Acompanhe</b> o andamento e o progresso da obra</span></li>
-          <li><i><svg><use href="#ck"/></svg></i><span>Envie <b>orçamentos com rapidez</b></span></li>
         </ul>
       </button>
     </div>
@@ -691,7 +689,7 @@ const ST = [["pendente","Pendente"],["andamento","Em andamento"],["concluida","C
 const KEY = "orca_aqui_v10", OLD9 = "orca_aqui_v9", OLD8 = "obra_clara_v8", OLD7 = "acompanhamento_obra_app_v7", OLD6 = "acompanhamento_obra_v6_final";
 const ROLE = {
   pro:{chip:"Profissional",kicker:"Modo profissional",title:"Escopo e etapas sob controle.",text:"Organize os cômodos, defina cada etapa e monte a lista de serviços para orçar."},
-  dono:{chip:"Proprietário",kicker:"Modo proprietário",title:"Acompanhe sua obra de perto.",text:"Veja o andamento de cada cômodo e peça orçamentos com um escopo claro."}
+  dono:{chip:"Proprietário",kicker:"Modo proprietário",title:"Peça orçamentos com clareza.",text:"Escolha os cômodos, marque os serviços e envie um pedido organizado ao seu profissional."}
 };
 
 const $ = s => document.querySelector(s);
@@ -1295,8 +1293,8 @@ function renderQuote(){
     '<div class="btn-row"><button class="btn btn-y" id="qAdd"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Adicionar serviços</button></div></div>';
 
   h+='<div class="card"><h2>Dados da solicitação</h2><p class="sub">Proprietário e profissional ficam na aba Início. Aqui vão o prazo e as observações do pedido.</p>'+
-    '<label class="l" for="q_prazo">Prazo desejado</label><input id="q_prazo" placeholder="Ex.: iniciar em novembro, concluir em 60 dias" value="'+esc(S.quote.prazo)+'">'+
-    '<label class="l" for="q_obs">Observações gerais</label><textarea id="q_obs" placeholder="Ex.: imóvel desocupado, acesso por elevador de serviço, horário de silêncio...">'+esc(S.quote.obs)+'</textarea></div>';
+    '<label class="l" for="q_prazo">Prazo desejado</label><textarea id="q_prazo" style="min-height:84px" placeholder="Ex.: iniciar em novembro, concluir em 60 dias">'+esc(S.quote.prazo)+'</textarea>'+
+    '<label class="l" for="q_obs">Observações gerais</label><textarea id="q_obs" placeholder="Ex.: imóvel desocupado, acesso por elevador de serviço, horário de silêncio...">'+esc(S.quote.obs)+'</textarea><div class="mic-tip">🎤 Dica: toque no microfone do teclado para falar em vez de digitar.</div></div>';
 
   if(!n){
     h+='<div class="card"><div class="empty"><div class="ei">'+ICO_DOC+'</div>Nenhum serviço selecionado ainda.<br>Toque em “Adicionar serviços”, escolha o cômodo e a etapa e toque nos serviços que serão feitos.</div></div>';
@@ -1416,7 +1414,7 @@ function openService(id){
   sheet('<h3>Editar serviço</h3><p>Dados usados no pedido de orçamento.</p>'+
     '<label class="l" for="sv_room">Cômodo / área</label><select id="sv_room">'+opt(rooms,ex.room)+'</select>'+
     '<label class="l" for="sv_stage">Etapa</label><select id="sv_stage">'+stOpts.map(o=>'<option value="'+esc(o[0])+'"'+(o[0]===ex.stageId?' selected':'')+'>'+esc(o[1])+'</option>').join("")+'</select>'+
-    '<label class="l" for="sv_desc">Descrição do serviço</label><input id="sv_desc" maxlength="120" value="'+esc(ex.desc)+'" autocomplete="off">'+
+    '<label class="l" for="sv_desc">Descrição do serviço</label><textarea id="sv_desc" maxlength="240" style="min-height:84px">'+esc(ex.desc)+'</textarea><div class="mic-tip">🎤 Dica: toque no microfone do teclado para falar em vez de digitar.</div>'+
     '<div id="sv_ac" class="acbox" hidden><div class="acttl">❄ Ar-condicionado</div><div class="grid2"><div><label class="l" for="sv_modelo">Modelo</label><input id="sv_modelo" maxlength="60" placeholder="Ex.: Inverter Hi Wall" value="'+esc(ex.modelo)+'" autocomplete="off"></div>'+
     '<div><label class="l" for="sv_btus">BTUs</label><input id="sv_btus" list="btu_list" inputmode="numeric" maxlength="8" placeholder="Ex.: 12.000" value="'+esc(ex.btus)+'" autocomplete="off"><datalist id="btu_list">'+BTU_LIST.map(b=>'<option value="'+b+'">').join("")+'</datalist></div></div></div>'+
     '<div class="grid2"><div><label class="l" for="sv_qty">Quantidade</label><input id="sv_qty" inputmode="decimal" placeholder="Opcional" value="'+esc(ex.qty)+'"></div>'+
