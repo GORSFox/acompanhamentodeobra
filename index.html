@@ -36,7 +36,6 @@ input::placeholder,textarea::placeholder{color:#98a2b3}
 input:focus,select:focus,textarea:focus{outline:none;border-color:var(--navy);box-shadow:0 0 0 4px rgba(20,33,61,.10)}
 select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23667085' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:40px}
 textarea{min-height:110px;resize:vertical;line-height:1.45}
-.mic-tip{margin:6px 2px 0;font-size:12.5px;color:var(--muted)}
 label.l{display:block;font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:#475467;margin:16px 0 6px}
 label.l:first-child{margin-top:0}
 
@@ -554,22 +553,22 @@ body.sheet-open #toast.on{transform:translateX(-50%)}
 
   <!-- MAIS -->
   <section class="view" id="v-more">
-    <button class="item" id="actStages"><div class="ic"><svg viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg></div><div><b>Etapas da obra</b><span>Incluir, renomear ou excluir etapas</span></div></button>
+    <button class="item" id="actStages"><div class="ic"><svg viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg></div><div><b>Ajustar etapas e serviços</b><span>Antes de salvar, quer modificar algum item? Inclua, renomeie ou exclua.</span></div></button>
     <button class="item" id="actPdf"><div class="ic"><svg viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/></svg></div><div><b>Relatório de andamento (PDF)</b><span>Situação de todas as etapas, por cômodo</span></div></button>
-    <button class="item" id="actExport"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg></div><div><b>Exportar backup</b><span>Baixa um arquivo com todos os dados da obra</span></div></button>
-    <button class="item" id="actImport"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 21V9M7 14l5-5 5 5M5 3h14"/></svg></div><div><b>Importar backup</b><span>Restaura os dados de um arquivo salvo</span></div></button>
+    <button class="item" id="actExport"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg></div><div><b>Salvar arquivo no dispositivo</b><span>Guarda um arquivo com todos os dados da obra</span></div></button>
+    <button class="item" id="actImport"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 21V9M7 14l5-5 5 5M5 3h14"/></svg></div><div><b>Abrir arquivo salvo</b><span>Recupera os dados de um arquivo guardado</span></div></button>
     <input type="file" id="fileIn" accept="application/json,.json" hidden>
     <button class="item danger" id="actClear"><div class="ic"><svg viewBox="0 0 24 24"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"/></svg></div><div><b>Limpar acompanhamento</b><span>Apaga todos os dados deste dispositivo</span></div></button>
     <div class="card" style="margin-top:6px">
-      <h2>Como instalar como app</h2>
-      <p class="sub">Abra esta página no navegador do celular e use <b>“Adicionar à tela inicial”</b>. Tudo é salvo automaticamente neste dispositivo; exporte um backup de vez em quando.</p>
+      <h2>Salvamento</h2>
+      <p class="sub">Suas alterações são salvas automaticamente neste dispositivo. De vez em quando, use <b>“Salvar arquivo no dispositivo”</b> para guardar uma cópia de segurança.</p>
       <p class="sub" id="savedAt"></p>
     </div>
     <div class="card">
       <h2>🔒 Sua obra, seus dados, sua privacidade.</h2>
       <p class="sub">As informações registradas no aplicativo ficam armazenadas apenas no seu dispositivo e não são enviadas a nenhum servidor.</p>
-      <p class="sub">Você decide quando e com quem compartilhar seus registros. Ao exportar, imprimir ou enviar um PDF ou orçamento por WhatsApp, e-mail ou outro meio, você é responsável por escolher os destinatários e conferir as informações compartilhadas.</p>
-      <p class="sub"><b>Importante:</b> mantenha cópias de segurança (Mais &gt; Exportar backup) para evitar a perda de informações.</p>
+      <p class="sub">Você decide quando e com quem compartilhar seus registros. Ao salvar um arquivo, imprimir ou enviar um PDF ou orçamento por WhatsApp, e-mail ou outro meio, você é responsável por escolher os destinatários e conferir as informações compartilhadas.</p>
+      <p class="sub"><b>Importante:</b> mantenha cópias de segurança (Mais &gt; Salvar arquivo no dispositivo) para evitar a perda de informações.</p>
     </div>
   </section>
 </div>
@@ -835,7 +834,7 @@ window.addEventListener("pagehide",flushSave);
 document.addEventListener("visibilitychange",()=>{ if(document.visibilityState==="hidden") flushSave(); });
 function renderSaved(){
   const el=$("#savedAt");
-  if(memoryOnly){ el.textContent="⚠️ Salvamento automático indisponível neste navegador. Use “Exportar backup”."; return; }
+  if(memoryOnly){ el.textContent="⚠️ Salvamento automático indisponível neste navegador. Use “Salvar arquivo no dispositivo”."; return; }
   el.textContent = S.savedAt ? "Salvo automaticamente em "+new Date(S.savedAt).toLocaleString("pt-BR") : "";
 }
 
@@ -903,7 +902,7 @@ $("#wEnter").addEventListener("click",()=>{
   $("#welcome").classList.add("out"); document.body.classList.remove("lock");
   go("home"); setHdr();
 });
-$("#wNew").addEventListener("click",()=>confirmSheet("Começar uma nova obra?","Os dados da obra atual serão apagados deste dispositivo. Exporte um backup antes, se quiser guardá-los.","Apagar e começar",true,()=>{
+$("#wNew").addEventListener("click",()=>confirmSheet("Começar uma nova obra?","Os dados da obra atual serão apagados deste dispositivo. Salve um arquivo no dispositivo antes, se quiser guardá-los.","Apagar e começar",true,()=>{
   const r=S.role; S=fresh(); S.role=r; try{[KEY,OLD9,OLD8,OLD7,OLD6].forEach(k=>localStorage.removeItem(k));}catch(_){}
   save(); showWelcome();
 }));
@@ -1294,7 +1293,7 @@ function renderQuote(){
 
   h+='<div class="card"><h2>Dados da solicitação</h2><p class="sub">Proprietário e profissional ficam na aba Início. Aqui vão o prazo e as observações do pedido.</p>'+
     '<label class="l" for="q_prazo">Prazo desejado</label><textarea id="q_prazo" style="min-height:84px" placeholder="Ex.: iniciar em novembro, concluir em 60 dias">'+esc(S.quote.prazo)+'</textarea>'+
-    '<label class="l" for="q_obs">Observações gerais</label><textarea id="q_obs" placeholder="Ex.: imóvel desocupado, acesso por elevador de serviço, horário de silêncio...">'+esc(S.quote.obs)+'</textarea><div class="mic-tip">🎤 Dica: toque no microfone do teclado para falar em vez de digitar.</div></div>';
+    '<label class="l" for="q_obs">Observações gerais</label><textarea id="q_obs" placeholder="Ex.: imóvel desocupado, acesso por elevador de serviço, horário de silêncio...">'+esc(S.quote.obs)+'</textarea></div>';
 
   if(!n){
     h+='<div class="card"><div class="empty"><div class="ei">'+ICO_DOC+'</div>Nenhum serviço selecionado ainda.<br>Toque em “Adicionar serviços”, escolha o cômodo e a etapa e toque nos serviços que serão feitos.</div></div>';
@@ -1414,7 +1413,7 @@ function openService(id){
   sheet('<h3>Editar serviço</h3><p>Dados usados no pedido de orçamento.</p>'+
     '<label class="l" for="sv_room">Cômodo / área</label><select id="sv_room">'+opt(rooms,ex.room)+'</select>'+
     '<label class="l" for="sv_stage">Etapa</label><select id="sv_stage">'+stOpts.map(o=>'<option value="'+esc(o[0])+'"'+(o[0]===ex.stageId?' selected':'')+'>'+esc(o[1])+'</option>').join("")+'</select>'+
-    '<label class="l" for="sv_desc">Descrição do serviço</label><textarea id="sv_desc" maxlength="240" style="min-height:84px">'+esc(ex.desc)+'</textarea><div class="mic-tip">🎤 Dica: toque no microfone do teclado para falar em vez de digitar.</div>'+
+    '<label class="l" for="sv_desc">Descrição do serviço</label><textarea id="sv_desc" maxlength="240" style="min-height:84px">'+esc(ex.desc)+'</textarea>'+
     '<div id="sv_ac" class="acbox" hidden><div class="acttl">❄ Ar-condicionado</div><div class="grid2"><div><label class="l" for="sv_modelo">Modelo</label><input id="sv_modelo" maxlength="60" placeholder="Ex.: Inverter Hi Wall" value="'+esc(ex.modelo)+'" autocomplete="off"></div>'+
     '<div><label class="l" for="sv_btus">BTUs</label><input id="sv_btus" list="btu_list" inputmode="numeric" maxlength="8" placeholder="Ex.: 12.000" value="'+esc(ex.btus)+'" autocomplete="off"><datalist id="btu_list">'+BTU_LIST.map(b=>'<option value="'+b+'">').join("")+'</datalist></div></div></div>'+
     '<div class="grid2"><div><label class="l" for="sv_qty">Quantidade</label><input id="sv_qty" inputmode="decimal" placeholder="Opcional" value="'+esc(ex.qty)+'"></div>'+
@@ -1478,7 +1477,7 @@ function manageList(kind,stId){
   sheet('<h3>'+(isSt?'Etapas da obra':esc(stg.name))+'</h3><p>'+(isSt?'Essas etapas valem para todos os cômodos. Toque no nome para renomear.':'Lista de serviços desta etapa. Toque no nome para renomear. Excluir da lista não remove serviços já selecionados.')+'</p>'+
     '<div id="ml"></div>'+
     '<div class="addrow"><input id="ml_new" maxlength="120" autocomplete="off" placeholder="'+(isSt?'Nova etapa, ex.: Paisagismo':'Novo serviço desta etapa')+'"><button class="btn btn-y" id="ml_add">Adicionar</button></div>'+
-    '<div class="btns"><button class="btn btn-o" id="ml_reset">Restaurar padrão</button><button class="btn btn-n" id="ml_done">Concluir</button></div>',sh=>{
+    '<div class="btns"><button class="btn btn-o" id="ml_reset">Restaurar padrão</button><button class="btn btn-n" id="ml_done">Salvar</button></div>',sh=>{
     const box=sh.querySelector("#ml"), inp=sh.querySelector("#ml_new");
     const draw=()=>{
       box.innerHTML = arr().length
@@ -1593,7 +1592,7 @@ $("#btnSave").onclick=()=>{
   clearTimeout(saveTimer); writeNow();
   const b=$("#btnSave"), tx=$("#btnSaveTxt");
   if(memoryOnly){
-    toast("Não foi possível salvar neste navegador. Baixando um backup…");
+    toast("Não foi possível salvar neste navegador. Salvando um arquivo no dispositivo…");
     $("#actExport").click();
     return;
   }
@@ -1609,10 +1608,10 @@ $("#actExport").onclick=()=>{
   const blob=new Blob([JSON.stringify(S,null,2)],{type:"application/json"});
   const a=document.createElement("a");
   a.href=URL.createObjectURL(blob);
-  a.download="orca-aqui-"+(S.obra.trim().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"")||"backup")+".json";
+  a.download="orca-aqui-"+(S.obra.trim().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"")||"obra")+".json";
   document.body.appendChild(a); a.click(); a.remove();
   setTimeout(()=>URL.revokeObjectURL(a.href),1000);
-  toast("Backup exportado");
+  toast("Arquivo salvo no dispositivo");
 };
 $("#actImport").onclick=()=>$("#fileIn").click();
 $("#fileIn").addEventListener("change",e=>{
@@ -1622,8 +1621,8 @@ $("#fileIn").addEventListener("change",e=>{
     try{
       const o=JSON.parse(rd.result);
       if(typeof o!=="object"||!o||!Array.isArray(o.selected)) throw 0;
-      S=normalize(o); save(); go("home"); toast("Backup importado");
-    }catch(_){ toast("Arquivo de backup inválido"); }
+      S=normalize(o); save(); go("home"); toast("Arquivo aberto com sucesso");
+    }catch(_){ toast("Arquivo inválido"); }
   };
   rd.readAsText(f); e.target.value="";
 });
