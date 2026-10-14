@@ -4,15 +4,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#14213D">
-<meta name="description" content="RPR+ Soluções em Orçamentos">
+<meta name="description" content="RPR + Soluções em Orçamentos: organize a obra, acompanhe cada etapa e peça orçamentos com clareza.">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="RPR+ Soluções em Orçamentos">
+<meta name="apple-mobile-web-app-title" content="RPR Orçamentos">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23FCA311'/%3E%3Cpath d='M14 31 32 16l18 15' fill='none' stroke='%2314213D' stroke-width='5' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M20 29v18h24V29' fill='none' stroke='%2314213D' stroke-width='5' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='m26 38 5 5 8-10' fill='none' stroke='%2314213D' stroke-width='5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
-<title>RPR+ Soluções em Orçamentos</title>
+<title>RPR + Soluções em Orçamentos</title>
 <style>
 :root{
   --black:#000;--navy:#14213D;--navy-2:#1d3057;--navy-3:#0d1730;--yellow:#FCA311;--yellow-2:#ffb94a;--gray:#E5E5E5;--white:#fff;
@@ -71,6 +71,8 @@ label.l:first-child{margin-top:0}
 .w-brand svg{width:46px;height:46px;flex:none;filter:drop-shadow(0 8px 16px rgba(0,0,0,.35))}
 .w-brand b{font-size:28px;font-weight:800;letter-spacing:-.03em;line-height:1}
 .w-brand b span{color:var(--yellow)}
+.w-name{text-align:left}
+.w-name small{display:block;margin-top:5px;font-size:13px;font-weight:600;letter-spacing:0;color:rgba(255,255,255,.78)}
 .w-hero{text-align:center;margin:22px auto 20px;max-width:560px;animation:rise .5s .05s ease both}
 .w-hero h1{margin:0;font-size:25px;line-height:1.15;letter-spacing:-.025em;font-weight:800}
 .w-hero p{margin:8px 0 0;color:rgba(255,255,255,.72);font-size:15px}
@@ -418,7 +420,7 @@ body.sheet-open #toast.on{transform:translateX(-50%)}
   <div class="w-inner">
     <div class="w-brand">
       <svg viewBox="0 0 64 64" aria-hidden="true"><use href="#logo"/></svg>
-      <b>Orça <span>Aqui</span></b>
+      <div class="w-name"><b>RPR <span>+</span></b><small>Soluções em Orçamentos</small></div>
     </div>
 
     <div class="w-roles" role="radiogroup" aria-label="Perfil de uso">
@@ -463,7 +465,7 @@ body.sheet-open #toast.on{transform:translateX(-50%)}
     <div class="hdr-top">
       <button class="brand" id="brandBtn" aria-label="Voltar à tela de entrada">
         <svg viewBox="0 0 64 64" aria-hidden="true"><use href="#logo"/></svg>
-        <div><b>Orça <span>Aqui</span></b><small id="tbTag">Planeje • Acompanhe • Orce</small></div>
+        <div><b>RPR <span>+</span></b><small id="tbTag">Soluções em Orçamentos</small></div>
       </button>
       <span class="role-chip" id="roleChip">Profissional</span>
       <div class="ring" id="ring"><span id="ringTxt">0%</span></div>
@@ -1467,7 +1469,7 @@ function quoteText(){
   const tv=parseBRL(S.quote.total);
   if(tv!=null) L.push("","*TOTAL GERAL: R$ "+fmtNum(tv)+"*");
   else L.push("","Por favor, informe valor total, prazo de execução e condições de pagamento.");
-  L.push("_Gerado pelo app Orça Aqui_");
+  L.push("_Gerado pelo app RPR + Soluções em Orçamentos_");
   return L.join("\n");
 }
 function copyQuote(){
@@ -1544,7 +1546,7 @@ function manageList(kind,stId){
 }
 
 /* ===== RELATÓRIOS ===== */
-const REPORT_HEAD='<div class="rh"><svg viewBox="0 0 64 64"><use href="#logo"/></svg><div><b>Orça Aqui</b><small>Planeje • Acompanhe • Orce</small></div></div>';
+const REPORT_HEAD='<div class="rh"><svg viewBox="0 0 64 64"><use href="#logo"/></svg><div><b>RPR +</b><small>Soluções em Orçamentos</small></div></div>';
 function metaLine(){
   return [S.tipo&&"Imóvel: "+esc(S.tipo),S.area&&"Área: "+esc(S.area)+" m²","Emitido em "+new Date().toLocaleDateString("pt-BR")].filter(Boolean).join(" &nbsp;•&nbsp; ");
 }
@@ -1630,7 +1632,7 @@ $("#actExport").onclick=()=>{
   const blob=new Blob([JSON.stringify(S,null,2)],{type:"application/json"});
   const a=document.createElement("a");
   a.href=URL.createObjectURL(blob);
-  a.download="orca-aqui-"+(S.obra.trim().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"")||"obra")+".json";
+  a.download="rpr-orcamentos-"+(S.obra.trim().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"")||"obra")+".json";
   document.body.appendChild(a); a.click(); a.remove();
   setTimeout(()=>URL.revokeObjectURL(a.href),1000);
   toast("Arquivo salvo no dispositivo");
