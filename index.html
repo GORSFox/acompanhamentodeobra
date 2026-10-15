@@ -29,6 +29,11 @@
 [hidden]{display:none!important}
 html,body{margin:0;min-height:100%}
 html{overflow-y:scroll;scrollbar-gutter:stable;scrollbar-width:thin;scrollbar-color:#25D366 #FFFFFF}
+body{scrollbar-width:thin;scrollbar-color:#25D366 #FFFFFF}
+body::-webkit-scrollbar{width:12px}
+body::-webkit-scrollbar-track{background:#FFFFFF}
+body::-webkit-scrollbar-thumb{background:#25D366;border:3px solid #FFFFFF;border-radius:10px}
+body::-webkit-scrollbar-thumb:hover{background:#075E54}
 body{font-family:var(--font);background:var(--bg);color:var(--ink);line-height:1.45;-webkit-font-smoothing:antialiased;overscroll-behavior-y:none;font-variant-numeric:tabular-nums;overflow-y:auto}
 /* Barra lateral visível para indicar que há mais conteúdo abaixo */
 html::-webkit-scrollbar{width:12px}
