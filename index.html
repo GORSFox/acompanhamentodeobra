@@ -536,8 +536,6 @@ body.sheet-open #toast.on{transform:translateX(-50%)}
       <input id="pro_contato" placeholder="Telefone / WhatsApp ou e-mail" autocomplete="off">
     </div>
 
-    <div class="sec-title">Andamento por cômodo</div>
-    <div class="card" id="homeRooms"></div>
   </section>
 
   <!-- CÔMODOS -->
@@ -940,17 +938,6 @@ function updateProgress(){
 function renderHome(){
   $("#obra").value=S.obra; $("#area").value=S.area; $("#tipo").value=S.tipo;
   $("#dono_nome").value=S.dono.nome; $("#dono_contato").value=S.dono.contato; $("#pro_nome").value=S.pro.nome; $("#pro_contato").value=S.pro.contato;
-  const box=$("#homeRooms");
-  if(!S.selected.length){
-    box.innerHTML='<div class="empty"><div class="ei">'+ICO_HOME+'</div>Nenhum cômodo selecionado ainda.<br><button class="btn btn-y" id="goRooms">Escolher cômodos</button></div>';
-    $("#goRooms").onclick=()=>go("rooms");
-  }else{
-    box.innerHTML=S.selected.map(n=>{
-      const r=roomStats(n);
-      return '<button class="roomrow" data-room="'+esc(n)+'"><div class="n"><b>'+esc(n)+'</b><div class="mini"><i class="'+(r.pct===100?'full':'')+'" style="width:'+r.pct+'%"></i></div></div><div class="p">'+r.pct+'%</div>'+CHEV+'</button>';
-    }).join("");
-    $$("#homeRooms .roomrow").forEach(b=>b.onclick=()=>{S.current=b.dataset.room;save();go("track");});
-  }
   updateProgress();
 }
 const BIND={obra:["obra"],area:["area"],dono_nome:["dono","nome"],dono_contato:["dono","contato"],pro_nome:["pro","nome"],pro_contato:["pro","contato"]};
