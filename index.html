@@ -125,8 +125,6 @@ label.l:first-child{margin-top:0}
 .brand b span{color:var(--yellow)}
 .brand small{display:block;font-size:11px;color:rgba(255,255,255,.65);margin-top:1px;white-space:nowrap}
 .role-chip{font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;background:rgba(252,163,17,.16);color:var(--yellow);border:1px solid rgba(252,163,17,.4);padding:5px 10px;border-radius:20px;white-space:nowrap}
-.ring{--p:0;width:44px;height:44px;border-radius:50%;background:conic-gradient(var(--yellow) calc(var(--p)*1%),rgba(255,255,255,.18) 0);display:grid;place-items:center;flex:none}
-.ring span{width:35px;height:35px;border-radius:50%;background:var(--navy);display:grid;place-items:center;font-size:11px;font-weight:800}
 .hdr-obra{display:flex;align-items:center;gap:8px;margin-top:10px;padding-top:9px;border-top:1px solid rgba(255,255,255,.1);min-width:0}
 .savebtn{margin-left:auto;flex:none;display:flex;align-items:center;gap:6px;min-height:34px;padding:0 12px;border:0;border-radius:999px;background:var(--yellow);color:var(--navy);font-weight:800;font-size:13px;cursor:pointer;transition:background .2s,transform .1s}
 .savebtn:active{transform:scale(.96)}
@@ -224,13 +222,6 @@ nav .badge{position:absolute;top:4px;left:calc(50% + 6px);background:var(--yello
 .stage .h{display:flex;gap:10px;align-items:center;margin-bottom:11px}
 .stage .num{width:26px;height:26px;border-radius:8px;background:#eef1f8;color:var(--navy);font-weight:800;font-size:12px;display:grid;place-items:center;flex:none}
 .stage .nm{font-weight:700;font-size:15px;flex:1;letter-spacing:-.01em}
-.seg{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;background:#f2f4f7;padding:4px;border-radius:12px}
-.seg button{border-radius:9px;padding:10px 2px;font-size:11.5px;font-weight:700;color:#667085;line-height:1.15;transition:.15s}
-.seg button.on{box-shadow:0 1px 3px rgba(16,24,40,.18)}
-.seg button.on[data-v=pendente]{background:#fff;color:#101828}
-.seg button.on[data-v=andamento]{background:var(--yellow);color:#111}
-.seg button.on[data-v=concluida]{background:var(--ok);color:#fff}
-.seg button.on[data-v=na]{background:#667085;color:#fff}
 .more{display:grid;gap:8px;margin-top:10px}
 .det{color:var(--navy);font-weight:700;font-size:12.5px;padding:10px 0 0}
 
@@ -339,7 +330,6 @@ body.sheet-open #toast.on{transform:translateX(-50%)}
 .svcrow .note{font-size:12.5px;color:var(--muted);margin-top:6px}
 .svdet{flex:none;font-size:12px;font-weight:700;color:var(--navy);padding:6px 10px;border-radius:9px;background:#eef1f8}
 .svcrow.qc{background:#fff;border:1px solid rgba(16,24,40,.05);border-radius:14px;padding:13px;margin-bottom:8px;box-shadow:var(--sh1)}
-.svcrow[data-s=na] .svn b{opacity:.55;text-decoration:line-through}
 .stg{font-size:11.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#98a2b3;margin:14px 4px 6px}
 .hint{background:#fff7e6;border-left:4px solid var(--yellow);border-radius:10px;padding:12px 14px;font-size:13.5px;color:#5c4300;margin-bottom:12px}
 .stb{margin-left:auto;font-style:normal;font-size:11px;font-weight:800;padding:3px 9px;border-radius:12px;background:#eef1f8;color:var(--navy)}
@@ -363,11 +353,7 @@ body.sheet-open #toast.on{transform:translateX(-50%)}
 .searchbar svg{position:absolute;left:14px;top:50%;transform:translateY(-50%);width:20px;height:20px;stroke:#98a2b3;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;pointer-events:none}
 .searchbar input{padding-left:44px;background:#fff}
 .nextwrap{margin:20px 0 4px;text-align:center}
-.navrow{display:flex;gap:10px}
-.nextwrap .btn{min-height:54px;font-size:15px}
-.nv-prev{flex:0 0 auto}
-.nv-next{flex:1}
-.nv-prev:only-child{flex:1}
+.nextwrap .btn{width:100%;min-height:54px;font-size:16px}
 .nextwrap p{margin:8px 0 0;font-size:12.5px;color:var(--muted)}
 .sharerow{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 12px}
 .sharerow .chip{padding:7px 12px;font-size:12.5px}
@@ -448,13 +434,13 @@ body.sheet-open #toast.on{transform:translateX(-50%)}
       <button class="role-card" data-role="pro" role="radio" aria-checked="false">
         <div class="top">
           <div class="ic"><svg viewBox="0 0 24 24"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.4 2.4-2.6-.6-.6-2.6z"/></svg></div>
-          <div><h2>Sou profissional</h2><p class="tg">Controle a obra e orce mais rápido</p></div>
+          <div><h2>Sou profissional</h2><p class="tg">Organize os serviços e orce mais rápido</p></div>
           <div class="rd"></div>
         </div>
         <ul>
           <li><i><svg><use href="#ck"/></svg></i><span><b>Descreva</b> os serviços de cada cômodo com facilidade</span></li>
           <li><i><svg><use href="#ck"/></svg></i><span>Envie <b>orçamentos organizados</b> e com aparência profissional</span></li>
-          <li><i><svg><use href="#ck"/></svg></i><span><b>Acompanhe</b> o andamento e o progresso da obra</span></li>
+          <li><i><svg><use href="#ck"/></svg></i><span><b>Organize</b> os serviços por cômodo e por etapa</span></li>
         </ul>
       </button>
     </div>
@@ -476,7 +462,6 @@ body.sheet-open #toast.on{transform:translateX(-50%)}
         <div><b>RPR <span>+</span></b><small id="tbTag">Soluções em Orçamentos</small></div>
       </button>
       <span class="role-chip" id="roleChip">Profissional</span>
-      <div class="ring" id="ring"><span id="ringTxt">0%</span></div>
     </div>
     <div class="hdr-obra">
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 21h18M5 21V9l7-5 7 5v12M10 21v-6h4v6"/></svg>
@@ -525,7 +510,7 @@ body.sheet-open #toast.on{transform:translateX(-50%)}
       <input id="pro_contato" placeholder="Telefone / WhatsApp ou e-mail" autocomplete="off">
     </div>
 
-  <div class="nextwrap"><div class="navrow"><button class="btn btn-y nv-next" data-go="rooms">Próximo: Cômodos<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></div><p>Use Anterior e Próximo ou os ícones da barra abaixo.</p></div>
+  <div class="nextwrap"><button class="btn btn-y" data-go="rooms">Próximo: Cômodos<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button><p>Toque em Próximo ou use os ícones da barra abaixo.</p></div>
   </section>
 
   <!-- CÔMODOS -->
@@ -540,24 +525,23 @@ body.sheet-open #toast.on{transform:translateX(-50%)}
       <div id="roomSelBox"></div>
       <div class="rgrid" id="roomGrid"></div>
     </div>
-    <div class="nextwrap"><div class="navrow"><button class="btn btn-o nv-prev" data-go="home"><svg viewBox="0 0 24 24"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>Anterior</button><button class="btn btn-y nv-next" data-go="track">Próximo: Etapas<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></div><p>Use Anterior e Próximo ou os ícones da barra abaixo.</p></div>
+    <div class="nextwrap"><button class="btn btn-y" data-go="track">Próximo: Etapas<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button><p>Toque em Próximo ou use os ícones da barra abaixo.</p></div>
   </section>
 
   <!-- ETAPAS -->
-  <section class="view" id="v-track"><div id="trackBody"></div><div class="nextwrap"><div class="navrow"><button class="btn btn-o nv-prev" data-go="rooms"><svg viewBox="0 0 24 24"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>Anterior</button><button class="btn btn-y nv-next" data-go="quote">Próximo: Orçar<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></div><p>Use Anterior e Próximo ou os ícones da barra abaixo.</p></div></section>
+  <section class="view" id="v-track"><div id="trackBody"></div><div class="nextwrap"><button class="btn btn-y" data-go="quote">Próximo: Orçar<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button><p>Toque em Próximo ou use os ícones da barra abaixo.</p></div></section>
 
   <!-- ORÇAR -->
-  <section class="view" id="v-quote"><div id="quoteBody"></div><div class="nextwrap"><div class="navrow"><button class="btn btn-o nv-prev" data-go="track"><svg viewBox="0 0 24 24"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>Anterior</button><button class="btn btn-y nv-next" data-go="more">Próximo: Mais<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></div><p>Use Anterior e Próximo ou os ícones da barra abaixo.</p></div></section>
+  <section class="view" id="v-quote"><div id="quoteBody"></div><div class="nextwrap"><button class="btn btn-y" data-go="more">Próximo: Mais opções<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button><p>Toque em Próximo ou use os ícones da barra abaixo.</p></div></section>
 
   <!-- MAIS -->
   <section class="view" id="v-more">
     <button class="item" id="actStages"><div class="ic"><svg viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg></div><div><b>Ajustar etapas e serviços</b><span>Antes de salvar, quer modificar algum item? Inclua, renomeie ou exclua.</span></div></button>
-    <button class="item" id="actPdf"><div class="ic"><svg viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/></svg></div><div><b>Relatório de andamento (PDF)</b><span>Situação de todas as etapas, por cômodo</span></div></button>
     <button class="item" id="actExport"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg></div><div><b>Salvar arquivo no dispositivo</b><span>Guarda um arquivo com todos os dados da obra</span></div></button>
     <button class="item" id="actImport"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 21V9M7 14l5-5 5 5M5 3h14"/></svg></div><div><b>Abrir arquivo salvo</b><span>Recupera os dados de um arquivo guardado</span></div></button>
     <input type="file" id="fileIn" accept="application/json,.json" hidden>
     <button class="item" id="actFaq"><div class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.4-1 .9-1 1.7M12 17h.01"/></svg></div><div><b>Dúvidas frequentes</b><span>Respostas rápidas sobre como usar o app</span></div></button>
-    <button class="item danger" id="actClear"><div class="ic"><svg viewBox="0 0 24 24"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"/></svg></div><div><b>Limpar acompanhamento</b><span>Apaga todos os dados deste dispositivo</span></div></button>
+    <button class="item danger" id="actClear"><div class="ic"><svg viewBox="0 0 24 24"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"/></svg></div><div><b>Limpar dados da obra</b><span>Apaga todos os dados deste dispositivo</span></div></button>
     <div class="card" style="margin-top:6px">
       <h2>Cópia de segurança</h2>
       <p class="sub">Suas alterações são salvas automaticamente neste dispositivo. De vez em quando, use <b>“Salvar arquivo no dispositivo”</b> para guardar uma cópia de segurança.</p>
@@ -569,7 +553,6 @@ body.sheet-open #toast.on{transform:translateX(-50%)}
       <p class="sub">Você decide quando e com quem compartilhar seus registros. Ao salvar um arquivo, imprimir ou enviar um PDF ou orçamento por WhatsApp, e-mail ou outro meio, você é responsável por escolher os destinatários e conferir as informações compartilhadas.</p>
       <p class="sub"><b>Importante:</b> mantenha cópias de segurança (Mais &gt; Salvar arquivo no dispositivo) para evitar a perda de informações.</p>
     </div>
-  <div class="nextwrap"><div class="navrow"><button class="btn btn-o nv-prev" data-go="quote"><svg viewBox="0 0 24 24"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>Anterior</button></div><p>Use Anterior e Próximo ou os ícones da barra abaixo.</p></div>
   </section>
 </div>
 
@@ -704,7 +687,7 @@ const ICO_HOME = '<svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8"/><path d="M5 
 function fresh(){
   return {ver:11,show:{},role:null,obra:"",tipo:"",area:"",dono:{nome:"",contato:""},pro:{nome:"",contato:""},stages:defStages(),custom:[],selected:[],services:[],quote:{prazo:"",total:"",obs:""},current:null,filter:"todas",savedAt:null};
 }
-let memoryOnly = false, tab = "home", pickedRole = null, reportMode = "progress";
+let memoryOnly = false, tab = "home", pickedRole = null, reportMode = "quote";
 let S = load();
 
 function load(){
@@ -842,13 +825,6 @@ function available(){ const b=DATA[S.tipo]||[]; return b.concat(S.custom.filter(
 function activeRooms(){ return ["Obra toda"].concat(S.selected); }
 function activeServices(){ const r=activeRooms(); return S.services.filter(v=>r.includes(v.room)); }
 function roomServices(name){ return S.services.filter(v=>v.room===name); }
-function statsOf(list){
-  const app=list.filter(x=>x.s!=="na"), done=app.filter(x=>x.s==="concluida").length;
-  return {total:app.length,done,doing:list.filter(x=>x.s==="andamento").length,pend:list.filter(x=>x.s==="pendente").length,pct:app.length?Math.round(done/app.length*100):0};
-}
-function roomStats(name){ return statsOf(roomServices(name)); }
-function overall(){ return statsOf(activeServices()); }
-
 /* ===== UI helpers ===== */
 let toastT;
 function toast(msg){ const t=$("#toast"); t.textContent=msg; t.classList.add("on"); clearTimeout(toastT); toastT=setTimeout(()=>t.classList.remove("on"),2400); }
@@ -910,9 +886,7 @@ $("#brandBtn").addEventListener("click",showWelcome);
 
 /* ===== header / progress ===== */
 function updateProgress(){
-  const o=overall(), R=ROLE[S.role]||ROLE.pro;
-  $("#ring").style.setProperty("--p",o.pct);
-  $("#ringTxt").textContent=o.pct+"%";
+  const R=ROLE[S.role]||ROLE.pro;
   $("#tbTitle").textContent=S.obra.trim()||"Nova obra";
   $("#tbMeta").textContent=[S.tipo,S.area?S.area+" m²":"",S.dono.nome&&"Prop.: "+S.dono.nome].filter(Boolean).join(" • ");
   $("#roleChip").textContent=R.chip;
@@ -984,7 +958,7 @@ function renderRooms(){
 }
 $("#selNone").onclick=()=>{ S.selected=[]; S.current=null; save(); updateProgress(); renderRooms(); };
 $("#addRoom").onclick=()=>{
-  sheet('<h3>Novo cômodo ou área</h3><p>Digite o nome do ambiente que deseja acompanhar.</p><input id="newRoom" placeholder="Ex.: Closet, Piscina, Quarto de hóspedes" maxlength="40" autocomplete="off"><div class="btns"><button class="btn btn-o" data-x="no">Cancelar</button><button class="btn btn-y" data-x="ok">Adicionar</button></div>',sh=>{
+  sheet('<h3>Novo cômodo ou área</h3><p>Digite o nome do ambiente da obra.</p><input id="newRoom" placeholder="Ex.: Closet, Piscina, Quarto de hóspedes" maxlength="40" autocomplete="off"><div class="btns"><button class="btn btn-o" data-x="no">Cancelar</button><button class="btn btn-y" data-x="ok">Adicionar</button></div>',sh=>{
     const inp=sh.querySelector("#newRoom"); setTimeout(()=>inp.focus(),150);
     const add=()=>{
       const name=inp.value.trim().replace(/\s+/g," ");
@@ -1002,20 +976,6 @@ $("#addRoom").onclick=()=>{
 /* ===== TRACK ===== */
 let openPanel=null, stagePanel=false, trackQ="";
 const normQ = t => String(t||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").trim();
-function applySearch(){
-  const body=$("#trackBody"), q=normQ(trackQ); let any=false;
-  body.querySelectorAll(".stage").forEach(el=>{
-    const rows=[...el.querySelectorAll(".svcrow")];
-    if(!q){ el.hidden=false; rows.forEach(r=>r.hidden=false); any=true; return; }
-    const stObj=S.stages.find(z=>z.id===el.dataset.st);
-    const nameHit=normQ(el.querySelector(".nm").textContent).includes(q);
-    const catHit=!!(stObj && stObj.svcs.some(c=>normQ(c.name).includes(q)));
-    let m=0;
-    rows.forEach(r=>{ const hit=nameHit||normQ(r.querySelector(".svn b").textContent).includes(q); r.hidden=!hit; if(hit) m++; });
-    const show=nameHit||catHit||m>0; el.hidden=!show; if(show) any=true;
-  });
-  const nr=body.querySelector("#trackNoRes"); if(nr) nr.hidden=!(q&&!any);
-}
 const shareRooms=new Set();
 function keepScroll(fn){ const y=window.scrollY; fn(); window.scrollTo(0,y); }
 function addSvcTo(room,stId,name){
@@ -1068,7 +1028,7 @@ function stagePanelHtml(room,groups){
   let o='<option value="">Selecione uma etapa…</option>';
   if(hidden.length) o+='<optgroup label="Etapas que não se aplicam a este cômodo">'+hidden.map(g=>'<option value="show:'+esc(g.st.id)+'">'+esc(g.st.name)+'</option>').join("")+'</optgroup>';
   o+='<option value="new">＋ Nova etapa personalizada…</option>';
-  return '<div class="addpanel"><div class="sugt"><b>Passo 1:</b> abra a lista e escolha a etapa para <b>'+esc(room)+'</b> (ou crie uma nova). <b>Passo 2:</b> dentro dela, adicione os serviços.</div>'+
+  return '<div class="addpanel"><div class="sugt">Escolha uma etapa que não aparece na pesquisa de <b>'+esc(room)+'</b> ou crie uma nova. Depois, toque nos serviços dela.</div>'+
     '<select id="stSel" class="stsel" aria-label="Etapa a incluir">'+o+'</select>'+
     '<div class="addrow" id="stNew" style="display:none;margin-top:10px"><input class="newstg" list="stg_sug" maxlength="80" autocomplete="off" placeholder="Digite ou escolha uma etapa"><datalist id="stg_sug">'+stageSuggestionsHtml()+'</datalist></div>'+
     '<button class="btn btn-y" data-addstage style="margin-top:10px;width:100%">Incluir etapa</button></div>';
@@ -1083,7 +1043,7 @@ function includeStage(){
   const st=S.stages.find(z=>z.id===id); if(!st) return;
   if(!S.show[room]) S.show[room]=[];
   if(!S.show[room].includes(id)) S.show[room].push(id);
-  stagePanel=false; openPanel=id; save();
+  stagePanel=false; trackQ=st.name; save();
   renderTrack(); updateProgress();
   const el=document.querySelector('#trackBody .stage[data-st="'+id+'"]'); if(el) el.scrollIntoView({block:"center"});
   toast("Etapa “"+st.name+"” incluída em "+room);
@@ -1095,123 +1055,111 @@ function addStageInline(){
   if(S.stages.some(z=>z.name.toLowerCase()===nm.toLowerCase())){ toast("Já existe uma etapa com esse nome"); return; }
   const id="e"+uid();
   S.stages.push({id,name:nm,svcs:[]});
-  stagePanel=false; openPanel=id; save();
+  stagePanel=false; trackQ=nm; save();
   renderTrack(); updateProgress();
   const el=document.querySelector('#trackBody .stage[data-st="'+id+'"]'); if(el) el.scrollIntoView({block:"center"});
-  toast("Etapa “"+nm+"” criada. Adicione os serviços dela.");
+  toast("Etapa “"+nm+"” criada. Adicione os serviços dela abaixo.");
 }
-function addPanelHtml(st,all){
-  const vs=st.svcs.filter(c=>svcVisible(S.current,st,c));
-  const others=S.selected.filter(n=>n!==S.current);
-  const share=others.length ? '<div class="sugt">Compartilhar com outros cômodos (opcional):</div><div class="sharerow">'+others.map(n=>'<button class="chip'+(shareRooms.has(n)?' on':'')+'" data-share="'+esc(n)+'">'+esc(n)+'</button>').join("")+'</div>' : '';
-  return '<div class="addpanel"><div class="sugt">Toque num serviço para adicionar. Cada toque inclui um serviço '+(shareRooms.size?'neste cômodo e nos marcados abaixo.':'neste cômodo.')+'</div>'+share+'<div class="svchips">'+
-    (vs.length?vs.map(c=>{ const n=all.filter(v=>v.stageId===st.id&&v.desc===c.name).length;
-      return '<button class="svchip" data-addsvc="'+esc(c.id)+'">＋ '+esc(c.name)+(n?'<em>'+n+'</em>':'')+'</button>'; }).join(""):'<span class="nosvc">Nenhum serviço na lista desta etapa.</span>')+
-    '</div>'+(st.svcs.length>vs.length?'<div class="sugt" style="margin-top:8px">'+(st.svcs.length-vs.length)+' serviço(s) desta etapa não se aplicam a este cômodo. Para ver tudo, use “Ver todas as etapas”.</div>':'')+'<div class="addrow"><input class="newsvc" maxlength="120" autocomplete="off" placeholder="Outro serviço desta etapa"><button class="btn btn-y" data-addcustom>Adicionar</button></div>'+
-    '<button class="linkbtn" data-editlist="'+esc(st.id)+'" style="padding:8px 0 0">✎ Editar lista desta etapa</button></div>';
+/* ===== pesquisa: etapas e serviços só aparecem aqui ===== */
+function searchMatches(room,q,all){
+  const out=[];
+  S.stages.forEach(st=>{
+    const nameHit=normQ(st.name).includes(q);
+    const svcs=st.svcs.filter(c=>svcVisible(room,st,c,all) && (nameHit||normQ(c.name).includes(q)));
+    const stageOk=nameHit && stageVisible(room,st,[],all);
+    if(svcs.length||stageOk) out.push({st:st,svcs:svcs,nameHit:nameHit});
+  });
+  return out;
 }
-function todayStr(){ return new Date(Date.now()-new Date().getTimezoneOffset()*60000).toISOString().slice(0,10); }
-function stLabel(k){ const x=ST.find(z=>z[0]===k); return x?x[1]:k; }
+function renderTrackList(){
+  const box=$("#trackList"); if(!box) return;
+  const room=S.current, q=normQ(trackQ), all=roomServices(room);
+  let h="";
+  if(q){
+    const res=searchMatches(room,q,showAllSvcs);
+    const others=S.selected.filter(n=>n!==room);
+    h+='<div class="sugt" style="margin:0 2px 10px">Toque num serviço para adicionar a <b>'+esc(room)+'</b>.</div>';
+    if(others.length) h+='<div class="addpanel" style="margin:0 0 12px"><div class="sugt">Compartilhar com outros cômodos (opcional):</div><div class="sharerow" style="margin:0">'+others.map(n=>'<button class="chip'+(shareRooms.has(n)?' on':'')+'" data-share="'+esc(n)+'">'+esc(n)+'</button>').join("")+'</div></div>';
+    res.forEach(g=>{
+      const st=g.st, idx=S.stages.indexOf(st)+1;
+      h+='<div class="stage" data-st="'+esc(st.id)+'" data-s="vazio"><div class="h"><div class="num">'+idx+'</div><div class="nm">'+esc(st.name)+'</div></div><div class="addpanel" style="margin-top:0">';
+      h+=g.svcs.length
+        ? '<div class="svchips">'+g.svcs.map(c=>{ const n=all.filter(v=>v.stageId===st.id&&v.desc===c.name).length;
+            return '<button class="svchip" data-addsvc="'+esc(c.id)+'">＋ '+esc(c.name)+(n?'<em>'+n+'</em>':'')+'</button>'; }).join("")+'</div>'
+        : '<span class="nosvc">Nenhum serviço nesta etapa ainda. Adicione abaixo.</span>';
+      if(g.nameHit){
+        h+='<div class="addrow"><input class="newsvc" maxlength="120" autocomplete="off" placeholder="Outro serviço desta etapa"><button class="btn btn-y" data-addcustom>Adicionar</button></div>'+
+           '<button class="linkbtn" data-editlist="'+esc(st.id)+'" style="padding:8px 0 0">✎ Editar lista desta etapa</button>';
+        if(shownFor(room,st.id) && !all.some(v=>v.stageId===st.id) && !stageVisible(room,st,[],false,true))
+          h+='<button class="linkbtn" data-hidestage="'+esc(st.id)+'" style="padding:8px 0 0 14px">Ocultar esta etapa neste cômodo</button>';
+      }
+      h+='</div></div>';
+    });
+    const cnt=r=>r.reduce((a,g)=>a+g.svcs.length,0);
+    const diff=cnt(searchMatches(room,q,true))-cnt(res);
+    if(showAllSvcs) h+='<button class="linkbtn" id="toggleAll" style="padding:4px 2px 12px">Ocultar o que não se aplica a '+esc(room)+'</button>';
+    else if(diff>0) h+='<button class="linkbtn" id="toggleAll" style="padding:4px 2px 12px">Mostrar também '+diff+' serviço'+(diff>1?'s':'')+' que não se aplica'+(diff>1?'m':'')+' a '+esc(room)+'</button>';
+    if(S.stages.length){
+      const def=res.length?res[0].st.id:S.stages[0].id, nm=trackQ.trim().replace(/\s+/g," ");
+      h+='<div class="addpanel" style="margin:4px 0 12px"><div class="sugt">'+(res.length?'Não está na lista?':'Nada encontrado.')+' Adicione “<b>'+esc(nm)+'</b>” como serviço de <b>'+esc(room)+'</b>, na etapa:</div>'+
+         '<select id="cuStage" class="stsel" aria-label="Etapa do serviço personalizado">'+S.stages.map(z=>'<option value="'+esc(z.id)+'"'+(z.id===def?' selected':'')+'>'+esc(z.name)+'</option>').join("")+'</select>'+
+         '<button class="btn btn-y" data-addcq style="margin-top:10px;width:100%">Adicionar serviço personalizado</button></div>';
+    }
+  }else{
+    const groups=S.stages.map(st=>({st:st,items:all.filter(v=>v.stageId===st.id)})).filter(g=>g.items.length);
+    const orphans=all.filter(v=>!S.stages.some(z=>z.id===v.stageId));
+    if(orphans.length) groups.push({st:{id:"",name:"Outros"},items:orphans});
+    if(!groups.length) h+='<div class="hint"><b>Pesquise para adicionar.</b> Digite o nome de uma etapa ou de um serviço (ex.: “piso”, “tomada”, “pintura”) e toque no que será feito neste cômodo. Só aparece aqui o que você escolher.</div>';
+    groups.forEach(g=>{
+      const idx=g.st.id?S.stages.findIndex(z=>z.id===g.st.id)+1:"";
+      h+='<div class="stage" data-st="'+esc(g.st.id)+'" data-s="vazio"><div class="h"><div class="num">'+(idx||"•")+'</div><div class="nm">'+esc(g.st.name)+'</div></div>';
+      g.items.forEach(v=>{ h+=svcRow(v,"track"); });
+      h+='</div>';
+    });
+  }
+  box.innerHTML=h;
+}
+function addCustomFromSearch(){
+  let nm=trackQ.trim().replace(/\s+/g," "); if(!nm) return;
+  nm=nm.charAt(0).toUpperCase()+nm.slice(1);
+  const sel=$("#trackBody #cuStage"); if(!sel) return;
+  const stId=sel.value, st=S.stages.find(z=>z.id===stId); if(!st) return;
+  if(!st.svcs.some(c=>c.name.toLowerCase()===nm.toLowerCase())) st.svcs.push({id:st.id+"s"+uid(),name:nm});
+  const exact=st.svcs.find(c=>c.name.toLowerCase()===nm.toLowerCase()).name;
+  const extra=addShared(stId,exact);
+  trackQ=""; keepScroll(()=>{ renderTrack(); updateProgress(); });
+  toast(shareMsg(exact,extra));
+}
 function stageName(id){ const z=S.stages.find(x=>x.id===id); return z?z.name:"Outros"; }
 function stageOrder(id){ const i=S.stages.findIndex(x=>x.id===id); return i<0?9999:i; }
 function sortByStage(list){ return list.map((v,i)=>[v,i]).sort((a,b)=>stageOrder(a[0].stageId)-stageOrder(b[0].stageId)||a[1]-b[1]).map(x=>x[0]); }
-function stageState(items){
-  const app=items.filter(v=>v.s!=="na");
-  if(!app.length) return "vazio";
-  if(app.every(v=>v.s==="concluida")) return "concluida";
-  if(app.some(v=>v.s==="andamento"||v.s==="concluida")) return "andamento";
-  return "pendente";
-}
 function svcRow(v,mode){
   const q=mode==="quote";
   const tags=(q?(qtyLabel(v)?'<span class="tag q">'+esc(qtyLabel(v))+'</span>':'')+'<span class="tag">'+esc(v.supply)+'</span>':'')+acTags(v);
-  let h='<div class="svcrow'+(q?' qc':'')+'" data-sid="'+esc(v.id)+'" data-s="'+v.s+'"><div class="svn"><div class="tx"><b>'+esc(v.desc)+'</b>'+(tags?'<div class="m">'+tags+'</div>':'')+(q&&v.note?'<div class="note">'+esc(v.note)+'</div>':'')+'</div><button class="svdet" data-edit>Detalhes</button><button class="svx" data-del aria-label="Remover serviço" title="Remover">✕</button></div>'+
-    '<div class="seg">'+ST.map(s=>'<button data-v="'+s[0]+'" class="'+(v.s===s[0]?'on':'')+'">'+s[1]+'</button>').join("")+'</div>';
-  if(!q){
-    const has=!!(v.d||v.o);
-    h+='<button class="det" data-det>'+(has?'▾':'＋')+' Data e observação</button><div class="more" '+(has?'':'hidden')+'><input type="date" class="date" value="'+esc(v.d)+'" aria-label="Data"><textarea class="obs" placeholder="Observação deste serviço...">'+esc(v.o)+'</textarea></div>';
-  }
-  return h+'</div>';
+  return '<div class="svcrow'+(q?' qc':'')+'" data-sid="'+esc(v.id)+'"><div class="svn"><div class="tx"><b>'+esc(v.desc)+'</b>'+(tags?'<div class="m">'+tags+'</div>':'')+(q&&v.note?'<div class="note">'+esc(v.note)+'</div>':'')+'</div><button class="svdet" data-edit>Detalhes</button><button class="svx" data-del aria-label="Remover serviço" title="Remover">✕</button></div></div>';
 }
 function renderTrack(){
   const body=$("#trackBody");
   if(!S.selected.length){
-    body.innerHTML='<div class="card"><div class="empty"><div class="ei">'+ICO_CHECK+'</div>Selecione os cômodos para iniciar o acompanhamento das etapas.<br><button class="btn btn-y" id="goRooms2">Escolher cômodos</button></div></div>';
+    body.innerHTML='<div class="card"><div class="empty"><div class="ei">'+ICO_CHECK+'</div>Selecione os cômodos para escolher as etapas e os serviços.<br><button class="btn btn-y" id="goRooms2">Escolher cômodos</button></div></div>';
     $("#goRooms2").onclick=()=>go("rooms"); return;
   }
   if(!S.current || !S.selected.includes(S.current)) S.current=S.selected[0];
-  S.filter="todas";
-  const room=S.current, r=roomStats(room), all=roomServices(room);
-  let h='<div class="picker">'+S.selected.map(n=>'<button class="chip'+(n===room?' on':'')+'" data-room="'+esc(n)+'">'+esc(n)+' <small data-pc="'+esc(n)+'">'+roomStats(n).pct+'%</small></button>').join("")+'</div>';
-  h+='<div class="roomhead"><small>Cômodo</small><h2>'+esc(room)+'</h2><div class="row"><span id="rhTxt">'+r.done+' de '+r.total+' serviços concluídos</span><b id="rhPct">'+r.pct+'%</b></div><div class="mini"><i id="rhBar" class="'+(r.pct===100&&r.total?'full':'')+'" style="width:'+r.pct+'%"></i></div></div>';
-  h+='<div class="searchbar"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="trackSearch" type="search" placeholder="Pesquisar etapas e serviços…" value="'+esc(trackQ)+'" autocomplete="off" aria-label="Pesquisar etapas e serviços"></div>';
-  h+='<!--STG_TOP-->';
-  if(!all.length) h+='<div class="hint"><b>Primeiro a etapa, depois o serviço.</b> Se a etapa não estiver na lista, use <b>＋ Incluir etapa</b>. Dentro de cada etapa, toque em <b>＋ Adicionar serviço</b> e escolha o que será feito neste cômodo. Cada toque inclui um serviço, que ganha os botões de andamento.</div>';
+  const room=S.current, all=roomServices(room), n=all.length;
+  let h='<div class="picker">'+S.selected.map(r=>'<button class="chip'+(r===room?' on':'')+'" data-room="'+esc(r)+'">'+esc(r)+'</button>').join("")+'</div>';
+  h+='<div class="roomhead"><small>Cômodo</small><h2>'+esc(room)+'</h2><div class="row"><span>'+(n?n+' serviço'+(n>1?'s':'')+' selecionado'+(n>1?'s':''):'Nenhum serviço selecionado')+'</span></div></div>';
+  h+='<div class="searchbar"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="trackSearch" type="search" placeholder="Pesquisar etapa ou serviço para adicionar…" value="'+esc(trackQ)+'" autocomplete="off" aria-label="Pesquisar etapas e serviços"></div>';
+  h+='<!--STG_TOP--><div id="trackList"></div>';
   const groups=S.stages.map(st=>({st:st,items:all.filter(v=>v.stageId===st.id)}));
-  const orphans=all.filter(v=>!S.stages.some(z=>z.id===v.stageId));
-  if(orphans.length) groups.push({st:{id:"",name:"Outros"},items:orphans});
-  const vis=groups.filter(g=>!g.st.id || stageVisible(room,g.st,g.items));
-  const hiddenN=groups.length-vis.length;
-  if(hiddenN>0) h+='<div class="sugt" style="margin:0 2px 10px">Mostrando as etapas que se aplicam a <b>'+esc(room)+'</b> ('+hiddenN+' oculta'+(hiddenN>1?'s':'')+'). Para ver todas, toque em “Ver todas as etapas”.</div>';
-  let shown=0;
-  vis.forEach((g,i)=>{
-    const items=g.items.filter(v=>S.filter==="todas"||v.s===S.filter);
-    if(S.filter!=="todas" && !items.length) return;
-    shown++;
-    const app=g.items.filter(v=>v.s!=="na"), done=app.filter(v=>v.s==="concluida").length;
-    h+='<div class="stage" data-st="'+esc(g.st.id)+'" data-s="'+stageState(g.items)+'"><div class="h"><div class="num">'+(i+1)+'</div><div class="nm">'+esc(g.st.name)+'</div><div class="cnt">'+(app.length?done+'/'+app.length:'')+'</div></div>';
-    if(!items.length) h+='<div class="nosvc">Nenhum serviço selecionado</div>';
-    items.forEach(v=>{ h+=svcRow(v,"track"); });
-    if(g.st.id){
-      const open=openPanel===g.st.id;
-      h+='<button class="addsv'+(open?' open':'')+'" data-pick="'+esc(g.st.id)+'">'+(open?'▾ Fechar':'＋ Adicionar serviço')+'</button>';
-      if(open) h+=addPanelHtml(g.st,all);
-      if(!g.items.length && shownFor(room,g.st.id) && !stageVisible(room,g.st,[],false,true)) h+='<button class="linkbtn" data-hidestage="'+esc(g.st.id)+'" style="padding:8px 0 0">Ocultar esta etapa neste cômodo</button>';
-    }
-    h+='</div>';
-  });
-  h+='<div class="card" id="trackNoRes" hidden><div class="empty">Nada encontrado para essa pesquisa.</div></div>';
   const topHtml='<div style="margin:2px 0 14px"><button class="addsv'+(stagePanel?' open':'')+'" data-newstage style="margin-top:0">'+(stagePanel?'▾ Fechar':'＋ Incluir etapa')+'</button>'+(stagePanel?stagePanelHtml(room,groups):'')+'</div>';
   h=h.replace('<!--STG_TOP-->',topHtml);
   body.innerHTML=h;
-  applySearch();
+  renderTrackList();
   setHdr();
-}
-function refreshRoomProgress(){
-  const room=S.current; if(!room) return;
-  const r=roomStats(room);
-  const bar=$("#rhBar"); if(bar){ bar.style.width=r.pct+"%"; bar.classList.toggle("full",r.pct===100&&r.total>0); }
-  const t=$("#rhTxt"); if(t) t.textContent=r.done+" de "+r.total+" serviços concluídos";
-  const p=$("#rhPct"); if(p) p.textContent=r.pct+"%";
-  $$("[data-pc]").forEach(el=>el.textContent=roomStats(el.dataset.pc).pct+"%");
-  updateProgress();
-}
-function updateStageCard(el){
-  if(tab!=="track" || !el) return;
-  const id=el.dataset.st, items=roomServices(S.current).filter(v=>id===""?!S.stages.some(z=>z.id===v.stageId):v.stageId===id);
-  el.dataset.s=stageState(items);
-  const app=items.filter(v=>v.s!=="na"), done=app.filter(v=>v.s==="concluida").length;
-  const c=el.querySelector(".cnt"); if(c) c.textContent=app.length?done+"/"+app.length:"";
 }
 function onSvcClick(e){
   const row=e.target.closest(".svcrow"); if(!row) return false;
   const v=S.services.find(x=>x.id===row.dataset.sid); if(!v) return true;
-  const seg=e.target.closest(".seg button");
-  if(seg){
-    const val=seg.dataset.v; v.s=val;
-    if(val==="concluida" && !v.d){
-      v.d=todayStr();
-      const dt=row.querySelector(".date");
-      if(dt){ dt.value=v.d; row.querySelector(".more").hidden=false; row.querySelector("[data-det]").textContent="▾ Data e observação"; }
-    }
-    row.dataset.s=val;
-    row.querySelectorAll(".seg button").forEach(b=>b.classList.toggle("on",b===seg));
-    save();
-    if(tab==="track") refreshRoomProgress(); else updateProgress();
-    updateStageCard(row.closest(".stage"));
-    if(tab==="track" && S.filter!=="todas" && S.filter!==val) setTimeout(renderTrack,350);
-    return true;
-  }
   const dl=e.target.closest("[data-del]");
   if(dl){
     if(dl.classList.contains("arm")){ clearTimeout(dl._t); S.services=S.services.filter(x=>x.id!==v.id); save(); refreshLists(); toast("Serviço removido"); return true; }
@@ -1220,8 +1168,6 @@ function onSvcClick(e){
     return true;
   }
   if(e.target.closest("[data-edit]")){ openService(v.id); return true; }
-  const det=e.target.closest("[data-det]");
-  if(det){ const m=row.querySelector(".more"); m.hidden=!m.hidden; det.textContent=(m.hidden?"＋":"▾")+" Data e observação"; }
   return true;
 }
 $("#trackBody").addEventListener("click",e=>{
@@ -1235,12 +1181,9 @@ $("#trackBody").addEventListener("click",e=>{
   if(e.target.closest("[data-addstage]")){ includeStage(); return; }
   const hs=e.target.closest("[data-hidestage]");
   if(hs){ const id=hs.dataset.hidestage, a=S.show[S.current]||[]; S.show[S.current]=a.filter(x=>x!==id); if(openPanel===id) openPanel=null; save(); keepScroll(renderTrack); toast("Etapa ocultada neste cômodo"); return; }
-  const f=e.target.closest(".chip[data-f]");
-  if(f){ S.filter=f.dataset.f; save(); renderTrack(); return; }
-  const pk=e.target.closest("[data-pick]");
-  if(pk){ const id=pk.dataset.pick; openPanel=(openPanel===id)?null:id; keepScroll(renderTrack); return; }
   const ad=e.target.closest("[data-addsvc]");
   if(ad){ addFromChip(ad.closest(".stage").dataset.st,ad.dataset.addsvc); return; }
+  if(e.target.closest("[data-addcq]")){ addCustomFromSearch(); return; }
   const ac=e.target.closest("[data-addcustom]");
   if(ac){ addCustomInStage(ac.closest(".stage")); return; }
   const el=e.target.closest("[data-editlist]");
@@ -1259,12 +1202,7 @@ $("#trackBody").addEventListener("keydown",e=>{
   if(e.key==="Enter" && e.target.classList.contains("newstg")){ e.preventDefault(); addStageInline(); }
 });
 $("#trackBody").addEventListener("input",e=>{
-  if(e.target.id==="trackSearch"){ trackQ=e.target.value; applySearch(); return; }
-  const row=e.target.closest(".svcrow"); if(!row) return;
-  const v=S.services.find(x=>x.id===row.dataset.sid); if(!v) return;
-  if(e.target.classList.contains("date")) v.d=e.target.value;
-  if(e.target.classList.contains("obs")) v.o=e.target.value;
-  save();
+  if(e.target.id==="trackSearch"){ trackQ=e.target.value; renderTrackList(); }
 });
 
 /* ===== ORÇAMENTO ===== */
@@ -1290,7 +1228,7 @@ function groupedServices(){
 function qtyLabel(s){ return s.qty ? s.qty+" "+s.unit : ""; }
 function renderQuote(){
   const box=$("#quoteBody"), groups=groupedServices(), n=activeServices().length;
-  let h='<div class="card"><div class="qhead"><div class="ic">'+ICO_DOC+'</div><div><h2>Serviços para orçamento</h2><p class="sub">Adicione os serviços de cada cômodo, por etapa. Eles entram aqui e também no acompanhamento.</p></div></div>'+
+  let h='<div class="card"><div class="qhead"><div class="ic">'+ICO_DOC+'</div><div><h2>Serviços para orçamento</h2><p class="sub">Adicione os serviços de cada cômodo, por etapa.</p></div></div>'+
     '<div class="qstats"><div><b>'+n+'</b><span>SERVIÇOS</span></div><div><b>'+groups.length+'</b><span>ÁREAS COM SERVIÇOS</span></div></div>'+
     '<div class="btn-row"><button class="btn btn-y" id="qAdd"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Adicionar serviços</button></div></div>';
 
@@ -1358,7 +1296,7 @@ function pickServices(room0,stage0){
   { const ok=stagesFor(room); if(ok.length && !ok.some(z=>z.id===stId)) stId=ok[0].id; }
   const optR=rooms.map(r=>'<option value="'+esc(r)+'"'+(r===room?' selected':'')+'>'+esc(r)+'</option>').join("");
   const optS=optsFor(room);
-  sheet('<h3>Adicionar serviços</h3><p>Escolha o cômodo e a etapa. Cada toque num serviço inclui um item na lista, que ganha os botões de andamento.</p>'+
+  sheet('<h3>Adicionar serviços</h3><p>Escolha o cômodo e a etapa. Cada toque num serviço inclui um item na lista.</p>'+
     '<label class="l" for="pk_room">Cômodo / área</label><select id="pk_room">'+optR+'</select>'+
     '<label class="l" for="pk_stage">Etapa</label><select id="pk_stage">'+optS+'</select>'+
     '<div class="sugt">Toque para adicionar</div><div id="pk_list" class="svchips"></div><div id="pk_hid" class="sugt" style="margin-top:8px"></div>'+
@@ -1550,8 +1488,6 @@ function partiesHtml(){
   return '<table class="parties"><tr>'+(showD?cell("Proprietário",S.dono):'')+(showP?cell("Profissional",S.pro):'')+'</tr></table>';
 }
 function buildReport(){
-  const lab={pendente:"Pendente",andamento:"Em andamento",concluida:"Concluída",na:"Não se aplica"};
-  const fmt=d=>d?d.split("-").reverse().join("/"):"";
   let h=REPORT_HEAD;
   if(reportMode==="quote"){
     h+='<h1>Solicitação de orçamento</h1><p class="meta"><b>'+esc(S.obra||"Obra sem nome")+'</b><br>'+metaLine()+'</p>'+partiesHtml();
@@ -1570,25 +1506,15 @@ function buildReport(){
     if(S.role==="pro"){ const tv=parseBRL(S.quote.total);
       h+='<div class="total"><span>TOTAL GERAL</span><span>'+(tv!=null?'R$ '+fmtNum(tv):'R$')+'</span></div>'; }
     h+='<p class="meta" style="margin-top:12px">Informe prazo de execução e condições de pagamento.</p><div class="sign"><div>Profissional / empresa</div><div>Prazo de execução</div><div>Data</div></div>';
-  }else{
-    const o=overall();
-    h+='<h1>'+esc(S.obra||"Acompanhamento de Obra")+'</h1><p class="meta">'+metaLine()+'</p>'+partiesHtml()+'<p><b>Progresso geral: '+o.pct+'%</b> — '+o.done+' concluídos, '+o.doing+' em andamento, '+o.pend+' pendentes.</p>';
-    groupedServices().forEach(g=>{
-      const r=roomStats(g.room);
-      h+='<h2>'+esc(g.room)+' — '+r.pct+'%</h2><table><tr><th style="width:24%">Etapa</th><th>Serviço</th><th style="width:14%">Situação</th><th style="width:11%">Data</th><th style="width:22%">Observação</th></tr>';
-      g.items.forEach(v=>{ h+='<tr><td>'+esc(stageName(v.stageId))+'</td><td>'+esc(v.desc)+acPdf(v)+'</td><td>'+lab[v.s]+'</td><td>'+fmt(v.d)+'</td><td>'+esc(v.o)+'</td></tr>'; });
-      h+='</table>';
-    });
   }
   $("#report").innerHTML=h;
 }
 function printReport(mode){
   if(mode==="quote" && !activeServices().length){ toast("Selecione serviços antes"); return; }
-  if(mode==="progress" && !activeServices().length){ toast("Selecione serviços antes de gerar o relatório"); return; }
   reportMode=mode; buildReport(); setTimeout(()=>window.print(),60);
 }
 window.addEventListener("beforeprint",buildReport);
-window.addEventListener("afterprint",()=>{reportMode="progress";});
+window.addEventListener("afterprint",()=>{reportMode="quote";});
 
 
 /* ===== botão Salvar ===== */
@@ -1608,7 +1534,7 @@ $("#btnSave").onclick=()=>{
 };
 
 /* ===== Dúvidas frequentes ===== */
-const FAQ = [["Começando", [["Por onde começo?", "Na aba Início, preencha os dados da obra e escolha o tipo de imóvel. Depois escolha os cômodos e marque os serviços de cada um."], ["Não achei o cômodo que preciso", "Na aba Cômodos, toque em + Novo cômodo e digite o nome."], ["Não achei a etapa ou o serviço", "Use Mais &gt; Ajustar etapas e serviços para incluir, renomear ou excluir itens."]]], ["Orçamento e relatório", [["Como envio o orçamento por WhatsApp?", "Na aba Orçar, confira os serviços e toque em Enviar por WhatsApp. Escolha o contato e confira a mensagem antes de enviar."], ["Como gero o relatório em PDF?", "Vá em Mais &gt; Relatório de andamento (PDF). Ele mostra a situação das etapas, por cômodo."], ["O cliente consegue ver o andamento no app dele?", "Não. Os dados ficam só no seu aparelho. Para compartilhar, envie o relatório em PDF."]]], ["Seus dados", [["Onde ficam salvos os meus dados?", "Somente no seu aparelho. Nada é enviado a servidores. Para guardar uma cópia, use Mais &gt; Salvar arquivo no dispositivo."], ["Troquei de celular. E agora?", "No celular antigo, salve um arquivo no dispositivo e envie para você. No novo, use Mais &gt; Abrir arquivo salvo."], ["Posso usar em dois aparelhos ao mesmo tempo?", "Cada aparelho guarda os próprios dados, sem sincronizar. Para levar a obra de um para outro, salve um arquivo e abra no outro."], ["Limpei o navegador e perdi tudo", "Se você tem um arquivo salvo, use Mais &gt; Abrir arquivo salvo. Sem o arquivo, não dá para recuperar. Por isso, salve um arquivo de vez em quando."], ["Como começo uma obra nova?", "Se quiser guardar a obra atual, salve um arquivo no dispositivo antes. Depois use Mais &gt; Limpar acompanhamento."]]]];
+const FAQ = [["Começando", [["Por onde começo?", "Na aba Início, preencha os dados da obra e escolha o tipo de imóvel. Depois escolha os cômodos e, na aba Etapas, pesquise e adicione os serviços de cada um."], ["Não achei o cômodo que preciso", "Na aba Cômodos, toque em + Novo cômodo e digite o nome."], ["Não achei a etapa ou o serviço", "Na aba Etapas, use a barra de pesquisa. Se não existir, adicione como serviço personalizado ali mesmo, ou use Mais &gt; Ajustar etapas e serviços."]]], ["Orçamento", [["Como envio o orçamento por WhatsApp?", "Na aba Orçar, confira os serviços e toque em Enviar por WhatsApp. Escolha o contato e confira a mensagem antes de enviar."], ["Como gero o PDF do orçamento?", "Na aba Orçar, toque em Gerar PDF para orçar. Ele lista os serviços por cômodo e por etapa."], ["O profissional vê os meus dados no app dele?", "Não. Os dados ficam só no seu aparelho. Para compartilhar, envie o pedido por WhatsApp ou em PDF."]]], ["Seus dados", [["Onde ficam salvos os meus dados?", "Somente no seu aparelho. Nada é enviado a servidores. Para guardar uma cópia, use Mais &gt; Salvar arquivo no dispositivo."], ["Troquei de celular. E agora?", "No celular antigo, salve um arquivo no dispositivo e envie para você. No novo, use Mais &gt; Abrir arquivo salvo."], ["Posso usar em dois aparelhos ao mesmo tempo?", "Cada aparelho guarda os próprios dados, sem sincronizar. Para levar a obra de um para outro, salve um arquivo e abra no outro."], ["Limpei o navegador e perdi tudo", "Se você tem um arquivo salvo, use Mais &gt; Abrir arquivo salvo. Sem o arquivo, não dá para recuperar. Por isso, salve um arquivo de vez em quando."], ["Como começo uma obra nova?", "Se quiser guardar a obra atual, salve um arquivo no dispositivo antes. Depois use Mais &gt; Limpar dados da obra."]]]];
 $("#actFaq").onclick=()=>{
   const chev='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>';
   let h='<h3>Dúvidas frequentes</h3><p>Toque numa pergunta para ver a resposta.</p>';
@@ -1622,7 +1548,6 @@ $("#actFaq").onclick=()=>{
 
 /* ===== MAIS ===== */
 $("#actStages").onclick=()=>manageList("stages");
-$("#actPdf").onclick=()=>printReport("progress");
 $("#actExport").onclick=()=>{
   const blob=new Blob([JSON.stringify(S,null,2)],{type:"application/json"});
   const a=document.createElement("a");
@@ -1648,7 +1573,7 @@ $("#fileIn").addEventListener("change",e=>{
 $("#actClear").onclick=()=>confirmSheet("Limpar tudo?","Todos os dados desta obra serão apagados deste dispositivo. Esta ação não pode ser desfeita.","Apagar tudo",true,()=>{
   const r=S.role; S=fresh(); S.role=r;
   try{[KEY,OLD9,OLD8,OLD7,OLD6].forEach(k=>localStorage.removeItem(k));}catch(_){}
-  save(); go("home"); toast("Acompanhamento limpo");
+  save(); go("home"); toast("Dados da obra apagados");
 });
 
 /* ===== init ===== */
