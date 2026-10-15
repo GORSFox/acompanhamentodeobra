@@ -156,7 +156,10 @@ label.l:first-child{margin-top:0}
    linear-gradient(135deg,var(--navy-3),var(--navy) 55%,var(--navy-2));box-shadow:var(--sh2)}
 .hero small{display:block;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--yellow)}
 .hero h2{margin:4px 0 6px;color:#fff;font-size:22px;letter-spacing:-.02em}
-.hero p{margin:0;color:rgba(255,255,255,.75);font-size:14px;max-width:460px}
+.hero p{margin:0;color:rgba(255,255,255,.75);font-size:14px;max-width:520px;text-wrap:balance}
+.view>.sec-title:first-child{margin-top:2px}
+.card:last-child{margin-bottom:0}
+.sec-title+.card{margin-top:0}
 .hero .pc{display:flex;align-items:flex-end;gap:10px;margin-top:16px}
 .hero .pc b{font-size:46px;line-height:1;letter-spacing:-.04em;font-weight:800}
 .hero .pc span{color:rgba(255,255,255,.7);font-size:13px;padding-bottom:6px}
@@ -166,11 +169,6 @@ label.l:first-child{margin-top:0}
 .stat{background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:10px 6px;text-align:center}
 .stat b{display:block;font-size:22px;line-height:1.1}
 .stat span{font-size:11px;color:rgba(255,255,255,.7);font-weight:600}
-.shortcuts{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:6px}
-.sc{background:#fff;border:1px solid rgba(16,24,40,.05);border-radius:14px;padding:14px 8px;text-align:center;box-shadow:var(--sh1);font-size:12.5px;font-weight:700;color:var(--navy);display:flex;flex-direction:column;align-items:center;gap:8px;transition:transform .1s}
-.sc:active{transform:scale(.97)}
-.sc .ic{width:40px;height:40px;border-radius:12px;background:var(--warn-bg);display:grid;place-items:center}
-.sc .ic svg{width:21px;height:21px;stroke:var(--navy);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .roomrow{display:flex;align-items:center;gap:12px;padding:13px 0;border-top:1px solid var(--line);width:100%;text-align:left}
 .roomrow:first-child{border-top:0}
@@ -361,6 +359,16 @@ body.sheet-open #toast.on{transform:translateX(-50%)}
 .svx.arm{background:var(--danger);color:#fff;font-size:11.5px;padding:0 10px}
 .svcrow .svn .svdet{margin-left:auto}
 .w-hero h1{font-size:25px}
+.searchbar{position:relative;margin:0 0 12px}
+.searchbar svg{position:absolute;left:14px;top:50%;transform:translateY(-50%);width:20px;height:20px;stroke:#98a2b3;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;pointer-events:none}
+.searchbar input{padding-left:44px;background:#fff}
+.nextwrap{margin:20px 0 4px;text-align:center}
+.navrow{display:flex;gap:10px}
+.nextwrap .btn{min-height:54px;font-size:15px}
+.nv-prev{flex:0 0 auto}
+.nv-next{flex:1}
+.nv-prev:only-child{flex:1}
+.nextwrap p{margin:8px 0 0;font-size:12.5px;color:var(--muted)}
 .sharerow{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 12px}
 .sharerow .chip{padding:7px 12px;font-size:12.5px}
 .sharerow .chip.on{background:var(--yellow);border-color:var(--yellow);color:#111}
@@ -480,25 +488,6 @@ body.sheet-open #toast.on{transform:translateX(-50%)}
 
   <!-- INÍCIO -->
   <section class="view active" id="v-home">
-    <div class="hero">
-      <small id="heroRole">Visão geral</small>
-      <h2 id="heroTitle">Sua obra, em ordem.</h2>
-      <p id="heroText"></p>
-      <div class="pc"><b id="bigPct">0%</b><span id="homeSub">concluído</span></div>
-      <div class="bar"><i id="bigBar"></i></div>
-      <div class="stats">
-        <div class="stat"><b id="stDone">0</b><span>Concluídas</span></div>
-        <div class="stat"><b id="stDoing">0</b><span>Em andamento</span></div>
-        <div class="stat"><b id="stPend">0</b><span>Pendentes</span></div>
-      </div>
-    </div>
-
-    <div class="shortcuts">
-      <button class="sc" data-go="rooms"><div class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="8" height="8" rx="2"/><rect x="13" y="3" width="8" height="8" rx="2"/><rect x="3" y="13" width="8" height="8" rx="2"/><rect x="13" y="13" width="8" height="8" rx="2"/></svg></div>Planejar cômodos</button>
-      <button class="sc" data-go="track"><div class="ic"><svg viewBox="0 0 24 24"><path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9"/></svg></div>Registrar etapas</button>
-      <button class="sc" data-go="quote"><div class="ic"><svg viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h4"/></svg></div>Pedir orçamento</button>
-    </div>
-
     <div class="sec-title">Dados da obra</div>
     <div class="card">
       <label class="l" for="obra">Nome da obra</label>
@@ -520,22 +509,23 @@ body.sheet-open #toast.on{transform:translateX(-50%)}
       </div>
     </div>
 
-    <div class="sec-title">Proprietário</div>
-    <div class="card">
+    <div class="sec-title" id="secDono">Proprietário</div>
+    <div class="card" id="cardDono">
       <label class="l" for="dono_nome">Nome</label>
       <input id="dono_nome" placeholder="Nome do proprietário" autocomplete="off">
       <label class="l" for="dono_contato">Contato</label>
       <input id="dono_contato" placeholder="Telefone / WhatsApp ou e-mail" autocomplete="off">
     </div>
 
-    <div class="sec-title">Profissional</div>
-    <div class="card">
+    <div class="sec-title" id="secPro">Profissional</div>
+    <div class="card" id="cardPro">
       <label class="l" for="pro_nome">Nome</label>
       <input id="pro_nome" placeholder="Nome do profissional ou empresa" autocomplete="off">
       <label class="l" for="pro_contato">Contato</label>
       <input id="pro_contato" placeholder="Telefone / WhatsApp ou e-mail" autocomplete="off">
     </div>
 
+  <div class="nextwrap"><div class="navrow"><button class="btn btn-y nv-next" data-go="rooms">Próximo: Cômodos<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></div><p>Use Anterior e Próximo ou os ícones da barra abaixo.</p></div>
   </section>
 
   <!-- CÔMODOS -->
@@ -550,13 +540,14 @@ body.sheet-open #toast.on{transform:translateX(-50%)}
       <div id="roomSelBox"></div>
       <div class="rgrid" id="roomGrid"></div>
     </div>
+    <div class="nextwrap"><div class="navrow"><button class="btn btn-o nv-prev" data-go="home"><svg viewBox="0 0 24 24"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>Anterior</button><button class="btn btn-y nv-next" data-go="track">Próximo: Etapas<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></div><p>Use Anterior e Próximo ou os ícones da barra abaixo.</p></div>
   </section>
 
   <!-- ETAPAS -->
-  <section class="view" id="v-track"><div id="trackBody"></div></section>
+  <section class="view" id="v-track"><div id="trackBody"></div><div class="nextwrap"><div class="navrow"><button class="btn btn-o nv-prev" data-go="rooms"><svg viewBox="0 0 24 24"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>Anterior</button><button class="btn btn-y nv-next" data-go="quote">Próximo: Orçar<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></div><p>Use Anterior e Próximo ou os ícones da barra abaixo.</p></div></section>
 
   <!-- ORÇAR -->
-  <section class="view" id="v-quote"><div id="quoteBody"></div></section>
+  <section class="view" id="v-quote"><div id="quoteBody"></div><div class="nextwrap"><div class="navrow"><button class="btn btn-o nv-prev" data-go="track"><svg viewBox="0 0 24 24"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>Anterior</button><button class="btn btn-y nv-next" data-go="more">Próximo: Mais<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></div><p>Use Anterior e Próximo ou os ícones da barra abaixo.</p></div></section>
 
   <!-- MAIS -->
   <section class="view" id="v-more">
@@ -578,6 +569,7 @@ body.sheet-open #toast.on{transform:translateX(-50%)}
       <p class="sub">Você decide quando e com quem compartilhar seus registros. Ao salvar um arquivo, imprimir ou enviar um PDF ou orçamento por WhatsApp, e-mail ou outro meio, você é responsável por escolher os destinatários e conferir as informações compartilhadas.</p>
       <p class="sub"><b>Importante:</b> mantenha cópias de segurança (Mais &gt; Salvar arquivo no dispositivo) para evitar a perda de informações.</p>
     </div>
+  <div class="nextwrap"><div class="navrow"><button class="btn btn-o nv-prev" data-go="quote"><svg viewBox="0 0 24 24"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>Anterior</button></div><p>Use Anterior e Próximo ou os ícones da barra abaixo.</p></div>
   </section>
 </div>
 
@@ -921,14 +913,9 @@ function updateProgress(){
   const o=overall(), R=ROLE[S.role]||ROLE.pro;
   $("#ring").style.setProperty("--p",o.pct);
   $("#ringTxt").textContent=o.pct+"%";
-  $("#bigPct").textContent=o.pct+"%";
-  $("#bigBar").style.width=o.pct+"%";
-  $("#stDone").textContent=o.done; $("#stDoing").textContent=o.doing; $("#stPend").textContent=o.pend;
   $("#tbTitle").textContent=S.obra.trim()||"Nova obra";
   $("#tbMeta").textContent=[S.tipo,S.area?S.area+" m²":"",S.dono.nome&&"Prop.: "+S.dono.nome].filter(Boolean).join(" • ");
   $("#roleChip").textContent=R.chip;
-  $("#heroRole").textContent=R.kicker; $("#heroTitle").textContent=R.title; $("#heroText").textContent=R.text;
-  $("#homeSub").textContent = S.selected.length ? "concluído • "+S.selected.length+" cômodo(s)" : "concluído • escolha os cômodos para começar";
   const b=$("#bdgRooms"); b.hidden=!S.selected.length; b.textContent=S.selected.length;
   const sv=$("#bdgSvc"), nsv=activeServices().length; sv.hidden=!nsv; sv.textContent=nsv;
   setHdr();
@@ -936,6 +923,7 @@ function updateProgress(){
 
 /* ===== HOME ===== */
 function renderHome(){
+  { const dono=S.role==="dono"; $("#secDono").hidden=$("#cardDono").hidden=!dono; $("#secPro").hidden=$("#cardPro").hidden=dono; }
   $("#obra").value=S.obra; $("#area").value=S.area; $("#tipo").value=S.tipo;
   $("#dono_nome").value=S.dono.nome; $("#dono_contato").value=S.dono.contato; $("#pro_nome").value=S.pro.nome; $("#pro_contato").value=S.pro.contato;
   updateProgress();
@@ -1012,7 +1000,22 @@ $("#addRoom").onclick=()=>{
 };
 
 /* ===== TRACK ===== */
-let openPanel=null, stagePanel=false;
+let openPanel=null, stagePanel=false, trackQ="";
+const normQ = t => String(t||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").trim();
+function applySearch(){
+  const body=$("#trackBody"), q=normQ(trackQ); let any=false;
+  body.querySelectorAll(".stage").forEach(el=>{
+    const rows=[...el.querySelectorAll(".svcrow")];
+    if(!q){ el.hidden=false; rows.forEach(r=>r.hidden=false); any=true; return; }
+    const stObj=S.stages.find(z=>z.id===el.dataset.st);
+    const nameHit=normQ(el.querySelector(".nm").textContent).includes(q);
+    const catHit=!!(stObj && stObj.svcs.some(c=>normQ(c.name).includes(q)));
+    let m=0;
+    rows.forEach(r=>{ const hit=nameHit||normQ(r.querySelector(".svn b").textContent).includes(q); r.hidden=!hit; if(hit) m++; });
+    const show=nameHit||catHit||m>0; el.hidden=!show; if(show) any=true;
+  });
+  const nr=body.querySelector("#trackNoRes"); if(nr) nr.hidden=!(q&&!any);
+}
 const shareRooms=new Set();
 function keepScroll(fn){ const y=window.scrollY; fn(); window.scrollTo(0,y); }
 function addSvcTo(room,stId,name){
@@ -1137,10 +1140,11 @@ function renderTrack(){
     $("#goRooms2").onclick=()=>go("rooms"); return;
   }
   if(!S.current || !S.selected.includes(S.current)) S.current=S.selected[0];
+  S.filter="todas";
   const room=S.current, r=roomStats(room), all=roomServices(room);
   let h='<div class="picker">'+S.selected.map(n=>'<button class="chip'+(n===room?' on':'')+'" data-room="'+esc(n)+'">'+esc(n)+' <small data-pc="'+esc(n)+'">'+roomStats(n).pct+'%</small></button>').join("")+'</div>';
   h+='<div class="roomhead"><small>Cômodo</small><h2>'+esc(room)+'</h2><div class="row"><span id="rhTxt">'+r.done+' de '+r.total+' serviços concluídos</span><b id="rhPct">'+r.pct+'%</b></div><div class="mini"><i id="rhBar" class="'+(r.pct===100&&r.total?'full':'')+'" style="width:'+r.pct+'%"></i></div></div>';
-  h+='<div class="filters">'+[["todas","Todos"],["pendente","Pendentes"],["andamento","Em andamento"],["concluida","Concluídos"]].map(f=>'<button class="chip'+(S.filter===f[0]?' on':'')+'" data-f="'+f[0]+'">'+f[1]+'</button>').join("")+'<button class="chip'+(showAllSvcs?' on':'')+'" id="toggleAll" style="margin-left:auto">'+(showAllSvcs?'Só o que se aplica':'Ver todas as etapas')+'</button><button class="chip" id="editStages">✎ Editar etapas</button></div>';
+  h+='<div class="searchbar"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="trackSearch" type="search" placeholder="Pesquisar etapas e serviços…" value="'+esc(trackQ)+'" autocomplete="off" aria-label="Pesquisar etapas e serviços"></div>';
   h+='<!--STG_TOP-->';
   if(!all.length) h+='<div class="hint"><b>Primeiro a etapa, depois o serviço.</b> Se a etapa não estiver na lista, use <b>＋ Incluir etapa</b>. Dentro de cada etapa, toque em <b>＋ Adicionar serviço</b> e escolha o que será feito neste cômodo. Cada toque inclui um serviço, que ganha os botões de andamento.</div>';
   const groups=S.stages.map(st=>({st:st,items:all.filter(v=>v.stageId===st.id)}));
@@ -1166,10 +1170,11 @@ function renderTrack(){
     }
     h+='</div>';
   });
-  if(!shown) h+='<div class="card"><div class="empty">Nenhum serviço neste filtro.</div></div>';
+  h+='<div class="card" id="trackNoRes" hidden><div class="empty">Nada encontrado para essa pesquisa.</div></div>';
   const topHtml='<div style="margin:2px 0 14px"><button class="addsv'+(stagePanel?' open':'')+'" data-newstage style="margin-top:0">'+(stagePanel?'▾ Fechar':'＋ Incluir etapa')+'</button>'+(stagePanel?stagePanelHtml(room,groups):'')+'</div>';
   h=h.replace('<!--STG_TOP-->',topHtml);
   body.innerHTML=h;
+  applySearch();
   setHdr();
 }
 function refreshRoomProgress(){
@@ -1223,7 +1228,7 @@ $("#trackBody").addEventListener("click",e=>{
   if(e.target.closest("#editStages")){ manageList("stages"); return; }
   if(e.target.closest("#toggleAll")){ showAllSvcs=!showAllSvcs; openPanel=null; keepScroll(renderTrack); return; }
   const chip=e.target.closest(".chip[data-room]");
-  if(chip){ S.current=chip.dataset.room; openPanel=null; shareRooms.clear(); showAllSvcs=false; save(); renderTrack(); window.scrollTo({top:0}); return; }
+  if(chip){ S.current=chip.dataset.room; trackQ=""; openPanel=null; shareRooms.clear(); showAllSvcs=false; save(); renderTrack(); window.scrollTo({top:0}); return; }
   const shr=e.target.closest("[data-share]");
   if(shr){ const n=shr.dataset.share; if(shareRooms.has(n)) shareRooms.delete(n); else shareRooms.add(n); keepScroll(renderTrack); return; }
   if(e.target.closest("[data-newstage]")){ stagePanel=!stagePanel; keepScroll(renderTrack); const f=$("#trackBody .newstg"); if(f) f.focus(); return; }
@@ -1254,6 +1259,7 @@ $("#trackBody").addEventListener("keydown",e=>{
   if(e.key==="Enter" && e.target.classList.contains("newstg")){ e.preventDefault(); addStageInline(); }
 });
 $("#trackBody").addEventListener("input",e=>{
+  if(e.target.id==="trackSearch"){ trackQ=e.target.value; applySearch(); return; }
   const row=e.target.closest(".svcrow"); if(!row) return;
   const v=S.services.find(x=>x.id===row.dataset.sid); if(!v) return;
   if(e.target.classList.contains("date")) v.d=e.target.value;
@@ -1303,7 +1309,7 @@ function renderQuote(){
         h+=svcRow(v,"quote");
       });
     });
-    h+='<div class="card totalcard" style="margin-top:18px"><h2>Total geral</h2><p class="sub">Valor total do orçamento, preenchido pelo profissional depois de orçar.</p>'+
+    if(S.role==="pro") h+='<div class="card totalcard" style="margin-top:18px"><h2>Total geral</h2><p class="sub">Valor total do orçamento, preenchido pelo profissional depois de orçar.</p>'+
       '<label class="l" for="q_total">Total geral (R$)</label><div class="money"><span>R$</span><input id="q_total" inputmode="decimal" placeholder="0,00" autocomplete="off" value="'+esc(S.quote.total)+'"></div></div>';
     h+='<div class="send"><h2>Enviar para orçamento</h2><p class="sub">Compartilhe a lista com o profissional. Ele pode informar valor, prazo e condições.</p><div class="btn-row">'+
       '<button class="btn btn-g" id="qWa"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 0 1-13.2 8L3 21l1.1-4.6A9 9 0 1 1 21 12z"/></svg>Enviar por WhatsApp</button>'+
@@ -1453,7 +1459,7 @@ function quoteText(){
     });
   });
   if(S.quote.obs) L.push("","Observações gerais: "+S.quote.obs);
-  const tv=parseBRL(S.quote.total);
+  const tv=S.role==="pro"?parseBRL(S.quote.total):null;
   if(tv!=null) L.push("","*TOTAL GERAL: R$ "+fmtNum(tv)+"*");
   else L.push("","Por favor, informe valor total, prazo de execução e condições de pagamento.");
   L.push("_Gerado pelo app RPR + Soluções em Orçamentos_");
@@ -1539,7 +1545,9 @@ function metaLine(){
 }
 function partiesHtml(){
   const cell=(lab,p)=>'<td><b>'+lab+'</b><br>'+(esc(p.nome)||'—')+(p.contato?'<br>'+esc(p.contato):'')+'</td>';
-  return '<table class="parties"><tr>'+cell("Proprietário",S.dono)+cell("Profissional",S.pro)+'</tr></table>';
+  const has=p=>!!(p.nome||p.contato);
+  const showD=S.role==="dono"||has(S.dono), showP=S.role!=="dono"||has(S.pro);
+  return '<table class="parties"><tr>'+(showD?cell("Proprietário",S.dono):'')+(showP?cell("Profissional",S.pro):'')+'</tr></table>';
 }
 function buildReport(){
   const lab={pendente:"Pendente",andamento:"Em andamento",concluida:"Concluída",na:"Não se aplica"};
@@ -1559,8 +1567,8 @@ function buildReport(){
       h+='</table>';
     });
     if(S.quote.obs) h+='<p class="meta" style="margin-top:12px"><b>Observações gerais:</b> '+esc(S.quote.obs)+'</p>';
-    const tv=parseBRL(S.quote.total);
-    h+='<div class="total"><span>TOTAL GERAL</span><span>'+(tv!=null?'R$ '+fmtNum(tv):'R$')+'</span></div>';
+    if(S.role==="pro"){ const tv=parseBRL(S.quote.total);
+      h+='<div class="total"><span>TOTAL GERAL</span><span>'+(tv!=null?'R$ '+fmtNum(tv):'R$')+'</span></div>'; }
     h+='<p class="meta" style="margin-top:12px">Informe prazo de execução e condições de pagamento.</p><div class="sign"><div>Profissional / empresa</div><div>Prazo de execução</div><div>Data</div></div>';
   }else{
     const o=overall();
