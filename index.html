@@ -28,20 +28,15 @@
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 [hidden]{display:none!important}
 html,body{margin:0;min-height:100%}
-html{overflow-y:scroll;scrollbar-gutter:stable;scrollbar-width:thin;scrollbar-color:#25D366 #FFFFFF}
-body{scrollbar-width:thin;scrollbar-color:#25D366 #FFFFFF}
-body::-webkit-scrollbar{width:12px}
-body::-webkit-scrollbar-track{background:#FFFFFF}
-body::-webkit-scrollbar-thumb{background:#25D366;border:3px solid #FFFFFF;border-radius:10px}
-body::-webkit-scrollbar-thumb:hover{background:#075E54}
 body{font-family:var(--font);background:var(--bg);color:var(--ink);line-height:1.45;-webkit-font-smoothing:antialiased;overscroll-behavior-y:none;font-variant-numeric:tabular-nums;overflow-y:auto}
-/* Barra lateral visível para indicar que há mais conteúdo abaixo */
-html::-webkit-scrollbar{width:12px}
-html::-webkit-scrollbar-track{background:#FFFFFF}
-html::-webkit-scrollbar-thumb{background:#25D366;border:3px solid #FFFFFF;border-radius:10px}
-html::-webkit-scrollbar-thumb:hover{background:#B6CCA0}
 h1,h2,h3,.w-brand b,.w-hero h1,.role-card h2,.brand b,.card h2,.hero h2,.roomhead h2,.sheet h3{font-family:"Raleway",Arial,sans-serif}
 body.lock{overflow:hidden}
+
+/* Indicador visual de rolagem compatível com celulares */
+#scrollHint{position:fixed;right:3px;top:calc(var(--hdr-h) + 8px);bottom:calc(78px + var(--safe-b));width:7px;border-radius:10px;background:rgba(7,94,84,.12);z-index:35;pointer-events:none;opacity:0;transition:opacity .2s}
+#scrollHint.visible{opacity:1}
+#scrollHintThumb{position:absolute;top:0;left:0;width:100%;min-height:28px;border-radius:10px;background:#25D366;box-shadow:0 0 0 1px rgba(7,94,84,.08)}
+@media(min-width:760px){#scrollHint{right:max(4px,calc((100vw - 760px)/2 - 9px));width:8px}}
 button{font:inherit;cursor:pointer;border:0;color:inherit;background:none}
 button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid rgba(252,163,17,.55);outline-offset:2px}
 input,select,textarea{font:inherit;width:100%;min-height:48px;padding:12px 14px;border:1.5px solid #d0d5dd;border-radius:var(--r-sm);background:#fff;color:var(--ink);transition:border-color .15s,box-shadow .15s}
@@ -588,6 +583,7 @@ body.sheet-open #toast.on{transform:translateX(-50%)}
 
 <div class="scrim" id="scrim"><div class="sheet" id="sheet"></div></div>
 <div id="toast" role="status" aria-live="polite"></div>
+<div id="scrollHint" aria-hidden="true"><div id="scrollHintThumb"></div></div>
 <div id="report"></div>
 
 <script>
@@ -860,12 +856,29 @@ $("#scrim").addEventListener("click",e=>{ if(e.target.id==="scrim") closeSheet()
 function setHdr(){ document.documentElement.style.setProperty("--hdr-h",$("#hdr").offsetHeight+"px"); }
 window.addEventListener("resize",setHdr);
 
+function updateScrollHint(){
+  const rail=$("#scrollHint"), thumb=$("#scrollHintThumb");
+  if(!rail||!thumb) return;
+  const doc=document.documentElement;
+  const maxScroll=Math.max(0,doc.scrollHeight-window.innerHeight);
+  const active=document.querySelector(".view.active");
+  const contentTooTall=maxScroll>8 || (active && active.scrollHeight>window.innerHeight+8);
+  rail.classList.toggle("visible",!!contentTooTall && !document.body.classList.contains("lock") && !document.body.classList.contains("sheet-open"));
+  const railHeight=rail.clientHeight||1;
+  const thumbHeight=maxScroll>0?Math.max(28,railHeight*(window.innerHeight/doc.scrollHeight)):railHeight;
+  thumb.style.height=Math.min(railHeight,thumbHeight)+"px";
+  const top=maxScroll>0?(window.scrollY/maxScroll)*(railHeight-thumb.offsetHeight):0;
+  thumb.style.transform="translateY("+Math.max(0,Math.min(railHeight-thumb.offsetHeight,top))+"px)";
+}
+window.addEventListener("scroll",updateScrollHint,{passive:true});
+window.addEventListener("resize",updateScrollHint);
 function go(t){
   tab=t;
   $$(".view").forEach(v=>v.classList.toggle("active",v.id==="v-"+t));
   $$("nav button").forEach(b=>b.classList.toggle("on",b.dataset.tab===t));
   ({home:renderHome,rooms:renderRooms,track:renderTrack,quote:renderQuote,more:()=>{}})[t]();
   window.scrollTo({top:0});
+  requestAnimationFrame(updateScrollHint);
 }
 $$("nav button").forEach(b=>b.addEventListener("click",()=>go(b.dataset.tab)));
 $$("[data-go]").forEach(b=>b.addEventListener("click",()=>go(b.dataset.go)));
@@ -896,7 +909,7 @@ $("#wEnter").addEventListener("click",()=>{
   if(!pickedRole) return;
   S.role=pickedRole; save();
   $("#welcome").classList.add("out"); document.body.classList.remove("lock");
-  go("home"); setHdr();
+  go("home"); setHdr(); requestAnimationFrame(updateScrollHint);
 });
 $("#wNew").addEventListener("click",()=>confirmSheet("Começar uma nova obra?","Os dados da obra atual serão apagados deste dispositivo. Salve um arquivo no dispositivo antes, se quiser guardá-los.","Apagar e começar",true,()=>{
   const r=S.role; S=fresh(); S.role=r; try{[KEY,OLD9,OLD8,OLD7,OLD6].forEach(k=>localStorage.removeItem(k));}catch(_){}
@@ -1589,7 +1602,7 @@ $("#actClear").onclick=()=>confirmSheet("Limpar tudo?","Todos os dados desta obr
 });
 
 /* ===== init ===== */
-renderHome(); renderSaved(); showWelcome(); setHdr();
+renderHome(); renderSaved(); showWelcome(); setHdr(); requestAnimationFrame(updateScrollHint);
 })();
 </script>
 <script>
