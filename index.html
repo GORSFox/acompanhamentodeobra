@@ -27,10 +27,14 @@
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 [hidden]{display:none!important}
-html,body{margin:0;min-height:100%}
-body{font-family:var(--font);background:var(--bg);color:var(--ink);line-height:1.45;-webkit-font-smoothing:antialiased;overscroll-behavior-y:none;font-variant-numeric:tabular-nums;overflow-y:auto}
+html{margin:0;min-height:100%;height:auto;overflow-x:hidden;overflow-y:auto!important;-webkit-overflow-scrolling:touch}
+body{margin:0;min-height:100%;height:auto;overflow-x:hidden;overflow-y:auto!important;-webkit-overflow-scrolling:touch;touch-action:pan-y}
+body{font-family:var(--font);background:var(--bg);color:var(--ink);line-height:1.45;-webkit-font-smoothing:antialiased;overscroll-behavior-y:auto;font-variant-numeric:tabular-nums;overflow-y:auto!important}
 h1,h2,h3,.w-brand b,.w-hero h1,.role-card h2,.brand b,.card h2,.hero h2,.roomhead h2,.sheet h3{font-family:"Raleway",Arial,sans-serif}
-body.lock{overflow:hidden}
+body.lock{overflow:hidden!important}
+body:not(.lock):not(.sheet-open){overflow-y:auto!important}
+#app{height:auto!important;overflow:visible!important}
+.view.active{height:auto!important;max-height:none!important;overflow:visible!important;touch-action:pan-y}
 
 /* Indicador visual de rolagem compatível com celulares */
 #scrollHint{position:fixed;right:3px;top:calc(var(--hdr-h) + 8px);bottom:calc(78px + var(--safe-b));width:7px;border-radius:10px;background:rgba(7,94,84,.12);z-index:35;pointer-events:none;opacity:0;transition:opacity .2s}
@@ -873,6 +877,7 @@ function updateScrollHint(){
 window.addEventListener("scroll",updateScrollHint,{passive:true});
 window.addEventListener("resize",updateScrollHint);
 function go(t){
+  document.body.classList.remove("lock");
   tab=t;
   $$(".view").forEach(v=>v.classList.toggle("active",v.id==="v-"+t));
   $$("nav button").forEach(b=>b.classList.toggle("on",b.dataset.tab===t));
