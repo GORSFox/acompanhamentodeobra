@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="112" fill="#075E54"/>
+  <path d="M90 244 256 104l166 140" fill="none" stroke="#25D366" stroke-width="34" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M144 225v176h224V225" fill="none" stroke="#fff" stroke-width="30" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="m203 310 42 42 75-91" fill="none" stroke="#25D366" stroke-width="30" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="256" y="466" font-family="Arial,sans-serif" font-size="48" font-weight="700" text-anchor="middle" fill="#fff">RPR+</text>
+</svg>
