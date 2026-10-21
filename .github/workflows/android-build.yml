@@ -24,8 +24,11 @@ jobs:
           distribution: temurin
           java-version: 17
 
+      - name: Generate dependency lock file
+        run: npm install --package-lock-only
+
       - name: Install web dependencies
-        run: npm install
+        run: npm ci
 
       - name: Add Android platform
         run: npx cap add android
