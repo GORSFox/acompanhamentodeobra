@@ -1,0 +1,10 @@
+{
+  "name": "RPR+ Soluções em Orçamentos",
+  "short_name": "RPR+",
+  "description": "Organize, gere e compartilhe orçamentos de obras.",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#25D366",
+  "lang": "pt-BR"
+}
